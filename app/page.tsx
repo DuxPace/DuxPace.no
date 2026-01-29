@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Navbar from "./Navbar";
+import NewsCarousel from "./NewsCarousel";
+import { members } from "./data/members";
 
 function HeroSection() {
   return (
@@ -88,6 +90,30 @@ function AboutSection() {
             </p>
           </div>
         </div>
+
+        <h3 className="text-2xl font-bold text-white mt-16 mb-8">Our Team</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {members.map((member) => (
+            <div
+              key={member.name}
+              className="bg-white/5 border border-white/10 rounded-xl p-6 text-center"
+            >
+              <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-white/10">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-1">
+                {member.name}
+              </h3>
+              <p className="text-purple-400 text-sm mb-3">{member.role}</p>
+              <p className="text-gray-400 text-sm">{member.bio}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -98,73 +124,12 @@ function NewsSection() {
     <section id="news" className="py-24 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl font-bold text-white mb-12">News</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <article className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-            <div className="relative w-full aspect-video">
-              <Image
-                src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=600&q=80"
-                alt="Earth from space"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <p className="text-sm text-gray-500 mb-2">January 2026</p>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                DuxPace Launches
-              </h3>
-              <p className="text-gray-400">
-                We are excited to announce the launch of DuxPace, bringing
-                AI-powered satellite analysis to the market from our home at
-                NTNU Trondheim.
-              </p>
-            </div>
-          </article>
-          <article className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-            <div className="relative w-full aspect-video">
-              <Image
-                src="https://images.unsplash.com/photo-1569429593410-b498b3fb3387?w=600&q=80"
-                alt="Satellite data visualization"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <p className="text-sm text-gray-500 mb-2">Coming Soon</p>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                Stay Tuned
-              </h3>
-              <p className="text-gray-400">
-                More updates about our progress, partnerships, and technology
-                developments will be shared here.
-              </p>
-            </div>
-          </article>
-          <article className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-            <div className="relative w-full aspect-video">
-              <Image
-                src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=600&q=80"
-                alt="Night sky technology"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <p className="text-sm text-gray-500 mb-2">Coming Soon</p>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                Product Updates
-              </h3>
-              <p className="text-gray-400">
-                Follow along as we develop our AI platform for satellite image
-                analysis.
-              </p>
-            </div>
-          </article>
-        </div>
+        <NewsCarousel />
       </div>
     </section>
   );
 }
+
 
 function ContactSection() {
   return (
