@@ -68,6 +68,7 @@ export const translations = {
     news: {
       headline: "What we've been up to",
       subheading: "Updates from the team",
+      readMore: "Read more",
     },
     contact: {
       headline: "Say hello.",
@@ -130,6 +131,7 @@ export const translations = {
     news: {
       headline: "Hva vi har drevet med",
       subheading: "Oppdateringer fra teamet",
+      readMore: "Les mer",
     },
     contact: {
       headline: "Si hei.",
