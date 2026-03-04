@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { siteContent } from "./data/content";
+import { translations } from "./data/content";
+import { LanguageProvider } from "./components/LanguageProvider";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: siteContent.meta.title,
-  description: siteContent.meta.description,
+  title: translations.en.meta.title,
+  description: translations.en.meta.description,
   icons: { icon: "/favicon.jpg" },
 };
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geist.className} antialiased`}>{children}</body>
+      <body className={`${geist.className} antialiased`}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

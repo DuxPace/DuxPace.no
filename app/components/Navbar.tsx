@@ -2,13 +2,16 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { siteContent } from "../data/content";
+import { siteConfig } from "../data/content";
+import { useLanguage } from "./LanguageProvider";
+import LanguageToggle from "./LanguageToggle";
 
-const { sections, logo } = siteContent.nav;
+const { sections, logo } = siteConfig.nav;
 
 export default function Navbar() {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -34,6 +37,7 @@ export default function Navbar() {
 
   return (
     <nav
+      aria-label="Main navigation"
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? "bg-black/90 backdrop-blur-md border-b border-white/10"
@@ -41,29 +45,24 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
-        <a href="#home" className="flex items-center">
-          <Image
-            src={logo}
-            alt="DuxPace"
-            width={160}
-            height={48}
-            className="h-10 w-auto"
-          />
+        <a href="#home" className="flex items-center" aria-label="DuxPace – go to top">
+          <Image src={logo} alt="DuxPace" width={160} height={48} className="h-10 w-auto" />
         </a>
-        <div className="flex gap-8 ml-auto">
+        <div className="flex items-center gap-8 ml-auto">
           {sections.map((id) => (
             <a
               key={id}
               href={`#${id}`}
-              className={`text-sm capitalize transition-colors ${
-                active === id
-                  ? "text-white"
-                  : "text-gray-500 hover:text-gray-200"
+              aria-current={active === id ? "true" : undefined}
+              className={`text-sm transition-colors ${
+                active === id ? "text-white" : "text-gray-500 hover:text-gray-200"
               }`}
             >
-              {id}
+              {t.nav[id as keyof typeof t.nav]}
             </a>
           ))}
+          <div className="w-px h-4 bg-white/10" aria-hidden="true" />
+          <LanguageToggle />
         </div>
       </div>
     </nav>
