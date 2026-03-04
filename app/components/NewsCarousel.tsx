@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { newsItems } from "./data/news";
+import { newsItems } from "../data/news";
 
 const PER_PAGE = 3;
 const totalPages = Math.ceil(newsItems.length / PER_PAGE);
@@ -20,12 +20,8 @@ export default function NewsCarousel() {
   );
 
   useEffect(() => {
-    if (selected !== null) {
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
+    document.body.style.overflow = selected !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [selected]);
 
   return (

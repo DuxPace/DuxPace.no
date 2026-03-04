@@ -1,35 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
+import { siteContent } from "./data/content";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DuxPace - AI-Powered Satellite Image Analysis",
-  description:
-    "DuxPace uses AI to analyze satellite pictures. Based at Gründerbrakka, NTNU Trondheim.",
+  title: siteContent.meta.title,
+  description: siteContent.meta.description,
+  icons: { icon: "/favicon.jpg" },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${geist.className} antialiased`}>{children}</body>
     </html>
   );
 }

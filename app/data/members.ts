@@ -1,23 +1,26 @@
 export const members = [
   {
-    name: "Member 1",
-    role: "Co-Founder",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
-    bio: "Background and expertise description.",
+    name: "Herman Castberg",
+    role: "CEO",
+    image: "/images/team/herman.jpg",
+    bio: "Bachelor in Material Science at NTNU",
+    linkedin: "https://www.linkedin.com/in/herman-castberg-17a17b109/",
+    email: "Planet@duxpace.no",
   },
   {
-    name: "Member 2",
-    role: "Co-Founder",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
-    bio: "Background and expertise description.",
+    name: "Andre Nielsen",
+    role: "CPO",
+    image: "/images/team/andre.jpg",
+    bio: "4.year Cybernetics at NTNU",
+    linkedin: "https://www.linkedin.com/in/andr%C3%A9-nielsen-2846a434a/",
+    email: "Planet@duxpace.no",
   },
   {
     name: "Tri Tac Le",
-    role: "Rolle",
-    image:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&q=80",
-    bio: "Background and expertise description.",
+    role: "CTO",
+    image: "/images/team/tri.jpg",
+    bio: "2.year Computer Science at NTNU",
+    linkedin: "https://www.linkedin.com/in/tritacle/",
+    email: "Planet@duxpace.no",
   },
 ];
