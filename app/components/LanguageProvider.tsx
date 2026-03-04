@@ -5,7 +5,7 @@ import { translations, type Language } from "../data/content";
 
 type LanguageContextType = {
   lang: Language;
-  t: typeof translations.en;
+  t: (typeof translations)[Language];
   toggle: () => void;
   setLang: (lang: Language) => void;
 };
