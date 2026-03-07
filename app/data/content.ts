@@ -11,6 +11,7 @@ export const siteConfig = {
     email: "planet@duxpace.no",
     location: "VM-paviljongen, Trondheim",
     mapEmbed: "https://www.google.com/maps?q=VM-paviljongen,Trondheim,Norway&output=embed",
+    linkedin: "https://linkedin.com/company/duxpace",
   },
   footer: {
     logo: "/images/logos/logo-square.jpeg",
