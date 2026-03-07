@@ -53,11 +53,12 @@ const RINGS_DATA = LOCATIONS.map(loc => ({
 }));
 
 export default function InteractiveGlobe() {
-  const globeRef = useRef<any>(null);
+  const globeRef = useRef<typeof Globe.prototype | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [rotationSpeed, setRotationSpeed] = useState(0.4);
   const [isHovering, setIsHovering] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
+  
+  const rotationSpeed = 0.4;
 
   // Handle window resize
   useEffect(() => {
@@ -90,8 +91,8 @@ export default function InteractiveGlobe() {
     scene.background = new THREE.Color(0x000000);
     
     // Clear existing lights
-    scene.children.forEach((child: any) => {
-      if (child.isLight) scene.remove(child);
+    scene.children.forEach((child: THREE.Object3D) => {
+      if ((child as THREE.Light).isLight) scene.remove(child);
     });
     
     // Add ambient light - INCREASED intensity

@@ -17,16 +17,16 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Globe */}
+      {/* Globe - visible on all devices */}
       <div
         aria-hidden="true"
-        className="hidden md:block absolute top-1/2 right-[10vw] -translate-y-1/2 w-[min(95vh,95vw)] h-[min(95vh,95vw)] pointer-events-none select-none"
+        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[120vw] md:w-[min(95vh,95vw)] h-[120vw] md:h-[min(95vh,95vw)] pointer-events-none select-none opacity-30 md:opacity-100"
       >
         <GlobeWrapper />
       </div>
       
-      <div className="absolute inset-0 bg-gradient-to-r from-black from-30% via-black/80 via-55% to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent md:from-black md:from-30% md:via-black/80 md:via-55% md:to-transparent pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-[1]" />
 
       <div className="relative z-10 w-full px-6 md:px-16 pt-32 pb-24">
         {/* Eyebrow */}
