@@ -1,15 +1,15 @@
 "use client";
 
-import GlobeWrapper from "../GlobeWrapper";
-import { useLanguage } from "../LanguageProvider";
+import GlobeWrapper from "../../../shared/components/GlobeWrapper";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import {
   SplitText,
   DramaticEntrance,
   ClipReveal,
   GlitchText,
   BounceIn,
-} from "../DramaticAnimations";
-import { FadeIn, Stagger, StaggerItem } from "../ScrollReveal";
+} from "../../../shared/components/animations/DramaticAnimations";
+import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
 import { motion } from "framer-motion";
 
 export default function Hero() {

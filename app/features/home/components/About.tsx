@@ -1,15 +1,15 @@
 "use client";
 
-import { useLanguage } from "../LanguageProvider";
-import { FadeIn, Stagger, StaggerItem } from "../ScrollReveal";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
 import { 
   DramaticSlide, 
   ClipReveal, 
   FlipReveal,
   SplitText,
   DramaticEntrance,
-} from "../DramaticAnimations";
-import { DramaticCard } from "../HoverEffects";
+} from "../../../shared/components/animations/DramaticAnimations";
+import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { motion } from "framer-motion";
 
 export default function About() {

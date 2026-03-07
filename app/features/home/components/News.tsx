@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { FadeIn, Stagger, StaggerItem } from "../ScrollReveal";
-import { DramaticCard } from "../HoverEffects";
-import { useLanguage } from "../LanguageProvider";
-import { newsItems, localize } from "../../data/news";
+import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import { newsItems, localize } from "../../../lib/data/news";
 import { useState } from "react";
 import { motion } from "framer-motion";
 

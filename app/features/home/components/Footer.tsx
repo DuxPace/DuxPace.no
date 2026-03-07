@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useLanguage } from "../LanguageProvider";
-import { siteConfig } from "../../data/content";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import { siteConfig } from "../../../lib/data/content";
 import { Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export default function SiteFooter() {

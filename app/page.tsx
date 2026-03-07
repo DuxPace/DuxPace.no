@@ -1,10 +1,5 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/sections/Hero";
-import About from "./components/sections/About";
-import Team from "./components/sections/Team";
-import News from "./components/sections/News";
-import Contact from "./components/sections/Contact";
-import SiteFooter from "./components/sections/SiteFooter";
+import { Navbar } from "./features/layout";
+import { Hero, About, Team, News, Contact, Footer } from "./features/home";
 
 export default function Home() {
   return (
@@ -27,7 +22,7 @@ export default function Home() {
         <Contact />
       </main>
       
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

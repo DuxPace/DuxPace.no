@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../../providers/LanguageProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function LanguageToggle() {

@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
-import { FadeIn, Stagger, StaggerItem } from "../ScrollReveal";
-import { DramaticButton, DramaticCard } from "../HoverEffects";
-import { useLanguage } from "../LanguageProvider";
-import { siteConfig } from "../../data/content";
-import { sendContactEmail } from "../../actions/contact";
+import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { DramaticButton, DramaticCard } from "../../../shared/components/ui/HoverEffects";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import { siteConfig } from "../../../lib/data/content";
+import { sendContactEmail } from "../../../actions/contact";
 import { motion } from "framer-motion";
 
 function ContactForm() {

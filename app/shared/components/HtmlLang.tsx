@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../providers/LanguageProvider";
 
 export default function HtmlLang() {
   const { lang } = useLanguage();

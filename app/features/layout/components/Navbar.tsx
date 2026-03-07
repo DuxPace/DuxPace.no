@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { siteConfig } from "../data/content";
-import { useLanguage } from "./LanguageProvider";
-import LanguageToggle from "./LanguageToggle";
+import { siteConfig } from "../../../lib/data/content";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import LanguageToggle from "../../../shared/components/ui/LanguageToggle";
 
 const { sections, logo } = siteConfig.nav;
 

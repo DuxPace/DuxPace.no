@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import { Linkedin, Mail } from "lucide-react";
-import { FadeIn, Stagger, StaggerItem } from "../ScrollReveal";
-import { SwoopIn, ElasticSnap, Floating } from "../SwoopAnimations";
-import { SpotlightCard, TiltCard } from "../PremiumHover";
-import { useLanguage } from "../LanguageProvider";
-import { members } from "../../data/members";
+import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { SwoopIn, ElasticSnap, Floating } from "../../../shared/components/animations/SwoopAnimations";
+import { SpotlightCard, TiltCard } from "../../../shared/components/ui/PremiumHover";
+import { useLanguage } from "../../../shared/providers/LanguageProvider";
+import { members } from "../../../lib/data/members";
 import { motion } from "framer-motion";
 
 export default function Team() {

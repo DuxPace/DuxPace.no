@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { translations } from "./data/content";
-import { LanguageProvider } from "./components/LanguageProvider";
-import { PageLoadProvider } from "./components/PageLoad";
-import { ScrollProgressIndicator } from "./components/SmoothScroll";
-import HtmlLang from "./components/HtmlLang";
+import { translations } from "./lib/data/content";
+import { LanguageProvider } from "./shared/providers/LanguageProvider";
+import { PageLoadProvider } from "./features/layout/components/PageLoad";
+import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
+import HtmlLang from "./shared/components/HtmlLang";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] });
