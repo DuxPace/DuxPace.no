@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { translations } from "./data/content";
-import { LanguageProvider } from "./components/LanguageProvider";
-import HtmlLang from "./components/HtmlLang";
+import { translations } from "./lib/data/content";
+import { LanguageProvider } from "./shared/providers/LanguageProvider";
+import { PageLoadProvider } from "./features/layout/components/PageLoad";
+import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
+import HtmlLang from "./shared/components/HtmlLang";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] });
@@ -11,6 +13,7 @@ const geist = Geist({ subsets: ["latin"] });
 const { title, description } = translations.en.meta;
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://duxpace.no"),
   title,
   description,
   icons: [
@@ -38,12 +41,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${geist.className} antialiased`}>
-        <LanguageProvider>
-          <HtmlLang />
-          {children}
-        </LanguageProvider>
+        <PageLoadProvider>
+          <LanguageProvider>
+            <HtmlLang />
+            <ScrollProgressIndicator />
+            {children}
+          </LanguageProvider>
+        </PageLoadProvider>
         <Analytics />
       </body>
     </html>
