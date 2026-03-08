@@ -3,50 +3,31 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Page load context
 interface PageLoadContextType {
   isLoading: boolean;
-  progress: number;
 }
 
-const PageLoadContext = createContext<PageLoadContextType>({
-  isLoading: true,
-  progress: 0,
-});
+const PageLoadContext = createContext<PageLoadContextType>({ isLoading: true });
 
 export const usePageLoad = () => useContext(PageLoadContext);
 
-// Page load provider
 export function PageLoadProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate loading progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        const increment = Math.random() * 20;
-        if (prev + increment >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setIsLoading(false), 500);
-          return 100;
-        }
-        return prev + increment;
-      });
-    }, 150);
-
-    return () => clearInterval(interval);
+    const timer = setTimeout(() => setIsLoading(false), 2600);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <PageLoadContext.Provider value={{ isLoading, progress }}>
+    <PageLoadContext.Provider value={{ isLoading }}>
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen progress={progress} />}
+        {isLoading && <IntroScreen key="intro" />}
       </AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.div>
@@ -54,78 +35,36 @@ export function PageLoadProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Dramatisk loading screen
-function LoadingScreen({ progress }: { progress: number }) {
-  const text = "DUXPACE";
-  const letters = text.split("");
+function IntroScreen() {
+  const letters = "DUXPACE".split("");
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden"
-      exit={{ 
-        opacity: 0,
-        scale: 1.1,
-        filter: "blur(20px)"
-      }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
+      exit={{ y: "-100%" }}
+      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
     >
-      {/* Animated background grid */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px',
-        }} />
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        aria-hidden="true"
+      >
+        <div className="w-[700px] h-[400px] bg-blue-600/10 rounded-full blur-[120px]" />
       </div>
 
-      {/* Glow effects */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-      />
-
-      {/* Main content */}
-      <div className="relative z-10 text-center">
-        {/* Letter animation */}
-        <div className="flex justify-center mb-8">
-          {letters.map((letter, index) => (
+      <div className="relative flex flex-col items-center gap-5">
+        {/* Letters */}
+        <div className="flex" aria-label="DUXPACE">
+          {letters.map((letter, i) => (
             <motion.span
-              key={index}
-              className="text-6xl md:text-8xl font-bold text-white inline-block"
-              initial={{ 
-                opacity: 0, 
-                y: 100,
-                rotateX: -90,
-                filter: "blur(10px)"
-              }}
-              animate={{ 
-                opacity: 1, 
-                y: 0,
-                rotateX: 0,
-                filter: "blur(0px)"
-              }}
+              key={i}
+              className="text-[13vw] sm:text-8xl md:text-9xl font-bold text-white leading-none tracking-tight"
+              initial={{ opacity: 0, y: 50, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
-                duration: 0.8,
-                delay: index * 0.1,
+                delay: i * 0.07 + 0.1,
+                duration: 0.7,
                 ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{ 
-                textShadow: "0 0 40px rgba(59, 130, 246, 0.5)",
-                perspective: "1000px"
               }}
             >
               {letter}
@@ -133,82 +72,25 @@ function LoadingScreen({ progress }: { progress: number }) {
           ))}
         </div>
 
-        {/* Subtitle */}
+        {/* Divider line */}
+        <motion.div
+          className="h-px bg-white/15 w-full"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          style={{ originX: 0 }}
+          transition={{ delay: 1.0, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        />
+
+        {/* Tagline */}
         <motion.p
-          className="text-blue-400/80 text-sm tracking-[0.3em] uppercase font-mono mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          className="text-[11px] text-white/35 tracking-[0.45em] uppercase font-mono"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.5 }}
         >
           Satellite Intelligence
         </motion.p>
-
-        {/* Progress bar container */}
-        <div className="w-64 mx-auto">
-          {/* Progress track */}
-          <div className="h-1 bg-white/10 rounded-full overflow-hidden mb-3">
-            <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${Math.min(progress, 100)}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-
-          {/* Progress text */}
-          <div className="flex justify-between text-[10px] font-mono tracking-wider">
-            <motion.span
-              className="text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              INITIALIZING
-            </motion.span>
-            <motion.span
-              className="text-blue-400"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              {Math.min(Math.round(progress), 100)}%
-            </motion.span>
-          </div>
-        </div>
-
-        {/* Loading dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 bg-blue-500 rounded-full"
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-            />
-          ))}
-        </div>
       </div>
-
-      {/* Corner decorations */}
-      <motion.div
-        className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-blue-500/30"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-      />
-      <motion.div
-        className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-blue-500/30"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-      />
     </motion.div>
   );
 }
