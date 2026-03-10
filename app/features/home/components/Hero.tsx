@@ -19,10 +19,10 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
-      {/* Globe */}
+      {/* Globe - VISIBLE ON MOBILE */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-none select-none opacity-15 md:opacity-100"
+        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-none select-none opacity-35 md:opacity-100"
       >
         <GlobeWrapper />
       </div>
@@ -30,7 +30,9 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent md:from-black md:from-30% md:via-black/80 md:via-55% md:to-transparent pointer-events-none z-[1]" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-[1]" />
 
-      <div className="relative z-10 w-full px-6 md:px-16 pt-24 md:pt-36 pb-20 md:pb-24">
+      <div className="relative z-10 w-full px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
+        {/* Content wrapper - ENABLE INTERACTIONS */}
+        <div className="pointer-events-auto">
         {/* Eyebrow */}
         <motion.p
           className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
@@ -57,20 +59,20 @@ export default function Hero() {
           {t.hero.subheading}
         </motion.p>
 
-        {/* CTA buttons */}
+        {/* CTA buttons - CLICKABLE */}
         <motion.div
-          className="flex flex-row items-center gap-5 flex-wrap"
+          className="flex flex-row items-center gap-5 flex-wrap relative z-20"
           {...fadeUp(0.6)}
         >
           <a
             href={t.hero.cta.href}
-            className="shrink-0 bg-white text-black text-xs font-semibold px-6 py-3 rounded-sm hover:bg-gray-100 transition-colors tracking-[0.08em] uppercase"
+            className="shrink-0 bg-white text-black text-xs font-semibold px-6 py-3 rounded-sm hover:bg-gray-100 transition-colors tracking-[0.08em] uppercase cursor-pointer pointer-events-auto"
           >
             {t.hero.cta.label}
           </a>
           <a
             href={t.hero.ctaSecondary.href}
-            className="shrink-0 text-gray-300 hover:text-white text-sm transition-colors"
+            className="shrink-0 text-gray-300 hover:text-white text-sm transition-colors cursor-pointer pointer-events-auto"
           >
             {t.hero.ctaSecondary.label}
           </a>
@@ -98,6 +100,7 @@ export default function Hero() {
             </motion.div>
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   );
