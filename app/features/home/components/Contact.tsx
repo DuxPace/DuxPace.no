@@ -36,7 +36,7 @@ function ContactForm() {
           </motion.div>
           <p className="text-white text-lg font-medium">Message sent!</p>
         </div>
-        <p className="text-gray-500 text-sm">We'll be in touch soon.</p>
+        <p className="text-gray-500 text-sm">We&apos;ll be in touch soon.</p>
       </motion.div>
     );
   }
