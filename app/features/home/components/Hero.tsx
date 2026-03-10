@@ -19,10 +19,9 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
-      {/* Globe - VISIBLE ON MOBILE */}
+      {/* Globe - INTERACTIVE */}
       <div
-        aria-hidden="true"
-        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-none select-none opacity-35 md:opacity-100"
+        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-auto select-none opacity-35 md:opacity-100 cursor-grab active:cursor-grabbing"
       >
         <GlobeWrapper />
       </div>
@@ -78,26 +77,15 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Scroll cue */}
+        {/* Interaction hint */}
         <motion.div
           className="absolute bottom-8 left-6 md:left-16"
           {...fadeUp(1.0)}
         >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] text-gray-600 font-mono tracking-[0.2em] uppercase">
-              Scroll
+          <div className="flex flex-col gap-2">
+            <span className="text-[10px] text-gray-500 font-mono tracking-wider">
+              Drag to rotate
             </span>
-            <motion.div
-              className="w-5 h-8 border border-white/20 rounded-full flex justify-center pt-2"
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <motion.div
-                className="w-1 h-1 bg-white/60 rounded-full"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </motion.div>
           </div>
         </motion.div>
         </div>
