@@ -95,17 +95,17 @@ export default function InteractiveGlobe() {
       if ((child as THREE.Light).isLight) scene.remove(child);
     });
     
-    // Add ambient light - INCREASED intensity
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // Add ambient light - BRIGHTER
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
     scene.add(ambientLight);
 
-    // Add directional light (sun) - INCREASED intensity and adjusted position
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    // Add directional light (sun) - BRIGHTER
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
     dirLight.position.set(100, 50, 80);
     scene.add(dirLight);
     
-    // Add secondary light for fill
-    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.5);
+    // Add secondary light for fill - BRIGHTER
+    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.8);
     fillLight.position.set(-100, 0, 50);
     scene.add(fillLight);
 
@@ -185,8 +185,8 @@ export default function InteractiveGlobe() {
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundColor="rgba(0,0,0,0)"
         
-        // Atmosphere glow - MORE VISIBLE
-        atmosphereColor="rgba(100, 149, 237, 0.6)"
+        // Atmosphere glow - BRIGHTER
+        atmosphereColor="rgba(100, 149, 237, 0.85)"
         atmosphereAltitude={0.2}
         
         // Locations markers
