@@ -121,7 +121,7 @@ export default function Contact() {
     <section id="contact" className="py-28 md:py-40 border-t border-white/[0.07] relative overflow-hidden">
       {/* Background effects */}
       <motion.div
-        className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"
+        className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.3, 0.2],

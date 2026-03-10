@@ -95,17 +95,17 @@ export default function InteractiveGlobe() {
       if ((child as THREE.Light).isLight) scene.remove(child);
     });
     
-    // Add ambient light - BRIGHTER
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     scene.add(ambientLight);
 
-    // Add directional light (sun) - BRIGHTER
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    // Add directional light (sun)
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
     dirLight.position.set(100, 50, 80);
     scene.add(dirLight);
     
-    // Add secondary light for fill - BRIGHTER
-    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.8);
+    // Add secondary light for fill
+    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.6);
     fillLight.position.set(-100, 0, 50);
     scene.add(fillLight);
 
