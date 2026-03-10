@@ -235,28 +235,6 @@ export default function InteractiveGlobe() {
         pointResolution={32}
       />
 
-      {/* Satellite legend overlay */}
-      <div className="absolute bottom-4 left-4 pointer-events-none">
-        <div className="bg-black/70 backdrop-blur-sm border border-white/10 rounded px-3 py-2">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-[10px] text-gray-400 font-mono tracking-wider uppercase">Active Hubs</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-px bg-gradient-to-r from-blue-400/30 to-blue-400" />
-            <span className="text-[10px] text-gray-400 font-mono tracking-wider uppercase">Data Links</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Interaction hint */}
-      <div 
-        className={`absolute bottom-4 right-4 pointer-events-none transition-opacity duration-300 ${isHovering ? 'opacity-0' : 'opacity-60'}`}
-      >
-        <span className="text-[10px] text-gray-500 font-mono tracking-wider">
-          Click to pause • Drag to rotate
-        </span>
-      </div>
     </div>
   );
 }

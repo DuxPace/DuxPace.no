@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
 import { DramaticButton, DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
@@ -11,6 +11,9 @@ import { motion } from "framer-motion";
 function ContactForm() {
   const { t } = useLanguage();
   const [state, action, pending] = useActionState(sendContactEmail, null);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  
+  const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim();
 
   if (state?.success) {
     return (
@@ -52,7 +55,9 @@ function ContactForm() {
               name="name"
               placeholder={t.contact.namePlaceholder}
               required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm pointer-events-auto"
             />
           </div>
         </StaggerItem>
@@ -68,7 +73,9 @@ function ContactForm() {
               name="email"
               placeholder={t.contact.emailPlaceholder}
               required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm pointer-events-auto"
             />
           </div>
         </StaggerItem>
@@ -84,7 +91,9 @@ function ContactForm() {
               placeholder={t.contact.messagePlaceholder}
               rows={5}
               required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 resize-none text-sm"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 resize-none text-sm pointer-events-auto"
             />
           </div>
         </StaggerItem>
@@ -99,15 +108,17 @@ function ContactForm() {
           </motion.p>
         )}
 
-        <StaggerItem>
-          <DramaticButton
-            variant="primary"
-            size="lg"
-            className="w-full rounded-lg"
-          >
-            {pending ? "Sending..." : t.contact.send}
-          </DramaticButton>
-        </StaggerItem>
+        {isFormValid && (
+          <StaggerItem>
+            <DramaticButton
+              variant="primary"
+              size="lg"
+              className="w-full rounded-lg"
+            >
+              {pending ? "Sending..." : t.contact.send}
+            </DramaticButton>
+          </StaggerItem>
+        )}
       </Stagger>
     </form>
   );
@@ -208,15 +219,12 @@ export default function Contact() {
 
           {/* Right column - Form */}
           <FadeIn direction="up" delay={0.2}>
-            <DramaticCard
-              className="p-8 bg-white/[0.02] rounded-2xl border border-white/5"
-              glowColor="rgba(59, 130, 246, 0.2)"
-            >
+            <div className="p-8 bg-white/[0.02] rounded-2xl border border-white/5 relative z-10">
               <h3 className="text-xl font-bold text-white mb-6">
                 {lang === "no" ? "Send oss en melding" : "Send us a message"}
               </h3>
               <ContactForm />
-            </DramaticCard>
+            </div>
           </FadeIn>
         </div>
       </div>
