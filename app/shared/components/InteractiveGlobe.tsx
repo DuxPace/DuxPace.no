@@ -95,17 +95,17 @@ export default function InteractiveGlobe() {
       if ((child as THREE.Light).isLight) scene.remove(child);
     });
     
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    // Add ambient light - DIMMER for subtler look
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambientLight);
 
-    // Add directional light (sun)
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    // Add directional light (sun) - DIMMER
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
     dirLight.position.set(100, 50, 80);
     scene.add(dirLight);
     
-    // Add secondary light for fill
-    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.6);
+    // Add secondary light for fill - DIMMER
+    const fillLight = new THREE.DirectionalLight(0x6699ff, 0.4);
     fillLight.position.set(-100, 0, 50);
     scene.add(fillLight);
 
@@ -165,12 +165,12 @@ export default function InteractiveGlobe() {
         </div>
       )}
 
-      {/* Glow effect behind globe - MORE VISIBLE */}
+      {/* Subtle ambient glow - SEAMLESS */}
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-50"
         style={{
-          background: 'radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.35) 0%, transparent 55%), radial-gradient(circle at 70% 50%, rgba(30, 89, 178, 0.3) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.15) 0%, transparent 70%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%)',
+          filter: 'blur(60px)',
         }}
       />
 
@@ -185,8 +185,8 @@ export default function InteractiveGlobe() {
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundColor="rgba(0,0,0,0)"
         
-        // Atmosphere glow - BRIGHTER
-        atmosphereColor="rgba(100, 149, 237, 0.85)"
+        // Atmosphere glow - SUBTLE
+        atmosphereColor="rgba(100, 149, 237, 0.4)"
         atmosphereAltitude={0.2}
         
         // Locations markers
