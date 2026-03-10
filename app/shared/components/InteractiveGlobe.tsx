@@ -4,19 +4,19 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
 
-// Data for Norwegian aquaculture locations
+  // Data for Norwegian aquaculture locations - INCREASED SIZES
 const LOCATIONS = [
-  { lat: 63.4305, lng: 10.3951, name: "Trondheim", size: 0.6, color: "#60a5fa" },
-  { lat: 59.9139, lng: 10.7522, name: "Oslo", size: 0.5, color: "#60a5fa" },
-  { lat: 60.3913, lng: 5.3221, name: "Bergen", size: 0.45, color: "#60a5fa" },
-  { lat: 69.6496, lng: 18.9553, name: "Tromsø", size: 0.45, color: "#60a5fa" },
-  { lat: 62.4722, lng: 6.1495, name: "Ålesund", size: 0.4, color: "#60a5fa" },
-  { lat: 58.1467, lng: 7.9956, name: "Kristiansand", size: 0.35, color: "#60a5fa" },
-  { lat: 67.28, lng: 14.405, name: "Bodø", size: 0.35, color: "#60a5fa" },
+  { lat: 63.4305, lng: 10.3951, name: "Trondheim", size: 1.2, color: "#60a5fa" },
+  { lat: 59.9139, lng: 10.7522, name: "Oslo", size: 1.0, color: "#60a5fa" },
+  { lat: 60.3913, lng: 5.3221, name: "Bergen", size: 0.9, color: "#60a5fa" },
+  { lat: 69.6496, lng: 18.9553, name: "Tromsø", size: 0.9, color: "#60a5fa" },
+  { lat: 62.4722, lng: 6.1495, name: "Ålesund", size: 0.8, color: "#60a5fa" },
+  { lat: 58.1467, lng: 7.9956, name: "Kristiansand", size: 0.7, color: "#60a5fa" },
+  { lat: 67.28, lng: 14.405, name: "Bodø", size: 0.7, color: "#60a5fa" },
   // International hubs
-  { lat: 51.5074, lng: -0.1278, name: "London", size: 0.5, color: "#93c5fd" },
-  { lat: 40.7128, lng: -74.006, name: "New York", size: 0.5, color: "#93c5fd" },
-  { lat: 35.6762, lng: 139.6503, name: "Tokyo", size: 0.45, color: "#93c5fd" },
+  { lat: 51.5074, lng: -0.1278, name: "London", size: 1.0, color: "#93c5fd" },
+  { lat: 40.7128, lng: -74.006, name: "New York", size: 1.0, color: "#93c5fd" },
+  { lat: 35.6762, lng: 139.6503, name: "Tokyo", size: 0.9, color: "#93c5fd" },
 ];
 
 // Satellite orbits (arcs)
@@ -56,7 +56,7 @@ export default function InteractiveGlobe() {
   const globeRef = useRef<typeof Globe.prototype | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
+  const [dimensions, setDimensions] = useState({ width: 900, height: 900 });
   
   const rotationSpeed = 0.4;
 
@@ -65,7 +65,7 @@ export default function InteractiveGlobe() {
     const updateDimensions = () => {
       const container = globeRef.current?._containerRef?.current?.parentElement;
       if (container) {
-        const size = Math.min(container.offsetWidth, container.offsetHeight, 800);
+        const size = Math.min(container.offsetWidth, container.offsetHeight, 1000);
         setDimensions({ width: size, height: size });
       }
     };
@@ -165,12 +165,12 @@ export default function InteractiveGlobe() {
         </div>
       )}
 
-      {/* Glow effect behind globe - ENHANCED */}
+      {/* Glow effect behind globe - MORE VISIBLE */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 30% 50%, rgba(30, 89, 178, 0.2) 0%, transparent 60%), radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)',
-          filter: 'blur(60px)',
+          background: 'radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.35) 0%, transparent 55%), radial-gradient(circle at 70% 50%, rgba(30, 89, 178, 0.3) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.15) 0%, transparent 70%)',
+          filter: 'blur(40px)',
         }}
       />
 
