@@ -19,9 +19,9 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
-      {/* Globe - SEAMLESSLY INTEGRATED */}
+      {/* Globe - CENTERED WITH HERO */}
       <div
-        className="absolute inset-0 md:inset-auto md:top-1/2 md:right-[-10vw] md:-translate-y-1/2 md:w-[80vw] md:h-[80vw] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing"
+        className="absolute top-0 md:top-1/2 md:right-[-15vw] md:-translate-y-1/2 w-full h-full md:w-[85vh] md:h-[85vh] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing"
       >
         <GlobeWrapper />
       </div>
