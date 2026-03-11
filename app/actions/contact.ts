@@ -26,8 +26,7 @@ export async function sendContactEmail(
     return { success: false, error: "Email service not configured." };
   }
 
-  // Once duxpace.no is verified in Resend, change to: "DuxPace <contact@duxpace.no>"
-  const from = "DuxPace Contact <onboarding@resend.dev>";
+  const from = "DuxPace <contact@duxpace.no>";
 
   const { error } = await resend.emails.send({
     from,
