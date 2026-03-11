@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { memo, useMemo } from "react";
+import { memo, useCallback } from "react";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize, type NewsItem } from "../../../lib/data/news";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
@@ -96,33 +96,36 @@ export default function News() {
   const totalPages = Math.ceil(newsItems.length / PER_PAGE);
   const visibleItems = newsItems.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
-  // Read URL parameter on mount
+  // Read URL parameter on mount - using layout effect pattern
   useEffect(() => {
     const newsId = searchParams.get("news");
     if (newsId !== null) {
       const index = parseInt(newsId, 10);
       if (!isNaN(index) && index >= 0 && index < newsItems.length) {
-        setSelected(index);
+        // Use requestAnimationFrame to avoid synchronous setState
+        requestAnimationFrame(() => {
+          setSelected(index);
+        });
       }
     }
   }, [searchParams]);
 
-  const openNews = (index: number) => {
+  const openNews = useCallback((index: number) => {
     setSelected(index);
     // Update URL without reloading
     const params = new URLSearchParams(searchParams.toString());
     params.set("news", index.toString());
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  }, [searchParams, pathname, router]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelected(null);
     // Remove news parameter from URL
     const params = new URLSearchParams(searchParams.toString());
     params.delete("news");
     const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     router.push(newUrl, { scroll: false });
-  };
+  }, [searchParams, pathname, router]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -160,56 +163,16 @@ export default function News() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {visibleItems.map((item, i) => {
             const globalIndex = page * PER_PAGE + i;
-            const { title, description, date } = localize(item, lang);
             return (
-              <FadeIn key={globalIndex} direction="up" delay={0.1 + i * 0.15} className="pointer-events-auto">
-                <div className="bg-white/[0.02] rounded-lg overflow-hidden border border-white/5 h-full hover:border-blue-500/30 transition-colors">
-                  <button
-                    onClick={() => openNews(globalIndex)}
-                    className="w-full h-full text-left group cursor-pointer block relative z-10"
-                    aria-haspopup="dialog"
-                    type="button"
-                  >
-                    {/* Image */}
-                    <div className="relative w-full aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.alt}
-                        fill
-                        loading="lazy"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      {/* Date badge */}
-                      <div className="absolute top-3 left-3">
-                        <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-[10px] text-white font-mono tracking-wider uppercase rounded-full">
-                          {date}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="p-5">
-                      <h3 className="text-sm font-bold text-white leading-snug mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
-                        {title}
-                      </h3>
-                      <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed mb-4">
-                        {description}
-                      </p>
-                      <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-blue-400/80 group-hover:text-blue-400 transition-colors inline-flex items-center gap-1">
-                        {t.news.readMore}
-                        <motion.span
-                          className="inline-block"
-                          animate={{ x: [0, 3, 0] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                        >
-                          →
-                        </motion.span>
-                    </span>
-                  </div>
-                  </button>
-                </div>
-              </FadeIn>
+              <NewsCard
+                key={globalIndex}
+                item={item}
+                index={i}
+                globalIndex={globalIndex}
+                onClick={openNews}
+                t={t}
+                lang={lang}
+              />
             );
           })}
         </div>

@@ -1,5 +1,23 @@
 "use client";
 
+// Type declarations for gtag
+declare global {
+  interface Window {
+    gtag?: (
+      command: string,
+      eventName: string,
+      params?: Record<string, unknown>
+    ) => void;
+  }
+  
+  interface Navigator {
+    connection?: {
+      effectiveType?: string;
+      saveData?: boolean;
+    };
+  }
+}
+
 // Performance monitoring utilities
 export function reportWebVitals(metric: {
   id: string;
@@ -15,9 +33,7 @@ export function reportWebVitals(metric: {
 
   // Send to analytics in production
   if (process.env.NODE_ENV === "production" && typeof window !== "undefined") {
-    // @ts-ignore
     if (window.gtag) {
-      // @ts-ignore
       window.gtag("event", metric.name, {
         event_category: "Web Vitals",
         event_label: metric.id,
@@ -48,9 +64,7 @@ export function measurePerformance(markName: string, startMark?: string) {
 export function isSlowConnection(): boolean {
   if (typeof navigator === "undefined") return false;
   
-  const connection = (navigator as any).connection || 
-                     (navigator as any).mozConnection || 
-                     (navigator as any).webkitConnection;
+  const connection = navigator.connection;
   
   if (!connection) return false;
   
@@ -70,11 +84,11 @@ export function prefetchImage(src: string): Promise<void> {
 }
 
 // Debounce function for performance
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -82,7 +96,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function for scroll/resize events
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
