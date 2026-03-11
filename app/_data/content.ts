@@ -105,19 +105,19 @@ export const translations = {
       ctaSecondary: { label: "Ta kontakt →", href: "#contact" },
     },
     about: {
-      headline: ["Bygget ved NTNU.", "Fokusert på fisk."],
+      headline: ["Bygget av NTNU-studenter", "Fokus på oppdrett"],
       body: [
-        "Vi er tre ingeniørstudenter fra NTNU som bygger verktøy for å hjelpe fiskeoppdrettere med å oppdage algeoppblomstringer ved hjelp av Sentinel-satellittdata - før de gjør skade på bestanden.",
-        "Algeoppblomstringer er en stor trussel mot norsk lakseoppdrett. Plattformen vår behandler satellittbilder i nær sanntid for å gi oppdretterne den tidlige varslingen de trenger.",
+        "Vi er tre ingeniørstudenter fra NTNU som bygger verktøy for å hjelpe fiskeoppdrettere med å oppdage algeoppblomstringer ved hjelp av satellittdata - før de gjør skade på bestanden.",
+        "Algeoppblomstringer er en stor trussel mot norsk lakseoppdrett. Plattformen vår behandler satellittbilder i nær sanntid for å gi oppdretterne innsikten de trenger for tidlig varsling.",
       ],
       facts: [
         {
           label: "Vår tilnærming",
-          text: "Maskinlæringsmodeller trent på Sentinel-satellittdata for å oppdage blomstermønstre, endringer og risikosoner - spesifikke for norske kystforhold.",
+          text: "Maskinlæringsmodeller trent på åpen satellittdata for å oppdage blomstermønstre, endringer og risikosoner - spesifikke for norske kystforhold, men mulighet for global utviding.",
         },
         {
           label: "Våre partnere",
-          text: "Samarbeider med EquaFish AS, NORCE, Blått Kompetansesenter, Mowi og NTNUs Hypso-satellittprogram.",
+          text: "Samarbeider med EquaFish AS, og flere oppdrettsselskap.",
         },
         {
           label: "Hvor vi er",
