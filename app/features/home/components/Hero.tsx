@@ -19,21 +19,17 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
-      {/* Globe - CENTERED WITH HERO */}
       <div
-        className="absolute top-0 md:top-1/2 md:right-[-15vw] md:-translate-y-1/2 w-full h-full md:w-[85vh] md:h-[85vh] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing"
+        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing z-[5]"
       >
         <GlobeWrapper />
       </div>
 
-      {/* Gradient overlays - blend globe into page */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent md:from-black md:from-20% md:via-black/85 md:via-50% md:to-transparent/50 pointer-events-none z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/60 pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent md:from-black md:from-30% md:via-black/80 md:via-55% md:to-transparent pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-[1]" />
 
       <div className="relative z-10 w-full px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
-        {/* Content wrapper - ENABLE INTERACTIONS */}
         <div className="pointer-events-auto">
-        {/* Eyebrow */}
         <motion.p
           className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
           {...fadeUp(0.1)}
@@ -41,7 +37,6 @@ export default function Hero() {
           {t.hero.eyebrow}
         </motion.p>
 
-        {/* Headline */}
         <motion.h1
           className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] max-w-2xl tracking-tight mb-5 md:mb-8"
           {...fadeUp(0.25)}
@@ -51,7 +46,6 @@ export default function Hero() {
           {t.hero.headline[1]}
         </motion.h1>
 
-        {/* Subheading */}
         <motion.p
           className="text-gray-500 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
           {...fadeUp(0.45)}
@@ -59,7 +53,6 @@ export default function Hero() {
           {t.hero.subheading}
         </motion.p>
 
-        {/* CTA buttons - CLICKABLE */}
         <motion.div
           className="flex flex-row items-center gap-5 flex-wrap relative z-20"
           {...fadeUp(0.6)}

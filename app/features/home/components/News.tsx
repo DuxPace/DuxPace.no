@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize } from "../../../lib/data/news";

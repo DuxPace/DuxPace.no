@@ -1,13 +1,10 @@
 "use client";
 
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
-import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { 
   DramaticSlide, 
-  ClipReveal, 
   FlipReveal,
-  SplitText,
-  DramaticEntrance,
 } from "../../../shared/components/animations/DramaticAnimations";
 import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { motion } from "framer-motion";

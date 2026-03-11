@@ -3,11 +3,6 @@
 import { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
 
-// ==========================================
-// DRAMATISKE HOVER EFFEKTER
-// ==========================================
-
-// Kort med dramatisk hover
 interface DramaticCardProps {
   children: ReactNode;
   className?: string;
@@ -77,7 +72,6 @@ export function DramaticCard({
   );
 }
 
-// Knapp med dramatisk hover
 interface DramaticButtonProps {
   children: ReactNode;
   className?: string;
@@ -162,7 +156,6 @@ export function DramaticButton({
   );
 }
 
-// Bilde med dramatisk hover
 interface DramaticImageProps {
   src: string;
   alt: string;
@@ -233,7 +226,6 @@ export function DramaticImage({ src, alt, className = "" }: DramaticImageProps) 
   );
 }
 
-// Lenke med dramatisk hover
 interface DramaticLinkProps {
   children: ReactNode;
   href: string;
@@ -282,7 +274,6 @@ export function DramaticLink({ children, href, className = "" }: DramaticLinkPro
   );
 }
 
-// Tekst med farge-shift hover
 interface ColorShiftTextProps {
   children: string;
   className?: string;
@@ -307,7 +298,6 @@ export function ColorShiftText({ children, className = "" }: ColorShiftTextProps
   );
 }
 
-// Pulsating dot
 interface PulsatingDotProps {
   color?: string;
   size?: number;
