@@ -15,7 +15,7 @@ export function PageLoadProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2600);
+    const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -39,11 +39,11 @@ function IntroScreen() {
   const letters = "DUXPACE".split("");
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
-      exit={{ y: "-100%" }}
-      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-    >
+        <motion.div
+        className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
+        exit={{ y: "-100%" }}
+        transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+      >
       {/* Ambient glow */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -62,8 +62,8 @@ function IntroScreen() {
               initial={{ opacity: 0, y: 50, filter: "blur(12px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
-                delay: i * 0.07 + 0.1,
-                duration: 0.7,
+                delay: i * 0.04 + 0.05,
+                duration: 0.4,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
@@ -78,7 +78,7 @@ function IntroScreen() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           style={{ originX: 0 }}
-          transition={{ delay: 1.0, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 0.6, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         />
 
         {/* Tagline */}
@@ -86,7 +86,7 @@ function IntroScreen() {
           className="text-[11px] text-white/35 tracking-[0.45em] uppercase font-mono"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.5 }}
+          transition={{ delay: 0.8, duration: 0.3 }}
         >
           Satellite Intelligence
         </motion.p>

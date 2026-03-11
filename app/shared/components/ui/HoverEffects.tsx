@@ -20,7 +20,7 @@ export function DramaticCard({
 
   return (
     <motion.div
-      className={`relative cursor-pointer ${className}`}
+      className={`relative ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}

@@ -10,7 +10,7 @@ function fadeUp(delay: number) {
   return {
     initial: { opacity: 0, y: 24 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.7, ease },
+    transition: { delay, duration: 0.4, ease },
   };
 }
 
@@ -32,14 +32,14 @@ export default function Hero() {
         <div className="pointer-events-auto">
         <motion.p
           className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
-          {...fadeUp(0.1)}
+          {...fadeUp(0.05)}
         >
           {t.hero.eyebrow}
         </motion.p>
 
         <motion.h1
           className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] max-w-2xl tracking-tight mb-5 md:mb-8"
-          {...fadeUp(0.25)}
+          {...fadeUp(0.12)}
         >
           {t.hero.headline[0]}
           <br />
@@ -48,14 +48,14 @@ export default function Hero() {
 
         <motion.p
           className="text-gray-500 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
-          {...fadeUp(0.45)}
+          {...fadeUp(0.2)}
         >
           {t.hero.subheading}
         </motion.p>
 
         <motion.div
           className="flex flex-row items-center gap-5 flex-wrap relative z-20"
-          {...fadeUp(0.6)}
+          {...fadeUp(0.28)}
         >
           <a
             href={t.hero.cta.href}

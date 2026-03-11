@@ -25,23 +25,6 @@ export function localize(item: NewsItem, lang: Language) {
 export const newsItems: NewsItem[] = [
   {
     image:
-      "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600&q=80",
-    alt: "Satellite dish",
-    date: "Winter 2024",
-    dateNo: "Vinteren 2024",
-    title: "Aneobidraget Grant Awarded",
-    titleNo: "Tildelt Aneobidraget",
-    description:
-      "DuxPace is awarded 50,000 kr through Aneobidraget, securing three months of Sentinel satellite data access for development.",
-    descriptionNo:
-      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, noe som sikrer tre måneders tilgang til Sentinel-satellittdata for utvikling.",
-    content:
-      "DuxPace is awarded 50,000 kr through Aneobidraget, a grant supporting early-stage innovation at NTNU.\n\nThe funding secures three months of Sentinel satellite data access, enabling the team to accelerate MVP development and validate our algal bloom detection models with real satellite imagery.\n\nThis grant represents an important milestone in our journey toward a commercially viable product.",
-    contentNo:
-      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, et tilskudd som støtter tidligfaseinnovasjon ved NTNU.\n\nFinansieringen sikrer tre måneders tilgang til Sentinel-satellittdata, noe som gjør at teamet kan akselerere MVP-utviklingen og validere modellene våre for deteksjon av algeoppblomstringer med ekte satellittbilder.\n\nDette tilskuddet representerer en viktig milepæl på veien mot et kommersielt levedyktig produkt.",
-  },
-  {
-    image:
       "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&q=80",
     alt: "Fish farming",
     date: "Early 2026",
@@ -56,6 +39,23 @@ export const newsItems: NewsItem[] = [
       "DuxPace begins discussions with EquaFish AS in September 2025, exploring how satellite intelligence can support fish farming operations.\n\nIn early 2026, the collaboration is formalized in writing. DuxPace contributes insights derived from Sentinel satellite data—such as indicators relevant to algal bloom risk and environmental conditions—which EquaFish can integrate and use within their platform.\n\nThe partnership strengthens the bridge between satellite data and day-to-day operational decision-making in aquaculture.",
     contentNo:
       "DuxPace innleder dialog med EquaFish AS i september 2025, med mål om å utforske hvordan satellittintelligens kan støtte driften i oppdrett.\n\nTidlig i 2026 blir samarbeidet formaliseres skriftlig. DuxPace bidrar med innsikt utledet fra Sentinel-satellittdata—som indikatorer relevante for risiko for algeoppblomstring og miljøforhold—som EquaFish kan integrere og bruke i sin plattform.\n\nPartnerskapet styrker koblingen mellom satellittdata og operasjonelle beslutninger i havbruk.",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600&q=80",
+    alt: "Satellite dish",
+    date: "Winter 2024",
+    dateNo: "Vinteren 2024",
+    title: "Aneobidraget Grant Awarded",
+    titleNo: "Tildelt Aneobidraget",
+    description:
+      "DuxPace is awarded 50,000 kr through Aneobidraget, securing three months of Sentinel satellite data access for development.",
+    descriptionNo:
+      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, noe som sikrer tre måneders tilgang til Sentinel-satellittdata for utvikling.",
+    content:
+      "DuxPace is awarded 50,000 kr through Aneobidraget, a grant supporting early-stage innovation at NTNU.\n\nThe funding secures three months of Sentinel satellite data access, enabling the team to accelerate MVP development and validate our algal bloom detection models with real satellite imagery.\n\nThis grant represents an important milestone in our journey toward a commercially viable product.",
+    contentNo:
+      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, et tilskudd som støtter tidligfaseinnovasjon ved NTNU.\n\nFinansieringen sikrer tre måneders tilgang til Sentinel-satellittdata, noe som gjør at teamet kan akselerere MVP-utviklingen og validere modellene våre for deteksjon av algeoppblomstringer med ekte satellittbilder.\n\nDette tilskuddet representerer en viktig milepæl på veien mot et kommersielt levedyktig produkt.",
   },
   {
     image:

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navbar } from "./features/layout";
 import { Hero, About, Team, News, Contact, Footer } from "./features/home";
 
@@ -18,7 +19,9 @@ export default function Home() {
         <Hero />
         <About />
         <Team />
-        <News />
+        <Suspense fallback={<div className="py-20 text-center text-gray-500">Loading news...</div>}>
+          <News />
+        </Suspense>
         <Contact />
       </main>
       
