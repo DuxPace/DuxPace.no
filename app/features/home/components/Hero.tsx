@@ -19,10 +19,8 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
-      {/* Globe */}
       <div
-        aria-hidden="true"
-        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-none select-none opacity-15 md:opacity-100"
+        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing z-[5]"
       >
         <GlobeWrapper />
       </div>
@@ -30,8 +28,8 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent md:from-black md:from-30% md:via-black/80 md:via-55% md:to-transparent pointer-events-none z-[1]" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-[1]" />
 
-      <div className="relative z-10 w-full px-6 md:px-16 pt-24 md:pt-36 pb-20 md:pb-24">
-        {/* Eyebrow */}
+      <div className="relative z-10 w-full px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
+        <div className="pointer-events-auto">
         <motion.p
           className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
           {...fadeUp(0.1)}
@@ -39,7 +37,6 @@ export default function Hero() {
           {t.hero.eyebrow}
         </motion.p>
 
-        {/* Headline */}
         <motion.h1
           className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] max-w-2xl tracking-tight mb-5 md:mb-8"
           {...fadeUp(0.25)}
@@ -49,7 +46,6 @@ export default function Hero() {
           {t.hero.headline[1]}
         </motion.h1>
 
-        {/* Subheading */}
         <motion.p
           className="text-gray-500 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
           {...fadeUp(0.45)}
@@ -57,47 +53,26 @@ export default function Hero() {
           {t.hero.subheading}
         </motion.p>
 
-        {/* CTA buttons */}
         <motion.div
-          className="flex flex-row items-center gap-5 flex-wrap"
+          className="flex flex-row items-center gap-5 flex-wrap relative z-20"
           {...fadeUp(0.6)}
         >
           <a
             href={t.hero.cta.href}
-            className="shrink-0 bg-white text-black text-xs font-semibold px-6 py-3 rounded-sm hover:bg-gray-100 transition-colors tracking-[0.08em] uppercase"
+            className="shrink-0 bg-white text-black text-xs font-semibold px-6 py-3 rounded-sm hover:bg-gray-100 transition-colors tracking-[0.08em] uppercase cursor-pointer pointer-events-auto"
           >
             {t.hero.cta.label}
           </a>
           <a
             href={t.hero.ctaSecondary.href}
-            className="shrink-0 text-gray-300 hover:text-white text-sm transition-colors"
+            className="shrink-0 text-gray-300 hover:text-white text-sm transition-colors cursor-pointer pointer-events-auto"
           >
             {t.hero.ctaSecondary.label}
           </a>
         </motion.div>
 
-        {/* Scroll cue */}
-        <motion.div
-          className="absolute bottom-8 left-6 md:left-16"
-          {...fadeUp(1.0)}
-        >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] text-gray-600 font-mono tracking-[0.2em] uppercase">
-              Scroll
-            </span>
-            <motion.div
-              className="w-5 h-8 border border-white/20 rounded-full flex justify-center pt-2"
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <motion.div
-                className="w-1 h-1 bg-white/60 rounded-full"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </motion.div>
-          </div>
-        </motion.div>
+
+        </div>
       </div>
     </section>
   );

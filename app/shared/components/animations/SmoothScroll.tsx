@@ -3,7 +3,6 @@
 import { useEffect, useRef, ReactNode, useCallback, useState } from "react";
 import { motion, useSpring, useScroll, useTransform } from "framer-motion";
 
-// Smooth scroll hook
 export function useSmoothScroll() {
   const scrollTo = useCallback((elementId: string, offset: number = 0) => {
     const element = document.getElementById(elementId);
@@ -21,7 +20,6 @@ export function useSmoothScroll() {
   return { scrollTo };
 }
 
-// Smooth scroll link component
 interface SmoothScrollLinkProps {
   href: string;
   children: ReactNode;
@@ -65,7 +63,6 @@ export function SmoothScrollLink({
   );
 }
 
-// Scroll progress indicator
 export function ScrollProgressIndicator() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -82,7 +79,6 @@ export function ScrollProgressIndicator() {
   );
 }
 
-// Section observer for animations
 interface SectionObserverProps {
   children: ReactNode;
   className?: string;
@@ -122,7 +118,6 @@ export function SectionObserver({
   );
 }
 
-// Scroll snap container
 interface ScrollSnapContainerProps {
   children: ReactNode;
   className?: string;
@@ -139,7 +134,6 @@ export function ScrollSnapContainer({ children, className = "" }: ScrollSnapCont
   );
 }
 
-// Scroll snap section
 interface ScrollSnapSectionProps {
   children: ReactNode;
   className?: string;
@@ -157,7 +151,6 @@ export function ScrollSnapSection({ children, className = "", id }: ScrollSnapSe
   );
 }
 
-// Parallax scroll element
 interface ParallaxElementProps {
   children: ReactNode;
   className?: string;
@@ -187,7 +180,6 @@ export function ParallaxElement({
   );
 }
 
-// Fade in on scroll
 interface FadeInOnScrollProps {
   children: ReactNode;
   className?: string;
@@ -240,22 +232,23 @@ export function FadeInOnScroll({
   );
 }
 
-// Scroll velocity hook
 export function useScrollVelocity() {
   const [velocity, setVelocity] = useState(0);
   const lastScrollY = useRef(0);
-  const lastTime = useRef(Date.now());
+  const lastTime = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentTime = Date.now();
-      const deltaTime = currentTime - lastTime.current;
       const currentScrollY = window.scrollY;
       const deltaY = currentScrollY - lastScrollY.current;
       
-      if (deltaTime > 0) {
-        const newVelocity = deltaY / deltaTime;
-        setVelocity(newVelocity);
+      if (lastTime.current !== null) {
+        const deltaTime = currentTime - lastTime.current;
+        if (deltaTime > 0) {
+          const newVelocity = deltaY / deltaTime;
+          setVelocity(newVelocity);
+        }
       }
       
       lastScrollY.current = currentScrollY;

@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
-import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
-import { DramaticButton, DramaticCard } from "../../../shared/components/ui/HoverEffects";
+import { useActionState, useState } from "react";
+import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
+import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { siteConfig } from "../../../lib/data/content";
 import { sendContactEmail } from "../../../actions/contact";
@@ -11,104 +11,108 @@ import { motion } from "framer-motion";
 function ContactForm() {
   const { t } = useLanguage();
   const [state, action, pending] = useActionState(sendContactEmail, null);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  
+  const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim();
 
   if (state?.success) {
     return (
       <motion.div 
-        className="pt-8"
+        className="text-center py-8"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center gap-3 mb-4">
-          <motion.div
-            className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 500, damping: 30 }}
-          >
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </motion.div>
-          <p className="text-white text-lg font-medium">Message sent!</p>
+        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
         </div>
-        <p className="text-gray-500 text-sm">We'll be in touch soon.</p>
+        <p className="text-white text-xl font-medium mb-2">Message sent!</p>
+        <p className="text-gray-500">We&apos;ll be in touch soon.</p>
       </motion.div>
     );
   }
 
+  const inputClass = "w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-blue-500/30 transition-all duration-200 text-sm";
+
   return (
-    <form action={action} className="space-y-8">
-      <Stagger staggerDelay={0.1} baseDelay={0}>
-        <StaggerItem>
-          <div className="group">
-            <label htmlFor="contact-name" className="block text-[10px] text-blue-400 font-mono tracking-[0.2em] uppercase mb-2">
-              {t.contact.namePlaceholder}
-            </label>
-            <input
-              id="contact-name"
-              type="text"
-              name="name"
-              placeholder={t.contact.namePlaceholder}
-              required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm"
-            />
-          </div>
-        </StaggerItem>
+    <form action={action} className="space-y-5">
+      <div>
+        <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
+          Name
+        </label>
+        <input
+          id="contact-name"
+          type="text"
+          name="name"
+          placeholder="Your name"
+          required
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className={inputClass}
+        />
+      </div>
 
-        <StaggerItem>
-          <div className="group">
-            <label htmlFor="contact-email" className="block text-[10px] text-blue-400 font-mono tracking-[0.2em] uppercase mb-2">
-              {t.contact.emailPlaceholder}
-            </label>
-            <input
-              id="contact-email"
-              type="email"
-              name="email"
-              placeholder={t.contact.emailPlaceholder}
-              required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 text-sm"
-            />
-          </div>
-        </StaggerItem>
+      <div>
+        <label htmlFor="contact-email" className="block text-xs text-gray-400 mb-1.5">
+          Email
+        </label>
+        <input
+          id="contact-email"
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className={inputClass}
+        />
+      </div>
 
-        <StaggerItem>
-          <div className="group">
-            <label htmlFor="contact-message" className="block text-[10px] text-blue-400 font-mono tracking-[0.2em] uppercase mb-2">
-              {t.contact.messagePlaceholder}
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              placeholder={t.contact.messagePlaceholder}
-              rows={5}
-              required
-              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.04] transition-all duration-300 resize-none text-sm"
-            />
-          </div>
-        </StaggerItem>
+      <div>
+        <label htmlFor="contact-message" className="block text-xs text-gray-400 mb-1.5">
+          Message
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          placeholder="How can we help you?"
+          rows={4}
+          required
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          className={`${inputClass} resize-none`}
+        />
+      </div>
 
-        {state?.error && (
-          <motion.p 
-            className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            {state.error}
-          </motion.p>
+      {state?.error && (
+        <p className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3">
+          {state.error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={!isFormValid || pending}
+        className={`w-full text-xs font-semibold tracking-[0.08em] uppercase rounded-sm transition-colors duration-200 mt-2 ${
+          isFormValid 
+            ? "bg-white text-black hover:bg-gray-100 cursor-pointer py-3 px-6" 
+            : "bg-white/10 text-white/30 cursor-not-allowed py-3 px-6"
+        }`}
+      >
+        {pending ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Sending...
+          </span>
+        ) : (
+          t.contact.send
         )}
-
-        <StaggerItem>
-          <DramaticButton
-            variant="primary"
-            size="lg"
-            className="w-full rounded-lg"
-          >
-            {pending ? "Sending..." : t.contact.send}
-          </DramaticButton>
-        </StaggerItem>
-      </Stagger>
+      </button>
     </form>
   );
 }
@@ -121,7 +125,7 @@ export default function Contact() {
     <section id="contact" className="py-28 md:py-40 border-t border-white/[0.07] relative overflow-hidden">
       {/* Background effects */}
       <motion.div
-        className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"
+        className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.3, 0.2],
@@ -208,15 +212,12 @@ export default function Contact() {
 
           {/* Right column - Form */}
           <FadeIn direction="up" delay={0.2}>
-            <DramaticCard
-              className="p-8 bg-white/[0.02] rounded-2xl border border-white/5"
-              glowColor="rgba(59, 130, 246, 0.2)"
-            >
-              <h3 className="text-xl font-bold text-white mb-6">
+            <div className="bg-white/[0.02] rounded-xl border border-white/10 p-6 md:p-8">
+              <h3 className="text-lg font-semibold text-white mb-6">
                 {lang === "no" ? "Send oss en melding" : "Send us a message"}
               </h3>
               <ContactForm />
-            </DramaticCard>
+            </div>
           </FadeIn>
         </div>
       </div>

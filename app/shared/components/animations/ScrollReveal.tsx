@@ -1,16 +1,14 @@
 "use client";
 
-import { useRef, ReactNode, useEffect, useState } from "react";
-import { motion, useInView, Variants } from "framer-motion";
+import { useRef, ReactNode } from "react";
+import { motion, useInView } from "framer-motion";
 
-// Enkel hook for scroll-reveal
 export function useScrollReveal(threshold = 0.2, once = true) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, amount: threshold });
   return { ref, isInView };
 }
 
-// Subtil fade-in på scroll
 interface FadeInProps {
   children: ReactNode;
   className?: string;
@@ -55,7 +53,6 @@ export function FadeIn({
   );
 }
 
-// Scale-in effekt
 interface ScaleInProps {
   children: ReactNode;
   className?: string;
@@ -88,7 +85,6 @@ export function ScaleIn({
   );
 }
 
-// Stagger container - elementer kommer etter hverandre
 interface StaggerProps {
   children: ReactNode;
   className?: string;
@@ -152,7 +148,6 @@ export function StaggerItem({
   );
 }
 
-// Linje som tegner seg inn
 interface LineRevealProps {
   className?: string;
   direction?: "horizontal" | "vertical";
@@ -191,7 +186,6 @@ export function LineReveal({
   );
 }
 
-// Bilde som fader inn med scale
 interface ImageFadeProps {
   src: string;
   alt: string;

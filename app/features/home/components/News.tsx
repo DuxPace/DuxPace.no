@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
+import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize } from "../../../lib/data/news";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const PER_PAGE = 3;
@@ -22,9 +22,14 @@ export default function News() {
     setSelected(null);
   };
 
-  if (typeof window !== "undefined") {
-    document.body.style.overflow = selected !== null ? "hidden" : "";
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.body.style.overflow = selected !== null ? "hidden" : "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
 
   return (
     <section id="news" className="py-28 md:py-40 border-t border-white/[0.07] relative">

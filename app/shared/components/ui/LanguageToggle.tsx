@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "../../providers/LanguageProvider";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function LanguageToggle() {
   const { lang, setLang } = useLanguage();
@@ -44,13 +44,6 @@ export default function LanguageToggle() {
             : "text-gray-500 hover:text-white"
         }`}
       >
-        <motion.span 
-          aria-hidden="true"
-          animate={{ scale: lang === "en" ? 1.1 : 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          🇬🇧
-        </motion.span>
         <span className="text-xs">EN</span>
       </button>
       
@@ -65,13 +58,6 @@ export default function LanguageToggle() {
             : "text-gray-500 hover:text-white"
         }`}
       >
-        <motion.span 
-          aria-hidden="true"
-          animate={{ scale: lang === "no" ? 1.1 : 1 }}
-          transition={{ duration: 0.2 }}
-        >
-          🇳🇴
-        </motion.span>
         <span className="text-xs">NO</span>
       </button>
     </motion.div>

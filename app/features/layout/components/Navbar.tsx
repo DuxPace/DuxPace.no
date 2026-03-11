@@ -13,14 +13,13 @@ export default function Navbar() {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
+
   const [hidden, setHidden] = useState(false);
   const { t } = useLanguage();
   
   const { scrollY } = useScroll();
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Handle scroll direction for hide/show
   useMotionValueEvent(scrollY, "change", (latest) => {
     const direction = latest > lastScrollY ? "down" : "up";
     
@@ -50,21 +49,12 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Lock scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Handle menu open/close with animation
-  useEffect(() => {
-    if (menuOpen) {
-      setMenuVisible(true);
-    } else {
-      const timer = setTimeout(() => setMenuVisible(false), 200);
-      return () => clearTimeout(timer);
-    }
-  }, [menuOpen]);
+
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -85,7 +75,6 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
-        {/* Logo with hover animation */}
         <motion.a 
           href="#home" 
           className="flex items-center" 
@@ -96,7 +85,6 @@ export default function Navbar() {
           <Image src={logo} alt="DuxPace" width={160} height={48} className="h-10 w-auto" />
         </motion.a>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8 ml-auto">
           {sections.map((id, index) => (
             <motion.a
@@ -112,7 +100,6 @@ export default function Navbar() {
               whileHover={{ y: -1 }}
             >
               {t.nav[id as keyof typeof t.nav]}
-              {/* Active indicator */}
               {active === id && (
                 <motion.div
                   className="absolute -bottom-1 left-0 right-0 h-px bg-white"
@@ -138,7 +125,6 @@ export default function Navbar() {
           </motion.div>
         </div>
 
-        {/* Mobile hamburger */}
         <motion.button
           className="md:hidden ml-auto text-gray-400 hover:text-white transition-all duration-200 w-11 h-11 flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -181,7 +167,6 @@ export default function Navbar() {
         </motion.button>
       </div>
 
-      {/* Mobile menu with animation */}
       <motion.div
         id="mobile-menu"
         initial={false}

@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { Linkedin, Mail } from "lucide-react";
-import { FadeIn, Stagger, StaggerItem } from "../../../shared/components/animations/ScrollReveal";
-import { SwoopIn, ElasticSnap, Floating } from "../../../shared/components/animations/SwoopAnimations";
+import { SwoopIn, ElasticSnap } from "../../../shared/components/animations/SwoopAnimations";
 import { SpotlightCard, TiltCard } from "../../../shared/components/ui/PremiumHover";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { members } from "../../../lib/data/members";

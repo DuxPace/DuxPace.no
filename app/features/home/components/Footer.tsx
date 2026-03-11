@@ -26,13 +26,10 @@ export default function SiteFooter() {
 
   return (
     <footer className="border-t border-white/[0.07] relative overflow-hidden">
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 py-16 relative">
-        {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
-          {/* Brand column */}
           <motion.div 
             className="md:col-span-5"
             initial={{ opacity: 0, y: 20 }}
@@ -82,7 +79,6 @@ export default function SiteFooter() {
             </div>
           </motion.div>
 
-          {/* Links columns */}
           <motion.div 
             className="md:col-span-3 md:col-start-7"
             initial={{ opacity: 0, y: 20 }}
@@ -147,7 +143,6 @@ export default function SiteFooter() {
           </motion.div>
         </div>
 
-        {/* Bottom bar */}
         <motion.div 
           className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-4"
           initial={{ opacity: 0 }}
@@ -186,7 +181,6 @@ export default function SiteFooter() {
           </div>
         </motion.div>
 
-        {/* Decorative element */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
           initial={{ scaleX: 0 }}

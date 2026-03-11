@@ -3,11 +3,6 @@
 import { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
 
-// ==========================================
-// PREMIUM HOVER COMPONENTS (shadcn/ui-universe style)
-// ==========================================
-
-// Glow button (shadcn style)
 interface GlowButtonProps {
   children: ReactNode;
   className?: string;
@@ -62,7 +57,6 @@ export function GlowButton({
   );
 }
 
-// Spotlight card (ui-universe style)
 interface SpotlightCardProps {
   children: ReactNode;
   className?: string;
@@ -110,7 +104,6 @@ export function SpotlightCard({ children, className = "" }: SpotlightCardProps) 
   );
 }
 
-// Animated border button
 interface AnimatedBorderButtonProps {
   children: ReactNode;
   className?: string;
@@ -140,7 +133,6 @@ export function AnimatedBorderButton({
   );
 }
 
-// Magnetic card (uten delay)
 interface MagneticCardProps {
   children: ReactNode;
   className?: string;
@@ -179,7 +171,6 @@ export function MagneticCard({ children, className = "" }: MagneticCardProps) {
   );
 }
 
-// Ripple button
 interface RippleButtonProps {
   children: ReactNode;
   className?: string;
@@ -232,7 +223,6 @@ export function RippleButton({
   );
 }
 
-// Glitch button (reactbits style)
 interface GlitchButtonProps {
   children: ReactNode;
   className?: string;
@@ -284,7 +274,6 @@ export function GlitchButton({
   );
 }
 
-// Neumorphic card
 interface NeumorphicCardProps {
   children: ReactNode;
   className?: string;
@@ -308,7 +297,6 @@ export function NeumorphicCard({ children, className = "" }: NeumorphicCardProps
   );
 }
 
-// Glass card
 interface GlassCardProps {
   children: ReactNode;
   className?: string;
@@ -331,7 +319,6 @@ export function GlassCard({ children, className = "" }: GlassCardProps) {
   );
 }
 
-// Tilt card (3D tilt on hover)
 interface TiltCardProps {
   children: ReactNode;
   className?: string;
