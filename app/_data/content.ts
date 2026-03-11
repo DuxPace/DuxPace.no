@@ -24,7 +24,7 @@ export const translations = {
     meta: {
       title: "DuxPace - Satellite Intelligence for Aquaculture",
       description:
-        "DuxPace uses AI and Sentinel satellite data to detect algal blooms and other risc factors for Norwegian fish farming. Based at VM-paviljongen, Trondheim.",
+        "DuxPace uses AI and Sentinel satellite data to detect algal blooms and other risk factors for Norwegian fish farming. Based at VM-paviljongen, Trondheim.",
     },
     nav: {
       home: "Home",
@@ -37,7 +37,7 @@ export const translations = {
       eyebrow: "Trondheim, Norway - NTNU",
       headline: ["We watch the", "ocean from space."],
       subheading:
-        "Satellite imagery and AI for Norwegian aquaculture. We help fish farms detect algal blooms before they cause damage.","Expanding to more usecases over time.",
+        "Satellite imagery and AI for Norwegian aquaculture. We help fish farms detect algal blooms before they cause damage. Expanding to more use cases over time.",
       cta: { label: "See our work", href: "#about" },
       ctaSecondary: { label: "Get in touch →", href: "#contact" },
     },
