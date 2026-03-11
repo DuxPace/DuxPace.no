@@ -47,7 +47,7 @@ export default function Team() {
                     {member.role}
                   </p>
                   {member.bio && (
-                    <p className="text-gray-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                    <p className="text-gray-500 text-[11px] mt-2 leading-relaxed">
                       {member.bio}
                     </p>
                   )}

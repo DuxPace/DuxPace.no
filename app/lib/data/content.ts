@@ -9,8 +9,8 @@ export const siteConfig = {
   },
   contact: {
     email: "planet@duxpace.no",
-    location: "VM-paviljongen, Trondheim",
-    mapEmbed: "https://www.google.com/maps?q=VM-paviljongen,Trondheim,Norway&output=embed",
+    location: "Gründerbrakka, VM-paviljongen, Trondheim",
+    mapEmbed: "https://www.google.com/maps?q=Gründerbrakka,VM-paviljongen,Trondheim,Norway&output=embed",
     linkedin: "https://linkedin.com/company/duxpace",
   },
   footer: {
@@ -25,7 +25,7 @@ export const translations = {
     meta: {
       title: "DuxPace - Satellite Intelligence for Aquaculture",
       description:
-        "DuxPace uses AI and Sentinel satellite data to detect algal blooms for Norwegian fish farming. Based at VM-paviljongen, Trondheim.",
+        "DuxPace uses AI and Sentinel satellite data to detect algal blooms and other risk factors for Norwegian fish farming. Based at VM-paviljongen, Trondheim.",
     },
     nav: {
       home: "Home",
@@ -35,31 +35,31 @@ export const translations = {
       contact: "Contact",
     },
     hero: {
-      eyebrow: "Trondheim, Norway — NTNU",
+      eyebrow: "Trondheim, Norway - NTNU",
       headline: ["We watch the", "ocean from space."],
       subheading:
-        "Satellite imagery and AI for Norwegian aquaculture. We help fish farms detect algal blooms before they cause damage.",
+        "Satellite imagery and AI for Norwegian aquaculture. We help fish farms detect algal blooms before they cause damage. Expanding to more use cases over time.",
       cta: { label: "See our work", href: "#about" },
       ctaSecondary: { label: "Get in touch →", href: "#contact" },
     },
     about: {
       headline: ["Built at NTNU.", "Focused on fish."],
       body: [
-        "We're three engineering students from NTNU building tools to help fish farmers detect algal blooms using Sentinel satellite data — before they cause damage to stock.",
+        "We're three engineering students from NTNU building tools to help fish farmers detect algal blooms using Sentinel satellite data - before they cause damage to stock.",
         "Algal blooms are a major threat to Norwegian salmon farming. Our platform processes satellite imagery in near real-time to give farmers the early warning they need.",
       ],
       facts: [
         {
           label: "Our approach",
-          text: "Machine learning models trained on Sentinel satellite data to detect bloom patterns, changes, and risk zones — specific to Norwegian coastal conditions.",
+          text: "Machine learning models trained on Sentinel satellite data to detect bloom patterns, changes, and risk zones - specific to Norwegian coastal conditions.",
         },
         {
           label: "Our partners",
-          text: "Working with EquaFish AS, NORCE, Blått Kompetansesenter, Mowi, and NTNU's Hypso satellite program.",
+          text: "Working with EquaFish AS and other aquaculture companies.",
         },
         {
           label: "Where we are",
-          text: "VM-paviljongen, Trondheim — founded June 2024.",
+          text: "VM-paviljongen, Trondheim - founded June 2024.",
         },
       ],
     },
@@ -98,7 +98,7 @@ export const translations = {
       contact: "Kontakt",
     },
     hero: {
-      eyebrow: "Trondheim, Norge — NTNU",
+      eyebrow: "Trondheim, Norge - NTNU",
       headline: ["Vi overvåker", "havet fra verdensrommet."],
       subheading:
         "Satellittbilder og KI for norsk havbruk. Vi hjelper fiskeoppdrettere med å oppdage algeoppblomstringer før de gjør skade.",
@@ -108,21 +108,21 @@ export const translations = {
     about: {
       headline: ["Bygget ved NTNU.", "Fokusert på fisk."],
       body: [
-        "Vi er tre ingeniørstudenter fra NTNU som bygger verktøy for å hjelpe fiskeoppdrettere med å oppdage algeoppblomstringer ved hjelp av Sentinel-satellittdata — før de gjør skade på bestanden.",
+        "Vi er tre ingeniørstudenter fra NTNU som bygger verktøy for å hjelpe fiskeoppdrettere med å oppdage algeoppblomstringer ved hjelp av Sentinel-satellittdata - før de gjør skade på bestanden.",
         "Algeoppblomstringer er en stor trussel mot norsk lakseoppdrett. Plattformen vår behandler satellittbilder i nær sanntid for å gi oppdretterne den tidlige varslingen de trenger.",
       ],
       facts: [
         {
           label: "Vår tilnærming",
-          text: "Maskinlæringsmodeller trent på Sentinel-satellittdata for å oppdage blomstermønstre, endringer og risikosoner — spesifikke for norske kystforhold.",
+          text: "Maskinlæringsmodeller trent på Sentinel-satellittdata for å oppdage blomstermønstre, endringer og risikosoner - spesifikke for norske kystforhold.",
         },
         {
           label: "Våre partnere",
-          text: "Samarbeider med EquaFish AS, NORCE, Blått Kompetansesenter, Mowi og NTNUs Hypso-satellittprogram.",
+          text: "Samarbeider med EquaFish AS og andre oppdrettsselskap.",
         },
         {
           label: "Hvor vi er",
-          text: "VM-paviljongen, Trondheim — stiftet juni 2024.",
+          text: "VM-paviljongen, Trondheim - stiftet juni 2024.",
         },
       ],
     },
@@ -136,7 +136,7 @@ export const translations = {
     },
     contact: {
       headline: "Si hei.",
-      body: "Enten du er innen havbruk, forskning eller bare er nysgjerrig på det vi bygger — vi vil gjerne høre fra deg.",
+      body: "Enten du er innen havbruk, forskning eller bare er nysgjerrig på det vi bygger - vi vil gjerne høre fra deg.",
       namePlaceholder: "Navn",
       emailPlaceholder: "E-post",
       messagePlaceholder: "Melding",

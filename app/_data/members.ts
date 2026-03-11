@@ -18,7 +18,7 @@ export const members: Member[] = [
   },
   {
     name: "Andre Nielsen",
-    role: "CPO",
+    role: "CTO",
     image: "/images/team/andre.jpg",
     bio: "4th year Cybernetics at NTNU",
     linkedin: "https://www.linkedin.com/in/andr%C3%A9-nielsen-2846a434a/",
@@ -26,7 +26,7 @@ export const members: Member[] = [
   },
   {
     name: "Tri Tac Le",
-    role: "CTO",
+    role: "CIO",
     image: "/images/team/tri.jpg",
     bio: "2nd year Computer Science at NTNU",
     linkedin: "https://www.linkedin.com/in/tritacle/",
