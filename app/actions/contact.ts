@@ -9,15 +9,15 @@ export type ContactState = {
   error?: string;
 } | null;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@.][^\s@]*$/;
 
 function validate(name: string, email: string, message: string): string | null {
   if (!name) return "Please enter your name.";
   if (name.length < 2) return "Name must be at least 2 characters.";
   if (name.length > 100) return "Name must be less than 100 characters.";
   if (!email) return "Please enter your email.";
-  if (!EMAIL_RE.test(email)) return "Please enter a valid email address.";
   if (email.length > 254) return "Email must be less than 254 characters.";
+  if (!EMAIL_RE.test(email)) return "Please enter a valid email address.";
   if (!message) return "Please enter a message.";
   if (message.length < 10) return "Message must be at least 10 characters.";
   if (message.length > 5000) return "Message must be less than 5000 characters.";
