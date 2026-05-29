@@ -25,6 +25,23 @@ export function localize(item: NewsItem, lang: Language) {
 export const newsItems: NewsItem[] = [
   {
     image:
+      "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=600&q=80",
+    alt: "Trophy award",
+    date: "May 21, 2026",
+    dateNo: "21. mai 2026",
+    title: "NTNU Discovery Award – 300,000 kr",
+    titleNo: "NTNU Discovery-prisen – 300 000 kr",
+    description:
+      "DuxPace wins 300,000 kr at the NTNU Discovery Award on May 21, 2026, recognizing our satellite-based approach to aquaculture monitoring.",
+    descriptionNo:
+      "DuxPace vinner 300 000 kr i NTNU Discovery-prisen 21. mai 2026, som anerkjenner vår satellittbaserte tilnærming til overvåking av havbruk.",
+    content:
+      "On May 21, 2026, DuxPace wins the NTNU Discovery Award, receiving 300,000 kr in recognition of our work applying satellite intelligence to aquaculture.\n\nThe award validates our approach of using Sentinel satellite data to detect algal blooms and environmental risk factors affecting fish farming operations.\n\nThis funding will accelerate development of our core product and support continued collaboration with partners in the aquaculture industry.",
+    contentNo:
+      "Den 21. mai 2026 vinner DuxPace NTNU Discovery-prisen og mottar 300 000 kr som anerkjennelse for arbeidet vårt med å anvende satellittintelligens på havbruk.\n\nPrisen bekrefter tilnærmingen vår med å bruke Sentinel-satellittdata til å oppdage algeoppblomstringer og miljørisikofaktorer som påvirker fiskeoppdrettsvirksomheter.\n\nMidlene vil akselerere utviklingen av kjerneprodukt og støtte videre samarbeid med partnere i oppdrettsnæringen.",
+  },
+  {
+    image:
       "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&q=80",
     alt: "Fish farming",
     date: "Early 2026",
