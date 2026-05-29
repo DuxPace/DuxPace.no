@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { translations } from "./lib/data/content";
 import { LanguageProvider } from "./shared/providers/LanguageProvider";
 import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
@@ -91,6 +92,7 @@ export default function RootLayout({
           {children}
         </LanguageProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
