@@ -74,10 +74,13 @@ export const translations = {
     contact: {
       headline: "Say hello.",
       body: "Whether you're in aquaculture, research, or just curious about what we're building, we'd love to hear from you.",
+      formTitle: "Send us a message",
       namePlaceholder: "Name",
       emailPlaceholder: "Email",
       messagePlaceholder: "Message",
       send: "Send →",
+      successTitle: "Message sent!",
+      successBody: "We'll be in touch soon.",
     },
     footer: {
       location: "Trondheim, Norway",
@@ -137,10 +140,13 @@ export const translations = {
     contact: {
       headline: "Si hei.",
       body: "Enten du er innen havbruk, forskning eller bare er nysgjerrig på det vi bygger - vi vil gjerne høre fra deg.",
+      formTitle: "Send oss en melding",
       namePlaceholder: "Navn",
       emailPlaceholder: "E-post",
       messagePlaceholder: "Melding",
       send: "Send →",
+      successTitle: "Melding sendt!",
+      successBody: "Vi tar kontakt snart.",
     },
     footer: {
       location: "Trondheim, Norge",
