@@ -5,7 +5,7 @@ import { memo, useCallback } from "react";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize, type NewsItem } from "../../../lib/data/news";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
@@ -127,6 +127,9 @@ export default function News() {
     router.push(newUrl, { scroll: false });
   }, [searchParams, pathname, router]);
 
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       document.body.style.overflow = selected !== null ? "hidden" : "";
@@ -135,6 +138,42 @@ export default function News() {
       document.body.style.overflow = "";
     };
   }, [selected]);
+
+  useEffect(() => {
+    if (selected === null) return;
+
+    requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last?.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selected, closeModal]);
 
   return (
     <section id="news" className="py-28 md:py-40 border-t border-white/[0.07] relative">
@@ -232,10 +271,12 @@ export default function News() {
           <div
             role="dialog"
             aria-modal="true"
+            aria-labelledby="news-modal-title"
             className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/90 backdrop-blur-md p-0 md:p-6"
             onClick={closeModal}
           >
             <motion.div
+              ref={modalRef}
               className="bg-black border border-white/[0.12] w-full md:max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg"
               onClick={(e) => e.stopPropagation()}
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
@@ -246,6 +287,7 @@ export default function News() {
               <div className="relative w-full aspect-video">
                 <Image src={item.image} alt={item.alt} fill className="object-cover" />
                 <motion.button
+                  ref={closeButtonRef}
                   onClick={closeModal}
                   aria-label="Close article"
                   className="absolute top-4 right-4 bg-black/70 hover:bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-full transition-colors"
@@ -257,7 +299,7 @@ export default function News() {
               </div>
               <div className="p-8">
                 <p className="text-[10px] text-blue-400 font-mono tracking-[0.18em] uppercase mb-3">{date}</p>
-                <h2 className="text-2xl font-bold text-white mb-6 leading-snug tracking-tight">{title}</h2>
+                <h2 id="news-modal-title" className="text-2xl font-bold text-white mb-6 leading-snug tracking-tight">{title}</h2>
                 {content.split("\n\n").map((paragraph, i) => (
                   <p key={i} className="text-gray-400 text-sm leading-relaxed mb-4">{paragraph}</p>
                 ))}
