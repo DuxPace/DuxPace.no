@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useRef } from "react";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize, type NewsItem } from "../../../lib/data/news";
@@ -92,6 +92,7 @@ export default function News() {
   const searchParams = useSearchParams();
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.ceil(newsItems.length / PER_PAGE);
   const visibleItems = newsItems.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
@@ -135,6 +136,43 @@ export default function News() {
       document.body.style.overflow = "";
     };
   }, [selected]);
+
+  useEffect(() => {
+    if (selected === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (e.key !== "Tab" || !modalRef.current) return;
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    requestAnimationFrame(() => {
+      modalRef.current?.querySelector<HTMLElement>("button[aria-label='Close article']")?.focus();
+    });
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selected, closeModal]);
 
   return (
     <section id="news" className="py-28 md:py-40 border-t border-white/[0.07] relative">
@@ -230,8 +268,10 @@ export default function News() {
         const { title, content, date } = localize(item, lang);
         return (
           <div
+            ref={modalRef}
             role="dialog"
             aria-modal="true"
+            aria-labelledby="news-modal-title"
             className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/90 backdrop-blur-md p-0 md:p-6"
             onClick={closeModal}
           >
@@ -257,7 +297,7 @@ export default function News() {
               </div>
               <div className="p-8">
                 <p className="text-[10px] text-blue-400 font-mono tracking-[0.18em] uppercase mb-3">{date}</p>
-                <h2 className="text-2xl font-bold text-white mb-6 leading-snug tracking-tight">{title}</h2>
+                <h2 id="news-modal-title" className="text-2xl font-bold text-white mb-6 leading-snug tracking-tight">{title}</h2>
                 {content.split("\n\n").map((paragraph, i) => (
                   <p key={i} className="text-gray-400 text-sm leading-relaxed mb-4">{paragraph}</p>
                 ))}
