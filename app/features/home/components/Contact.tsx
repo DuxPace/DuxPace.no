@@ -40,7 +40,7 @@ function ContactForm() {
     <form action={action} className="space-y-5">
       <div>
         <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
-          {t.contact.namePlaceholder}
+          {t.contact.nameLabel}
         </label>
         <input
           id="contact-name"
@@ -56,7 +56,7 @@ function ContactForm() {
 
       <div>
         <label htmlFor="contact-email" className="block text-xs text-gray-400 mb-1.5">
-          {t.contact.emailPlaceholder}
+          {t.contact.emailLabel}
         </label>
         <input
           id="contact-email"
@@ -72,7 +72,7 @@ function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="block text-xs text-gray-400 mb-1.5">
-          {t.contact.messagePlaceholder}
+          {t.contact.messageLabel}
         </label>
         <textarea
           id="contact-message"
