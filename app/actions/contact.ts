@@ -9,7 +9,7 @@ export type ContactState = {
   error?: string;
 } | null;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@.][^\s@]*\.[^\s@.][^\s@]*$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
 function validate(name: string, email: string, message: string): string | null {
   if (!name) return "Please enter your name.";
