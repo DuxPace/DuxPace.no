@@ -82,8 +82,10 @@ export const translations = {
       emailPlaceholder: "your@email.com",
       messagePlaceholder: "How can we help you?",
       send: "Send →",
+      sending: "Sending...",
       successTitle: "Message sent!",
       successBody: "We'll be in touch soon.",
+      sendAnother: "Send another message",
     },
     footer: {
       location: "Trondheim, Norway",
@@ -151,8 +153,10 @@ export const translations = {
       emailPlaceholder: "din@epost.no",
       messagePlaceholder: "Hvordan kan vi hjelpe deg?",
       send: "Send →",
+      sending: "Sender...",
       successTitle: "Melding sendt!",
       successBody: "Vi tar kontakt snart.",
+      sendAnother: "Send en ny melding",
     },
     footer: {
       location: "Trondheim, Norge",

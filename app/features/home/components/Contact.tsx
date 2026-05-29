@@ -8,11 +8,11 @@ import { siteConfig } from "../../../lib/data/content";
 import { sendContactEmail } from "../../../actions/contact";
 import { motion } from "framer-motion";
 
-function ContactForm() {
+function ContactForm({ onReset }: { onReset: () => void }) {
   const { t } = useLanguage();
   const [state, action, pending] = useActionState(sendContactEmail, null);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  
+
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim();
 
   if (state?.success) {
@@ -29,7 +29,13 @@ function ContactForm() {
           </svg>
         </div>
         <p className="text-white text-xl font-medium mb-2">{t.contact.successTitle}</p>
-        <p className="text-gray-500">{t.contact.successBody}</p>
+        <p className="text-gray-500 mb-6">{t.contact.successBody}</p>
+        <button
+          onClick={onReset}
+          className="text-xs font-semibold tracking-[0.08em] uppercase text-blue-400 hover:text-blue-300 transition-colors"
+        >
+          {t.contact.sendAnother}
+        </button>
       </motion.div>
     );
   }
@@ -107,7 +113,7 @@ function ContactForm() {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
-            Sending...
+            {t.contact.sending}
           </span>
         ) : (
           t.contact.send
@@ -120,6 +126,7 @@ function ContactForm() {
 export default function Contact() {
   const { t } = useLanguage();
   const { email, location, mapEmbed } = siteConfig.contact;
+  const [formKey, setFormKey] = useState(0);
 
   return (
     <section id="contact" className="py-28 md:py-40 border-t border-white/[0.07] relative overflow-hidden">
@@ -216,7 +223,7 @@ export default function Contact() {
               <h3 className="text-lg font-semibold text-white mb-6">
                 {t.contact.formTitle}
               </h3>
-              <ContactForm />
+              <ContactForm key={formKey} onReset={() => setFormKey((k) => k + 1)} />
             </div>
           </FadeIn>
         </div>
