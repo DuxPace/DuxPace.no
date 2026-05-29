@@ -17,7 +17,7 @@ function ContactForm() {
 
   if (state?.success) {
     return (
-      <motion.div 
+      <motion.div
         className="text-center py-8"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -28,8 +28,8 @@ function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <p className="text-white text-xl font-medium mb-2">Message sent!</p>
-        <p className="text-gray-500">We&apos;ll be in touch soon.</p>
+        <p className="text-white text-xl font-medium mb-2">{t.contact.successTitle}</p>
+        <p className="text-gray-500">{t.contact.successBody}</p>
       </motion.div>
     );
   }
@@ -40,13 +40,13 @@ function ContactForm() {
     <form action={action} className="space-y-5">
       <div>
         <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
-          Name
+          {t.contact.nameLabel}
         </label>
         <input
           id="contact-name"
           type="text"
           name="name"
-          placeholder="Your name"
+          placeholder={t.contact.namePlaceholder}
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -56,13 +56,13 @@ function ContactForm() {
 
       <div>
         <label htmlFor="contact-email" className="block text-xs text-gray-400 mb-1.5">
-          Email
+          {t.contact.emailLabel}
         </label>
         <input
           id="contact-email"
           type="email"
           name="email"
-          placeholder="your@email.com"
+          placeholder={t.contact.emailPlaceholder}
           required
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -72,12 +72,12 @@ function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="block text-xs text-gray-400 mb-1.5">
-          Message
+          {t.contact.messageLabel}
         </label>
         <textarea
           id="contact-message"
           name="message"
-          placeholder="How can we help you?"
+          placeholder={t.contact.messagePlaceholder}
           rows={4}
           required
           value={formData.message}
@@ -118,7 +118,7 @@ function ContactForm() {
 }
 
 export default function Contact() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const { email, location, mapEmbed } = siteConfig.contact;
 
   return (
@@ -214,7 +214,7 @@ export default function Contact() {
           <FadeIn direction="up" delay={0.2}>
             <div className="bg-white/[0.02] rounded-xl border border-white/10 p-6 md:p-8">
               <h3 className="text-lg font-semibold text-white mb-6">
-                {lang === "no" ? "Send oss en melding" : "Send us a message"}
+                {t.contact.formTitle}
               </h3>
               <ContactForm />
             </div>
