@@ -9,7 +9,7 @@ import { sendContactEmail } from "../../../actions/contact";
 import { motion } from "framer-motion";
 
 function ContactForm({ onReset }: { onReset: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [state, action, pending] = useActionState(sendContactEmail, null);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
@@ -44,6 +44,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
 
   return (
     <form action={action} className="space-y-5">
+      <input type="hidden" name="lang" value={lang} />
       <div>
         <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
           {t.contact.nameLabel}
