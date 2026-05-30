@@ -11,6 +11,15 @@ import {
 } from "@/types/sanity";
 import { logger } from "./logger";
 
+function toError(err: unknown): Error {
+  if (err instanceof Error) return err;
+  try {
+    return new Error(JSON.stringify(err));
+  } catch {
+    return new Error(String(err));
+  }
+}
+
 // Lazy initialization - only create client when needed
 let clientInstance: SanityClient | null = null;
 let builderInstance: ReturnType<typeof import("@sanity/image-url").default> | null = null;
@@ -91,7 +100,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     const query = `*[_type == "siteSettings"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getSiteSettings failed", err instanceof Error ? err : new Error(String(err)));
+    try { logger.error("getSiteSettings failed", toError(err)); } catch { /* ignore */ }
     return null;
   }
 }
@@ -101,7 +110,7 @@ export async function getHeroSection(): Promise<HeroSection | null> {
     const query = `*[_type == "heroSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getHeroSection failed", err instanceof Error ? err : new Error(String(err)));
+    try { logger.error("getHeroSection failed", toError(err)); } catch { /* ignore */ }
     return null;
   }
 }
@@ -111,7 +120,7 @@ export async function getAboutSection(): Promise<AboutSection | null> {
     const query = `*[_type == "aboutSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getAboutSection failed", err instanceof Error ? err : new Error(String(err)));
+    try { logger.error("getAboutSection failed", toError(err)); } catch { /* ignore */ }
     return null;
   }
 }
@@ -123,7 +132,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
     }`;
     return (await client.fetch(query)) || [];
   } catch (err) {
-    logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(String(err)));
+    try { logger.error("getTeamMembers failed", toError(err)); } catch { /* ignore */ }
     return [];
   }
 }
@@ -136,7 +145,7 @@ export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
     }`;
     return (await client.fetch(query)) || [];
   } catch (err) {
-    logger.error("getNewsArticles failed", err instanceof Error ? err : new Error(String(err)), { limit });
+    try { logger.error("getNewsArticles failed", toError(err), { limit }); } catch { /* ignore */ }
     return [];
   }
 }
@@ -146,7 +155,7 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | 
     const query = `*[_type == "newsArticle" && slug.current == $slug][0]`;
     return (await client.fetch(query, { slug })) || null;
   } catch (err) {
-    logger.error("getNewsArticleBySlug failed", err instanceof Error ? err : new Error(String(err)), { slug });
+    try { logger.error("getNewsArticleBySlug failed", toError(err), { slug }); } catch { /* ignore */ }
     return null;
   }
 }
@@ -156,7 +165,7 @@ export async function getContactSection(): Promise<ContactSection | null> {
     const query = `*[_type == "contactSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getContactSection failed", err instanceof Error ? err : new Error(String(err)));
+    try { logger.error("getContactSection failed", toError(err)); } catch { /* ignore */ }
     return null;
   }
 }
