@@ -1,7 +1,9 @@
 "use client";
 
-import { createContext, useContext, useLayoutEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 import { translations, type Language } from "../../lib/data/content";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type LanguageContextType = {
   lang: Language;
@@ -15,10 +17,9 @@ const LanguageContext = createContext<LanguageContextType | null>(null);
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("en");
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const saved = localStorage.getItem("lang") as Language | null;
     if (saved === "en" || saved === "no") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState(saved);
     }
   }, []);
