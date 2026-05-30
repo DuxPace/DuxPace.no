@@ -76,16 +76,21 @@ export async function sendContactEmail(
 
   const from = "DuxPace Contact <onboarding@resend.dev>";
 
-  const { error } = await resend.emails.send({
-    from,
-    to: "planet@duxpace.no",
-    replyTo: email,
-    subject: `New message from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-  });
+  try {
+    const { error } = await resend.emails.send({
+      from,
+      to: "planet@duxpace.no",
+      replyTo: email,
+      subject: `New message from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    });
 
-  if (error) {
-    console.error("Resend error:", error);
+    if (error) {
+      console.error("Resend error:", error);
+      return { success: false, error: m.send_failed };
+    }
+  } catch (err) {
+    console.error("Resend threw:", err);
     return { success: false, error: m.send_failed };
   }
 
