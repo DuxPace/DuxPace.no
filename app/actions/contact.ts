@@ -1,8 +1,10 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const COOLDOWN_SECONDS = 60;
 
 export type ContactState = {
   success: boolean;
@@ -24,6 +26,7 @@ const MESSAGES = {
     message_long: "Message must be less than 5000 characters.",
     service_error: "Email service not configured.",
     send_failed: "Failed to send. Please try again.",
+    rate_limited: "Please wait before sending another message.",
   },
   no: {
     name_empty: "Vennligst oppgi ditt navn.",
@@ -37,6 +40,7 @@ const MESSAGES = {
     message_long: "Meldingen kan ikke være mer enn 5000 tegn.",
     service_error: "E-posttjeneste ikke konfigurert.",
     send_failed: "Sending mislyktes. Prøv igjen.",
+    rate_limited: "Vennligst vent litt før du sender en ny melding.",
   },
 };
 
@@ -61,6 +65,15 @@ export async function sendContactEmail(
 ): Promise<ContactState> {
   const lang = formData.get("lang") === "no" ? "no" : "en";
   const m = MESSAGES[lang];
+
+  const cookieStore = await cookies();
+  const lastTs = cookieStore.get("contact_last")?.value;
+  if (lastTs) {
+    const elapsed = (Date.now() - parseInt(lastTs, 10)) / 1000;
+    if (elapsed < COOLDOWN_SECONDS) {
+      return { success: false, error: m.rate_limited };
+    }
+  }
 
   const name = formData.get("name")?.toString().trim() ?? "";
   const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
@@ -88,6 +101,13 @@ export async function sendContactEmail(
     console.error("Resend error:", error);
     return { success: false, error: m.send_failed };
   }
+
+  cookieStore.set("contact_last", Date.now().toString(), {
+    httpOnly: true,
+    sameSite: "strict",
+    maxAge: COOLDOWN_SECONDS,
+    path: "/",
+  });
 
   return { success: true };
 }
