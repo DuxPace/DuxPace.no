@@ -59,6 +59,9 @@ export async function sendContactEmail(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  const honeypot = formData.get("website")?.toString() ?? "";
+  if (honeypot) return { success: true };
+
   const lang = formData.get("lang") === "no" ? "no" : "en";
   const m = MESSAGES[lang];
 

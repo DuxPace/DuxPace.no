@@ -45,6 +45,17 @@ function ContactForm({ onReset }: { onReset: () => void }) {
   return (
     <form action={action} className="space-y-5">
       <input type="hidden" name="lang" value={lang} />
+      {/* honeypot: hidden from real users, bots fill it */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 0, height: 0, overflow: "hidden" }}>
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <div>
         <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
           {t.contact.nameLabel}
