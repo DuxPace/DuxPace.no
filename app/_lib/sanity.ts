@@ -146,7 +146,7 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | 
     const query = `*[_type == "newsArticle" && slug.current == $slug][0]`;
     return (await client.fetch(query, { slug })) || null;
   } catch (err) {
-    logger.error("getNewsArticleBySlug failed", err instanceof Error ? err : new Error(String(err)));
+    logger.error(`getNewsArticleBySlug failed: ${slug}`, err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
