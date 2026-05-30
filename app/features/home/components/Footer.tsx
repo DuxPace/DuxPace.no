@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { siteConfig } from "../../../lib/data/content";
 import { Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
@@ -10,6 +10,7 @@ export default function SiteFooter() {
   const { t, lang } = useLanguage();
 
   const currentYear = new Date().getFullYear();
+  const shouldReduce = useReducedMotion();
 
   const footerLinks = {
     company: [
@@ -32,10 +33,10 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
           <motion.div 
             className="md:col-span-5"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            whileInView={shouldReduce ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={shouldReduce ? {} : { duration: 0.6 }}
           >
             <motion.a 
               href="#home"
@@ -79,12 +80,12 @@ export default function SiteFooter() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="md:col-span-3 md:col-start-7"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            whileInView={shouldReduce ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={shouldReduce ? {} : { duration: 0.6, delay: 0.1 }}
           >
             <h3 className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase mb-4">
               {lang === "no" ? "Selskap" : "Company"}
@@ -108,12 +109,12 @@ export default function SiteFooter() {
             </ul>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="md:col-span-3"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            whileInView={shouldReduce ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={shouldReduce ? {} : { duration: 0.6, delay: 0.2 }}
           >
             <h3 className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase mb-4">
               {lang === "no" ? "Kontakt" : "Contact"}
@@ -143,12 +144,12 @@ export default function SiteFooter() {
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={shouldReduce ? false : { opacity: 0 }}
+          whileInView={shouldReduce ? {} : { opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={shouldReduce ? {} : { duration: 0.6, delay: 0.3 }}
         >
           <div className="flex items-center gap-3">
             <Image
@@ -172,8 +173,8 @@ export default function SiteFooter() {
             >
               {lang === "no" ? "Til toppen" : "Back to top"}
               <motion.span
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={shouldReduce ? {} : { y: [0, -3, 0] }}
+                transition={shouldReduce ? {} : { duration: 1.5, repeat: Infinity }}
               >
                 ↑
               </motion.span>
@@ -183,10 +184,10 @@ export default function SiteFooter() {
 
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
+          initial={shouldReduce ? false : { scaleX: 0 }}
+          whileInView={shouldReduce ? {} : { scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={shouldReduce ? {} : { duration: 1, delay: 0.5 }}
         />
       </div>
     </footer>
