@@ -15,7 +15,7 @@ export const siteConfig = {
   },
   footer: {
     logo: "/images/logos/logo-square.jpeg",
-    copyright: "© 2026 DuxPace",
+    copyright: "DuxPace",
   },
 };
 
