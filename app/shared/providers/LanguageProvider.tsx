@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 import { translations, type Language } from "../../lib/data/content";
 
 type LanguageContextType = {
@@ -15,11 +15,11 @@ const LanguageContext = createContext<LanguageContextType | null>(null);
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("en");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const saved = localStorage.getItem("lang") as Language | null;
     if (saved === "en" || saved === "no") {
-      // Use requestAnimationFrame to avoid synchronous setState in effect
-      requestAnimationFrame(() => setLangState(saved));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLangState(saved);
     }
   }, []);
 
