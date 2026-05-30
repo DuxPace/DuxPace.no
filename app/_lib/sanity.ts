@@ -9,6 +9,7 @@ import {
   NewsArticle,
   ContactSection,
 } from "@/types/sanity";
+import { logger } from "./logger";
 
 // Lazy initialization - only create client when needed
 let clientInstance: SanityClient | null = null;
@@ -89,7 +90,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const query = `*[_type == "siteSettings"][0]`;
     return (await client.fetch(query)) || null;
-  } catch {
+  } catch (err) {
+    logger.error("getSiteSettings failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -98,7 +100,8 @@ export async function getHeroSection(): Promise<HeroSection | null> {
   try {
     const query = `*[_type == "heroSection"][0]`;
     return (await client.fetch(query)) || null;
-  } catch {
+  } catch (err) {
+    logger.error("getHeroSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -107,7 +110,8 @@ export async function getAboutSection(): Promise<AboutSection | null> {
   try {
     const query = `*[_type == "aboutSection"][0]`;
     return (await client.fetch(query)) || null;
-  } catch {
+  } catch (err) {
+    logger.error("getAboutSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -118,7 +122,8 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
       _id, name, role, image, bio, linkedin, order
     }`;
     return (await client.fetch(query)) || [];
-  } catch {
+  } catch (err) {
+    logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(String(err)));
     return [];
   }
 }
@@ -130,7 +135,8 @@ export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
       _id, title, slug, excerpt, image, publishedAt, featured
     }`;
     return (await client.fetch(query)) || [];
-  } catch {
+  } catch (err) {
+    logger.error("getNewsArticles failed", err instanceof Error ? err : new Error(String(err)));
     return [];
   }
 }
@@ -139,7 +145,8 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | 
   try {
     const query = `*[_type == "newsArticle" && slug.current == $slug][0]`;
     return (await client.fetch(query, { slug })) || null;
-  } catch {
+  } catch (err) {
+    logger.error("getNewsArticleBySlug failed", err instanceof Error ? err : new Error(String(err)), { slug });
     return null;
   }
 }
@@ -148,7 +155,8 @@ export async function getContactSection(): Promise<ContactSection | null> {
   try {
     const query = `*[_type == "contactSection"][0]`;
     return (await client.fetch(query)) || null;
-  } catch {
+  } catch (err) {
+    logger.error("getContactSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
