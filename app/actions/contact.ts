@@ -1,5 +1,6 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -24,6 +25,7 @@ const MESSAGES = {
     message_long: "Message must be less than 5000 characters.",
     service_error: "Email service not configured.",
     send_failed: "Failed to send. Please try again.",
+    rate_limited: "Please wait 60 seconds before sending another message.",
   },
   no: {
     name_empty: "Vennligst oppgi ditt navn.",
@@ -37,6 +39,7 @@ const MESSAGES = {
     message_long: "Meldingen kan ikke være mer enn 5000 tegn.",
     service_error: "E-posttjeneste ikke konfigurert.",
     send_failed: "Sending mislyktes. Prøv igjen.",
+    rate_limited: "Vent 60 sekunder før du sender en ny melding.",
   },
 };
 
@@ -69,6 +72,11 @@ export async function sendContactEmail(
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
 
+  const jar = await cookies();
+  if (jar.get("contact_rl")) {
+    return { success: false, error: m.rate_limited };
+  }
+
   if (!process.env.RESEND_API_KEY) {
     console.warn("RESEND_API_KEY is not set");
     return { success: false, error: m.service_error };
@@ -95,6 +103,13 @@ export async function sendContactEmail(
     console.error("Resend error:", sendError);
     return { success: false, error: m.send_failed };
   }
+
+  jar.set("contact_rl", "1", {
+    httpOnly: true,
+    sameSite: "strict",
+    path: "/",
+    maxAge: 60,
+  });
 
   return { success: true };
 }
