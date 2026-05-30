@@ -1,9 +1,12 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const RL_WINDOW_MS = 60_000;
+const rateLimitStore = new Map<string, number>();
 
 export type ContactState = {
   success: boolean;
@@ -72,8 +75,14 @@ export async function sendContactEmail(
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
 
-  const jar = await cookies();
-  if (jar.get("contact_rl")) {
+  const hdrs = await headers();
+  const ip =
+    hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    hdrs.get("x-real-ip") ??
+    "unknown";
+  const now = Date.now();
+  const last = rateLimitStore.get(ip);
+  if (last !== undefined && now - last < RL_WINDOW_MS) {
     return { success: false, error: m.rate_limited };
   }
 
@@ -104,13 +113,7 @@ export async function sendContactEmail(
     return { success: false, error: m.send_failed };
   }
 
-  jar.set("contact_rl", "1", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    path: "/",
-    maxAge: 60,
-  });
+  rateLimitStore.set(ip, now);
 
   return { success: true };
 }
