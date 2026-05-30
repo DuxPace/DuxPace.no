@@ -6,7 +6,7 @@ import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { siteConfig } from "../../../lib/data/content";
 import { sendContactEmail } from "../../../actions/contact";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 function ContactForm({ onReset }: { onReset: () => void }) {
   const { t, lang } = useLanguage();
@@ -128,21 +128,16 @@ export default function Contact() {
   const { t } = useLanguage();
   const { email, location, mapEmbed } = siteConfig.contact;
   const [formKey, setFormKey] = useState(0);
+  const shouldReduce = useReducedMotion();
 
   return (
     <section id="contact" className="py-28 md:py-40 border-t border-white/[0.07] relative overflow-hidden">
       {/* Background effects */}
       <motion.div
         className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.2, 0.3, 0.2],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        initial={shouldReduce ? { opacity: 0.2 } : false}
+        animate={shouldReduce ? { opacity: 0.2 } : { scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
+        transition={shouldReduce ? {} : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       
       <div className="max-w-7xl mx-auto px-6 relative">
