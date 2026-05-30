@@ -135,6 +135,7 @@ export default function Contact() {
       {/* Background effects */}
       <motion.div
         className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
+        initial={shouldReduce ? { opacity: 0.2 } : false}
         animate={shouldReduce ? { opacity: 0.2 } : { scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
         transition={shouldReduce ? {} : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
