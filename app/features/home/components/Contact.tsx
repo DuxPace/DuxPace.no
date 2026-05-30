@@ -55,6 +55,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
           name="name"
           placeholder={t.contact.namePlaceholder}
           required
+          maxLength={100}
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className={inputClass}
@@ -71,6 +72,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
           name="email"
           placeholder={t.contact.emailPlaceholder}
           required
+          maxLength={254}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className={inputClass}
@@ -78,15 +80,27 @@ function ContactForm({ onReset }: { onReset: () => void }) {
       </div>
 
       <div>
-        <label htmlFor="contact-message" className="block text-xs text-gray-400 mb-1.5">
-          {t.contact.messageLabel}
-        </label>
+        <div className="flex justify-between items-baseline mb-1.5">
+          <label htmlFor="contact-message" className="block text-xs text-gray-400">
+            {t.contact.messageLabel}
+          </label>
+          <span className={`text-xs tabular-nums ${
+            formData.message.length > 4800
+              ? "text-red-400"
+              : formData.message.length > 4500
+              ? "text-yellow-400"
+              : "text-gray-600"
+          }`}>
+            {formData.message.length} / 5000
+          </span>
+        </div>
         <textarea
           id="contact-message"
           name="message"
           placeholder={t.contact.messagePlaceholder}
           rows={4}
           required
+          maxLength={5000}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className={`${inputClass} resize-none`}
