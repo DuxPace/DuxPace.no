@@ -106,6 +106,7 @@ export async function sendContactEmail(
 
   jar.set("contact_rl", "1", {
     httpOnly: true,
+    secure: true,
     sameSite: "strict",
     path: "/",
     maxAge: 60,
