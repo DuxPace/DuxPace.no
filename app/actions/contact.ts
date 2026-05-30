@@ -62,6 +62,10 @@ export async function sendContactEmail(
   const lang = formData.get("lang") === "no" ? "no" : "en";
   const m = MESSAGES[lang];
 
+  // Honeypot: bots fill this, humans don't see it
+  const honeypot = formData.get("website")?.toString() ?? "";
+  if (honeypot) return { success: true };
+
   const name = formData.get("name")?.toString().trim() ?? "";
   const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
   const message = formData.get("message")?.toString().trim() ?? "";
