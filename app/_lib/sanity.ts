@@ -91,7 +91,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     const query = `*[_type == "siteSettings"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getSiteSettings failed", err instanceof Error ? err : new Error(JSON.stringify(err)));
+    logger.error("getSiteSettings failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -101,7 +101,7 @@ export async function getHeroSection(): Promise<HeroSection | null> {
     const query = `*[_type == "heroSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getHeroSection failed", err instanceof Error ? err : new Error(JSON.stringify(err)));
+    logger.error("getHeroSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -111,7 +111,7 @@ export async function getAboutSection(): Promise<AboutSection | null> {
     const query = `*[_type == "aboutSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getAboutSection failed", err instanceof Error ? err : new Error(JSON.stringify(err)));
+    logger.error("getAboutSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
@@ -123,7 +123,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
     }`;
     return (await client.fetch(query)) || [];
   } catch (err) {
-    logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(JSON.stringify(err)));
+    logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(String(err)));
     return [];
   }
 }
@@ -136,7 +136,7 @@ export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
     }`;
     return (await client.fetch(query)) || [];
   } catch (err) {
-    logger.error("getNewsArticles failed", err instanceof Error ? err : new Error(JSON.stringify(err)), { limit });
+    logger.error("getNewsArticles failed", err instanceof Error ? err : new Error(String(err)), { limit });
     return [];
   }
 }
@@ -146,7 +146,7 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | 
     const query = `*[_type == "newsArticle" && slug.current == $slug][0]`;
     return (await client.fetch(query, { slug })) || null;
   } catch (err) {
-    logger.error("getNewsArticleBySlug failed", err instanceof Error ? err : new Error(JSON.stringify(err)), { slug });
+    logger.error("getNewsArticleBySlug failed", err instanceof Error ? err : new Error(String(err)), { slug });
     return null;
   }
 }
@@ -156,7 +156,7 @@ export async function getContactSection(): Promise<ContactSection | null> {
     const query = `*[_type == "contactSection"][0]`;
     return (await client.fetch(query)) || null;
   } catch (err) {
-    logger.error("getContactSection failed", err instanceof Error ? err : new Error(JSON.stringify(err)));
+    logger.error("getContactSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
   }
 }
