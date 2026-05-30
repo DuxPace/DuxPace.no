@@ -167,7 +167,7 @@ export default function News() {
         modal.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         )
-      ).filter((el) => !el.hasAttribute("disabled"));
+      ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
 
       if (focusable.length === 0) return;
       const first = focusable[0];
