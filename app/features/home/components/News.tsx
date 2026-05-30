@@ -290,10 +290,10 @@ export default function News() {
               ref={modalRef}
               className="bg-black border border-white/[0.12] w-full md:max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg"
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 50 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 50 }}
+              animate={shouldReduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 50 }}
+              transition={shouldReduce ? { duration: 0.15 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="relative w-full aspect-video">
                 <Image src={item.image} alt={item.alt} fill className="object-cover" />
