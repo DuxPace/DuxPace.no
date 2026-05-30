@@ -6,7 +6,7 @@ import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems, localize, type NewsItem } from "../../../lib/data/news";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 const PER_PAGE = 3;
@@ -28,7 +28,8 @@ const NewsCard = memo(function NewsCard({
   lang: "en" | "no";
 }) {
   const { title, description, date } = localize(item, lang);
-  
+  const shouldReduce = useReducedMotion();
+
   const handleClick = useCallback(() => {
     onClick(globalIndex);
   }, [onClick, globalIndex]);
@@ -72,8 +73,8 @@ const NewsCard = memo(function NewsCard({
               {t.news.readMore}
               <motion.span
                 className="inline-block"
-                animate={{ x: [0, 3, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={shouldReduce ? {} : { x: [0, 3, 0] }}
+                transition={shouldReduce ? {} : { duration: 1.5, repeat: Infinity }}
               >
                 →
               </motion.span>
@@ -92,6 +93,7 @@ export default function News() {
   const searchParams = useSearchParams();
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
+  const shouldReduce = useReducedMotion();
 
   const totalPages = Math.ceil(newsItems.length / PER_PAGE);
   const visibleItems = newsItems.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
@@ -141,15 +143,8 @@ export default function News() {
       {/* Background glow */}
       <motion.div
         className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-        animate={{
-          y: [0, 50, 0],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        animate={shouldReduce ? { opacity: 0.2 } : { y: [0, 50, 0], opacity: [0.2, 0.4, 0.2] }}
+        transition={shouldReduce ? {} : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       
       <div className="max-w-7xl mx-auto px-6 relative">

@@ -2,20 +2,22 @@
 
 import GlobeWrapper from "../../../shared/components/GlobeWrapper";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-function fadeUp(delay: number) {
-  return {
-    initial: { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.4, ease },
-  };
-}
-
 export default function Hero() {
   const { t } = useLanguage();
+  const shouldReduce = useReducedMotion();
+
+  function fadeUp(delay: number) {
+    if (shouldReduce) return {};
+    return {
+      initial: { opacity: 0, y: 24 },
+      animate: { opacity: 1, y: 0 },
+      transition: { delay, duration: 0.4, ease },
+    };
+  }
 
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden">

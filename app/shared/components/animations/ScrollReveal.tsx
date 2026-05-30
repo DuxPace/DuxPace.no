@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 export function useScrollReveal(threshold = 0.2, once = true) {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,6 +27,7 @@ export function FadeIn({
   distance = 30,
 }: FadeInProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   const directions = {
     up: { y: distance, x: 0 },
@@ -40,13 +41,9 @@ export function FadeIn({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, ...directions[direction] }}
-      animate={isInView ? { opacity: 1, y: 0, x: 0 } : {}}
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      initial={shouldReduce ? false : { opacity: 0, ...directions[direction] }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, y: 0, x: 0 } : {})}
+      transition={shouldReduce ? {} : { duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}
     </motion.div>
@@ -67,18 +64,15 @@ export function ScaleIn({
   duration = 0.5,
 }: ScaleInProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      initial={shouldReduce ? false : { opacity: 0, scale: 0.9 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, scale: 1 } : {})}
+      transition={shouldReduce ? {} : { duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}
     </motion.div>
@@ -99,14 +93,15 @@ export function Stagger({
   baseDelay = 0,
 }: StaggerProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
+      initial={shouldReduce ? false : "hidden"}
+      animate={shouldReduce ? "visible" : (isInView ? "visible" : "hidden")}
+      variants={shouldReduce ? undefined : {
         hidden: {},
         visible: {
           transition: {
@@ -128,10 +123,12 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const shouldReduce = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      variants={{
+      variants={shouldReduce ? {} : {
         hidden: { opacity: 0, y: 20 },
         visible: {
           opacity: 1,
@@ -162,22 +159,19 @@ export function LineReveal({
   duration = 0.8,
 }: LineRevealProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
   const isHorizontal = direction === "horizontal";
 
   return (
     <motion.div
       ref={ref}
       className={`bg-white/20 ${isHorizontal ? "h-px" : "w-px"} ${className}`}
-      initial={{
+      initial={shouldReduce ? false : {
         scaleX: isHorizontal ? 0 : 1,
         scaleY: isHorizontal ? 1 : 0,
       }}
-      animate={isInView ? { scaleX: 1, scaleY: 1 } : {}}
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      animate={shouldReduce ? {} : (isInView ? { scaleX: 1, scaleY: 1 } : {})}
+      transition={shouldReduce ? {} : { duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
       style={{
         originX: isHorizontal ? 0 : 0.5,
         originY: isHorizontal ? 0.5 : 0,
@@ -200,6 +194,7 @@ export function ImageFade({
   delay = 0,
 }: ImageFadeProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div ref={ref} className={`overflow-hidden ${className}`}>
@@ -207,9 +202,9 @@ export function ImageFade({
         src={src}
         alt={alt}
         className="w-full h-full object-cover"
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-        transition={{
+        initial={shouldReduce ? false : { opacity: 0, scale: 1.1 }}
+        animate={shouldReduce ? {} : (isInView ? { opacity: 1, scale: 1 } : {})}
+        transition={shouldReduce ? {} : {
           opacity: { duration: 0.6, delay },
           scale: { duration: 0.8, delay },
           ease: [0.25, 0.1, 0.25, 1],
@@ -232,6 +227,7 @@ export function TextReveal({
   delay = 0,
 }: TextRevealProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
   const words = children.split(" ");
 
   return (
@@ -240,9 +236,9 @@ export function TextReveal({
         <motion.span
           key={index}
           className="inline-block mr-[0.25em]"
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
+          initial={shouldReduce ? false : { opacity: 0, y: 10 }}
+          animate={shouldReduce ? {} : (isInView ? { opacity: 1, y: 0 } : {})}
+          transition={shouldReduce ? {} : {
             duration: 0.4,
             delay: delay + index * 0.05,
             ease: [0.25, 0.1, 0.25, 1],
@@ -268,21 +264,22 @@ export function AnimatedBorder({
   delay = 0,
 }: AnimatedBorderProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={`relative ${className}`}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.4, delay }}
+      initial={shouldReduce ? false : { opacity: 0 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1 } : {})}
+      transition={shouldReduce ? {} : { duration: 0.4, delay }}
     >
       {children}
       <motion.div
         className="absolute inset-0 border border-white/10 rounded-lg pointer-events-none"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-        transition={{
+        initial={shouldReduce ? false : { opacity: 0, scale: 0.95 }}
+        animate={shouldReduce ? {} : (isInView ? { opacity: 1, scale: 1 } : {})}
+        transition={shouldReduce ? {} : {
           duration: 0.5,
           delay: delay + 0.2,
           ease: [0.25, 0.1, 0.25, 1],
@@ -307,22 +304,15 @@ export function BlurIn({
   duration = 0.6,
 }: BlurInProps) {
   const { ref, isInView } = useScrollReveal();
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      animate={
-        isInView
-          ? { opacity: 1, filter: "blur(0px)" }
-          : {}
-      }
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      initial={shouldReduce ? false : { opacity: 0, filter: "blur(10px)" }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, filter: "blur(0px)" } : {})}
+      transition={shouldReduce ? {} : { duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}
     </motion.div>
