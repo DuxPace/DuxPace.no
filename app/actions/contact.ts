@@ -1,12 +1,12 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const RL_WINDOW_MS = 60_000;
-const rateLimitStore = new Map<string, number>();
+const RL_COOKIE = "rl_contact";
+const RL_WINDOW_S = 60;
 
 export type ContactState = {
   success: boolean;
@@ -75,14 +75,8 @@ export async function sendContactEmail(
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
 
-  const hdrs = await headers();
-  const ip =
-    hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    hdrs.get("x-real-ip") ??
-    "unknown";
-  const now = Date.now();
-  const last = rateLimitStore.get(ip);
-  if (last !== undefined && now - last < RL_WINDOW_MS) {
+  const cookieStore = await cookies();
+  if (cookieStore.get(RL_COOKIE)) {
     return { success: false, error: m.rate_limited };
   }
 
@@ -113,7 +107,13 @@ export async function sendContactEmail(
     return { success: false, error: m.send_failed };
   }
 
-  rateLimitStore.set(ip, now);
+  (await cookies()).set(RL_COOKIE, "1", {
+    maxAge: RL_WINDOW_S,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+  });
 
   return { success: true };
 }
