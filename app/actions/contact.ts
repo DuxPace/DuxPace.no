@@ -1,8 +1,12 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const RL_COOKIE = "rl_contact";
+const RL_WINDOW_S = 60;
 
 export type ContactState = {
   success: boolean;
@@ -24,6 +28,7 @@ const MESSAGES = {
     message_long: "Message must be less than 5000 characters.",
     service_error: "Email service not configured.",
     send_failed: "Failed to send. Please try again.",
+    rate_limited: "Please wait 60 seconds before sending another message.",
   },
   no: {
     name_empty: "Vennligst oppgi ditt navn.",
@@ -37,6 +42,7 @@ const MESSAGES = {
     message_long: "Meldingen kan ikke være mer enn 5000 tegn.",
     service_error: "E-posttjeneste ikke konfigurert.",
     send_failed: "Sending mislyktes. Prøv igjen.",
+    rate_limited: "Vent 60 sekunder før du sender en ny melding.",
   },
 };
 
@@ -69,6 +75,11 @@ export async function sendContactEmail(
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
 
+  const cookieStore = await cookies();
+  if (cookieStore.get(RL_COOKIE)) {
+    return { success: false, error: m.rate_limited };
+  }
+
   if (!process.env.RESEND_API_KEY) {
     console.warn("RESEND_API_KEY is not set");
     return { success: false, error: m.service_error };
@@ -95,6 +106,14 @@ export async function sendContactEmail(
     console.error("Resend error:", sendError);
     return { success: false, error: m.send_failed };
   }
+
+  (await cookies()).set(RL_COOKIE, "1", {
+    maxAge: RL_WINDOW_S,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+  });
 
   return { success: true };
 }
