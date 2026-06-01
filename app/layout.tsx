@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
+import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { translations } from "./lib/data/content";
+import { translations, type Language } from "./lib/data/content";
 import { LanguageProvider } from "./shared/providers/LanguageProvider";
 import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
 import HtmlLang from "./shared/components/HtmlLang";
@@ -71,11 +72,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const cookieStore = await cookies();
+  const rawLang = cookieStore.get("lang")?.value;
+  const initialLang: Language = rawLang === "en" || rawLang === "no" ? rawLang : "en";
+
   return (
-    <html lang="en" className={`scroll-smooth ${geist.variable}`}>
+    <html lang={initialLang} className={`scroll-smooth ${geist.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -86,7 +91,7 @@ export default function RootLayout({
         <link rel="preload" href="/images/logos/logo-wide.jpeg" as="image" />
       </head>
       <body className={`${geist.className} antialiased`}>
-        <LanguageProvider>
+        <LanguageProvider initialLang={initialLang}>
           <HtmlLang />
           <ScrollProgressIndicator />
           {children}
