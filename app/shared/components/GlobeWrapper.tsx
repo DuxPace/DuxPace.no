@@ -1,9 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useState, useEffect } from "react";
+import { Component, type ReactNode, useRef, useState, useEffect } from "react";
 
-const InteractiveGlobe = dynamic(() => import("./InteractiveGlobe"), { 
+const InteractiveGlobe = dynamic(() => import("./InteractiveGlobe"), {
   ssr: false,
   loading: () => (
     <div className="w-full aspect-square flex items-center justify-center">
@@ -11,6 +11,25 @@ const InteractiveGlobe = dynamic(() => import("./InteractiveGlobe"), {
     </div>
   )
 });
+
+class GlobeErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) {
+      return (
+        <div className="w-full aspect-square flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10" />
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export default function GlobeWrapper() {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,9 +43,9 @@ export default function GlobeWrapper() {
           observer.disconnect();
         }
       },
-      { 
+      {
         rootMargin: "100px",
-        threshold: 0.1 
+        threshold: 0.1
       }
     );
 
@@ -39,11 +58,13 @@ export default function GlobeWrapper() {
 
   return (
     <div ref={ref} className="w-full h-full">
-      {isVisible ? <InteractiveGlobe /> : (
-        <div className="w-full aspect-square flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
-        </div>
-      )}
+      <GlobeErrorBoundary>
+        {isVisible ? <InteractiveGlobe /> : (
+          <div className="w-full aspect-square flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+          </div>
+        )}
+      </GlobeErrorBoundary>
     </div>
   );
 }
