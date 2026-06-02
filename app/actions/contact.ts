@@ -85,7 +85,7 @@ export async function sendContactEmail(
     return { success: false, error: m.service_error };
   }
 
-  const from = "DuxPace Contact <onboarding@resend.dev>";
+  const from = "DuxPace Contact <noreply@duxpace.no>";
 
   let sendError: unknown;
   try {
