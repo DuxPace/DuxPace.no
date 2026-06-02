@@ -4,7 +4,7 @@ import Image from "next/image";
 import { memo, useCallback, useRef } from "react";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
-import { newsItems, localize, type NewsItem } from "../../../lib/data/news";
+import { newsItems as staticNewsItems, localize, type NewsItem } from "../../../lib/data/news";
 import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -86,7 +86,8 @@ const NewsCard = memo(function NewsCard({
   );
 });
 
-export default function News() {
+export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
+  const newsItems = initialItems && initialItems.length > 0 ? initialItems : staticNewsItems;
   const { lang, t } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
@@ -114,7 +115,7 @@ export default function News() {
         });
       }
     }
-  }, [searchParams]);
+  }, [searchParams, newsItems]);
 
   const openNews = useCallback((index: number) => {
     setSelected(index);
