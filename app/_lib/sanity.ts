@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
-import type { SanityClient } from "@sanity/client";
-import {
+import type {
   SiteSettings,
   HeroSection,
   AboutSection,
@@ -10,65 +7,6 @@ import {
   ContactSection,
 } from "@/types/sanity";
 import { logger } from "./logger";
-
-// Lazy initialization - only create client when needed
-let clientInstance: SanityClient | null = null;
-let builderInstance: ReturnType<typeof import("@sanity/image-url").default> | null = null;
-
-function getClient(): SanityClient {
-  if (clientInstance) return clientInstance;
-
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-
-  if (!projectId || projectId === "your_project_id_here") {
-    // Return mock client when Sanity is not configured
-    return { fetch: async () => null } as unknown as SanityClient;
-  }
-
-  // Dynamic import to avoid build-time issues
-  const { createClient } = require("@sanity/client");
-  clientInstance = createClient({
-    projectId,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-03-05",
-    useCdn: true,
-    perspective: "published",
-  }) as SanityClient;
-
-  return clientInstance;
-}
-
-function getBuilder() {
-  if (builderInstance) return builderInstance;
-  const { default: imageUrlBuilder } = require("@sanity/image-url");
-  builderInstance = imageUrlBuilder(getClient());
-  return builderInstance;
-}
-
-// Export a proxy that lazy-loads the client
-export const client = new Proxy({} as SanityClient, {
-  get(_target, prop) {
-    const actualClient = getClient();
-    return actualClient ? actualClient[prop as keyof SanityClient] : undefined;
-  },
-});
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function urlFor(source: any) {
-  try {
-    const builder = getBuilder();
-    if (!builder) {
-      throw new Error("Builder not available");
-    }
-    return builder.image(source);
-  } catch {
-    return {
-      url: () => "/images/placeholder.jpg",
-      width: () => ({ url: () => "/images/placeholder.jpg" }),
-      height: () => ({ url: () => "/images/placeholder.jpg" }),
-    };
-  }
-}
 
 export type Language = "no" | "en";
 
@@ -85,11 +23,72 @@ export function getLocalizedValue(
   return field[lang] ?? field.en ?? field.no ?? null;
 }
 
-// QUERIES
+export function blocksToText(
+  blocks: Array<{ children?: Array<{ text: string }> }> | undefined
+): string {
+  if (!blocks || !Array.isArray(blocks)) return "";
+  return blocks
+    .map((b) => (b.children || []).map((c) => c.text).join(""))
+    .join("\n\n");
+}
+
+export function urlFor(source: { asset?: { _ref?: string } } | null | undefined) {
+  const fallback = { url: () => "/images/placeholder.jpg" };
+  if (!source?.asset?._ref) return fallback;
+
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+  if (!projectId || projectId === "your_project_id_here") return fallback;
+
+  // ref format: image-<hash>-<WxH>-<ext>
+  const parts = source.asset._ref.split("-");
+  if (parts.length < 4) return fallback;
+  const [, hash, dimensions, ext] = parts;
+  const filename = `${hash}-${dimensions}.${ext}`;
+
+  return {
+    url: () => `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}`,
+  };
+}
+
+async function sanityFetch<T>(
+  query: string,
+  params?: Record<string, string>
+): Promise<T | null> {
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  if (!projectId || projectId === "your_project_id_here") return null;
+
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+  const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-03-05";
+  const useCdn = process.env.NODE_ENV === "production";
+  const subdomain = useCdn ? "apicdn" : "api";
+
+  const url = new URL(
+    `https://${projectId}.${subdomain}.sanity.io/v${apiVersion}/data/query/${dataset}`
+  );
+  url.searchParams.set("query", query);
+
+  if (params) {
+    for (const [key, value] of Object.entries(params)) {
+      url.searchParams.set(`$${key}`, JSON.stringify(value));
+    }
+  }
+
+  const res = await fetch(url.toString(), {
+    next: { revalidate: 300 },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Sanity API ${res.status}: ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  return data.result as T;
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
-    const query = `*[_type == "siteSettings"][0]`;
-    return (await client.fetch(query)) || null;
+    return await sanityFetch<SiteSettings>(`*[_type == "siteSettings"][0]`);
   } catch (err) {
     logger.error("getSiteSettings failed", err instanceof Error ? err : new Error(String(err)));
     return null;
@@ -98,8 +97,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
 
 export async function getHeroSection(): Promise<HeroSection | null> {
   try {
-    const query = `*[_type == "heroSection"][0]`;
-    return (await client.fetch(query)) || null;
+    return await sanityFetch<HeroSection>(`*[_type == "heroSection"][0]`);
   } catch (err) {
     logger.error("getHeroSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
@@ -108,8 +106,7 @@ export async function getHeroSection(): Promise<HeroSection | null> {
 
 export async function getAboutSection(): Promise<AboutSection | null> {
   try {
-    const query = `*[_type == "aboutSection"][0]`;
-    return (await client.fetch(query)) || null;
+    return await sanityFetch<AboutSection>(`*[_type == "aboutSection"][0]`);
   } catch (err) {
     logger.error("getAboutSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;
@@ -121,7 +118,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
     const query = `*[_type == "teamMember"] | order(order asc) {
       _id, name, role, image, bio, linkedin, order
     }`;
-    return (await client.fetch(query)) || [];
+    return (await sanityFetch<TeamMember[]>(query)) || [];
   } catch (err) {
     logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(String(err)));
     return [];
@@ -132,9 +129,9 @@ export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
   try {
     const limitClause = limit ? `[0...${limit}]` : "";
     const query = `*[_type == "newsArticle"] | order(publishedAt desc) ${limitClause} {
-      _id, title, slug, excerpt, image, publishedAt, featured
+      _id, title, slug, excerpt, content, image, publishedAt, featured
     }`;
-    return (await client.fetch(query)) || [];
+    return (await sanityFetch<NewsArticle[]>(query)) || [];
   } catch (err) {
     logger.error("getNewsArticles failed", err instanceof Error ? err : new Error(String(err)));
     return [];
@@ -144,17 +141,19 @@ export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
 export async function getNewsArticleBySlug(slug: string): Promise<NewsArticle | null> {
   try {
     const query = `*[_type == "newsArticle" && slug.current == $slug][0]`;
-    return (await client.fetch(query, { slug })) || null;
+    return await sanityFetch<NewsArticle>(query, { slug });
   } catch (err) {
-    logger.error(`getNewsArticleBySlug failed: ${slug}`, err instanceof Error ? err : new Error(String(err)));
+    logger.error(
+      `getNewsArticleBySlug failed: ${slug}`,
+      err instanceof Error ? err : new Error(String(err))
+    );
     return null;
   }
 }
 
 export async function getContactSection(): Promise<ContactSection | null> {
   try {
-    const query = `*[_type == "contactSection"][0]`;
-    return (await client.fetch(query)) || null;
+    return await sanityFetch<ContactSection>(`*[_type == "contactSection"][0]`);
   } catch (err) {
     logger.error("getContactSection failed", err instanceof Error ? err : new Error(String(err)));
     return null;

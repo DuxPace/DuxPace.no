@@ -1,8 +1,10 @@
 export type Member = {
   name: string;
   role: string;
+  roleNo?: string;
   image: string;
   bio: string;
+  bioNo?: string;
   linkedin: string;
   email: string;
 };
