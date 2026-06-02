@@ -23,7 +23,7 @@ const organizationJsonLd = {
   name: "DuxPace",
   url: "https://duxpace.no",
   description,
-  foundingDate: "2024-06",
+  foundingDate: "2024-06-01",
   location: {
     "@type": "Place",
     name: siteConfig.contact.location,
