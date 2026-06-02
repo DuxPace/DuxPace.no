@@ -182,8 +182,8 @@ export default function InteractiveGlobe() {
         width={dimensions.width}
         height={dimensions.height}
         
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        globeImageUrl="/images/earth-blue-marble.jpg"
+        bumpImageUrl="/images/earth-topology.png"
         backgroundColor="rgba(0,0,0,0)"
         
         atmosphereColor="rgba(100, 149, 237, 0.4)"
