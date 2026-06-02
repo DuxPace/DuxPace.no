@@ -115,7 +115,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
         });
       }
     }
-  }, [searchParams, newsItems.length]);
+  }, [searchParams, newsItems]);
 
   const openNews = useCallback((index: number) => {
     setSelected(index);

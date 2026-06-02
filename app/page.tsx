@@ -23,11 +23,11 @@ function formatDate(isoDate: string, locale: string): string {
 function adaptNews(articles: NewsArticle[]): NewsItem[] {
   return articles.map((a) => ({
     image: a.image ? urlFor(a.image).url() : "/images/placeholder.jpg",
-    alt: a.title.en || a.title.no || "",
+    alt: a.title?.en || a.title?.no || "",
     date: a.publishedAt ? formatDate(a.publishedAt, "en-US") : "",
     dateNo: a.publishedAt ? formatDate(a.publishedAt, "nb-NO") : "",
-    title: a.title.en || a.title.no || "",
-    titleNo: a.title.no || a.title.en || "",
+    title: a.title?.en || a.title?.no || "",
+    titleNo: a.title?.no || a.title?.en || "",
     description: a.excerpt?.en || a.excerpt?.no || "",
     descriptionNo: a.excerpt?.no || a.excerpt?.en || "",
     content: blocksToText(a.content?.en),
@@ -38,8 +38,8 @@ function adaptNews(articles: NewsArticle[]): NewsItem[] {
 function adaptTeam(sanityMembers: TeamMember[]): Member[] {
   return sanityMembers.map((m) => ({
     name: m.name,
-    role: m.role.en || m.role.no || "",
-    roleNo: m.role.no || m.role.en || "",
+    role: m.role?.en || m.role?.no || "",
+    roleNo: m.role?.no || m.role?.en || "",
     image: m.image ? urlFor(m.image).url() : "/images/placeholder.jpg",
     bio: m.bio?.en || m.bio?.no || "",
     bioNo: m.bio?.no || m.bio?.en || "",
