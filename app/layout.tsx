@@ -3,7 +3,7 @@ import { Geist } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { translations, type Language } from "./lib/data/content";
+import { translations, siteConfig, type Language } from "./lib/data/content";
 import { LanguageProvider } from "./shared/providers/LanguageProvider";
 import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
 import HtmlLang from "./shared/components/HtmlLang";
@@ -16,6 +16,20 @@ const geist = Geist({
 });
 
 const { title, description } = translations.en.meta;
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "DuxPace",
+  url: "https://duxpace.no",
+  description,
+  foundingDate: "2024-06-01",
+  location: {
+    "@type": "Place",
+    name: siteConfig.contact.location,
+  },
+  sameAs: [siteConfig.contact.linkedin],
+};
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -86,6 +100,10 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <link rel="preload" href="/images/team/herman.jpg" as="image" />
         <link rel="preload" href="/images/team/andre.jpg" as="image" />
         <link rel="preload" href="/images/logos/logo-wide.jpeg" as="image" />
