@@ -22,12 +22,8 @@ export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
-export async function generateMetadata(): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const rawLang = cookieStore.get("lang")?.value;
-  const lang: Language = rawLang === "en" || rawLang === "no" ? rawLang : "en";
-  const { title, description } = translations[lang].meta;
-  const ogLocale = lang === "no" ? "nb_NO" : "en_US";
+export function generateMetadata(): Metadata {
+  const { title, description } = translations.en.meta;
 
   return {
     metadataBase: new URL("https://duxpace.no"),
@@ -58,8 +54,8 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       url: "https://duxpace.no",
       siteName: "DuxPace",
-      locale: ogLocale,
-      alternateLocale: lang === "no" ? "en_US" : "nb_NO",
+      locale: "en_US",
+      alternateLocale: "nb_NO",
       type: "website",
       images: [{ url: "/images/logos/logo-banner.jpeg", width: 1200, height: 630, alt: "DuxPace" }],
     },
