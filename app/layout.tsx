@@ -57,13 +57,13 @@ export function generateMetadata(): Metadata {
       locale: "en_US",
       alternateLocale: "nb_NO",
       type: "website",
-      images: [{ url: "/images/logos/logo-banner.jpeg", width: 1200, height: 630, alt: "DuxPace" }],
+      images: [{ url: "/images/logos/og-image.jpeg", width: 1200, height: 630, alt: "DuxPace" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/logos/logo-banner.jpeg"],
+      images: ["/images/logos/og-image.jpeg"],
     },
     alternates: {
       canonical: "https://duxpace.no",
