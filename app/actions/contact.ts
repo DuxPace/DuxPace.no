@@ -22,7 +22,6 @@ export async function sendContactEmail(
   }
 
   if (!process.env.RESEND_API_KEY) {
-    console.warn("RESEND_API_KEY is not set");
     return { success: false, error: "Email service not configured." };
   }
 
@@ -37,7 +36,6 @@ export async function sendContactEmail(
   });
 
   if (error) {
-    console.error("Resend error:", error);
     return { success: false, error: "Failed to send. Please try again." };
   }
 

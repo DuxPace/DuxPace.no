@@ -52,7 +52,7 @@ export default function About() {
                 {t.about.body.map((p, i) => (
                   <FadeIn key={i} direction="up" delay={0.3 + i * 0.15}>
                     <p
-                      className={`leading-relaxed ${i === 0 ? "text-gray-400 text-base" : "text-gray-600 text-sm"}`}
+                      className={`leading-relaxed ${i === 0 ? "text-gray-300 text-base" : "text-gray-400 text-sm"}`}
                     >
                       {p}
                     </p>
@@ -66,14 +66,14 @@ export default function About() {
           <div className="space-y-6 pt-1">
             {t.about.facts.map((fact, i) => (
               <FlipReveal key={fact.label} delay={0.2 + i * 0.2} axis="y">
-                <DramaticCard 
-                  className="p-6 bg-white/[0.02] rounded-lg border border-white/5"
+                <DramaticCard
+                  className="p-6 bg-white/[0.05] rounded-lg border border-white/[0.08]"
                   glowColor="rgba(59, 130, 246, 0.15)"
                 >
                   <p className="text-[10px] text-blue-400 font-mono tracking-[0.18em] uppercase mb-3">
                     {fact.label}
                   </p>
-                  <p className="text-gray-400 leading-relaxed text-sm">
+                  <p className="text-gray-300 leading-relaxed text-sm">
                     {fact.text}
                   </p>
                 </DramaticCard>

@@ -35,7 +35,7 @@ const NewsCard = memo(function NewsCard({
 
   return (
     <FadeIn key={globalIndex} direction="up" delay={0.1 + index * 0.15} className="pointer-events-auto">
-      <div className="bg-white/[0.02] rounded-lg overflow-hidden border border-white/5 h-full hover:border-blue-500/30 transition-colors">
+      <div className="bg-white/[0.05] rounded-lg overflow-hidden border border-white/[0.08] h-full hover:border-blue-500/40 transition-colors">
         <button
           onClick={handleClick}
           className="w-full h-full text-left group cursor-pointer block relative z-10"
@@ -65,7 +65,7 @@ const NewsCard = memo(function NewsCard({
             <h3 className="text-sm font-bold text-white leading-snug mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
               {title}
             </h3>
-            <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed mb-4">
+            <p className="text-gray-300 text-xs line-clamp-2 leading-relaxed mb-4">
               {description}
             </p>
             <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-blue-400/80 group-hover:text-blue-400 transition-colors inline-flex items-center gap-1">

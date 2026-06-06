@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { translations } from "./lib/data/content";
-import { LanguageProvider } from "./shared/providers/LanguageProvider";
-import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
-import HtmlLang from "./shared/components/HtmlLang";
+import { LocaleProvider } from "@/lib/i18n/useT";
+import { ScrollProgressIndicator } from "@/lib/motion/SmoothScroll";
+import { organizationSchema } from "@/lib/seo/schema";
 import "./globals.css";
 
 const geist = Geist({ 
@@ -13,13 +12,14 @@ const geist = Geist({
   variable: "--font-geist",
 });
 
-const { title, description } = translations.en.meta;
+const title = "DuxPace - Satellite data for Norwegian aquaculture";
+const description = "DuxPace gives Norwegian fish farmers early warning of algae, sea lice, and environmental stress - from Sentinel-2 satellite data to dashboard in hours. Based at VM-paviljongen, Trondheim.";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#000000",
+  themeColor: "#0a0a0a",
 };
 
 export const metadata: Metadata = {
@@ -63,10 +63,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://duxpace.no",
-    languages: {
-      "en": "https://duxpace.no",
-      "no": "https://duxpace.no",
-    },
   },
 };
 
@@ -74,7 +70,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${geist.variable}`}>
+    <html lang="no" className={`scroll-smooth ${geist.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -83,13 +79,16 @@ export default function RootLayout({
         <link rel="preload" href="/images/team/herman.jpg" as="image" />
         <link rel="preload" href="/images/team/andre.jpg" as="image" />
         <link rel="preload" href="/images/logos/logo-wide.jpeg" as="image" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
       </head>
       <body className={`${geist.className} antialiased`}>
-        <LanguageProvider>
-          <HtmlLang />
+        <LocaleProvider>
           <ScrollProgressIndicator />
           {children}
-        </LanguageProvider>
+        </LocaleProvider>
         <Analytics />
       </body>
     </html>

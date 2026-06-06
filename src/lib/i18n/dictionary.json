@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "home": { "en": "Home", "no": "Hjem" },
+    "news": { "en": "News", "no": "Nyheter" },
+    "howItWorks": { "en": "How it works", "no": "Hvordan det fungerer" },
+    "caseStudy": { "en": "Case study", "no": "Case study" },
+    "contact": { "en": "Contact", "no": "Kontakt" },
+    "logo_alt": { "en": "DuxPace logo", "no": "DuxPace logo" },
+    "bookDemo": { "en": "Book demo", "no": "Book demo" }
+  },
+  "hero": {
+    "label": { "en": "Satellite data for Norwegian aquaculture", "no": "Satellittdata for norsk havbruk" },
+    "headline": {
+      "en": "See your farms from space, before the problem hits.",
+      "no": "Se merdene fra rommet, for problemet kommer."
+    },
+    "subhead": {
+      "en": "DuxPace gives Norwegian fish farmers early warning of algae, sea lice, and environmental stress - from satellite to dashboard in hours.",
+      "no": "DuxPace gir norske oppdrettere tidlig varsling om alger, lus og miljøstress - fra satellitt til dashboard på timer."
+    },
+    "cta_primary": { "en": "Contact us", "no": "Ta kontakt" },
+    "cta_secondary": { "en": "How it works", "no": "Slik fungerer det" }
+  },
+  "problem": {
+    "label": { "en": "The problem", "no": "Problemet" },
+    "headline": {
+      "en": "Every mortality event starts invisible.",
+      "no": "Hvert tap starter usynlig."
+    },
+    "body": {
+      "en": "Algal blooms, rising sea lice pressure, and hypoxia events do not announce themselves. By the time sensors at the cage detect a problem, fish are already under stress. The Norwegian aquaculture industry loses billions annually to events that could be anticipated days earlier.",
+      "no": "Algeoppblomstring, stigende lusepresset og oksygensvikt varsler ikke om seg selv. Innen sensorene ved merden registrerer et problem, er fisken allerede stresset. Norsk havbruksnæring taper milliarder hvert år på hendelser som kunne vært forutsett dager tidligere."
+    },
+    "stat_value": { "en": "2-5 days", "no": "2-5 dager" },
+    "stat_label": {
+      "en": "earlier warning possible with satellite data",
+      "no": "tidligere varsling mulig med satellittdata"
+    }
+  },
+  "howItWorks": {
+    "label": { "en": "How it works", "no": "Slik fungerer det" },
+    "title": {
+      "en": "From orbit to dashboard in hours.",
+      "no": "Fra bane til dashbord på timer."
+    },
+    "step1_label": { "en": "1", "no": "1" },
+    "step1_title": { "en": "Satellite imagery", "no": "Satellittbilder" },
+    "step1_body": {
+      "en": "Multispectral satellite passes cover your farm area every few days. We ingest and process the data automatically - no setup required on your end.",
+      "no": "Multispektrale satellittpasseringer dekker ditt anleggsområde hvert par dager. Vi henter inn og behandler dataene automatisk - ingen oppsett kreves fra deg."
+    },
+    "step2_label": { "en": "2", "no": "2" },
+    "step2_title": { "en": "Sensor fusion", "no": "Sensorfusjon" },
+    "step2_body": {
+      "en": "Site-specific models correlate spectral satellite data with in-situ sensor readings. Each locality is calibrated independently to account for local conditions.",
+      "no": "Stedsspesifikke modeller korrelerer spektrale satellittdata med in-situ sensoravlesninger. Hver lokalitet kalibreres uavhengig for å ta hensyn til lokale forhold."
+    },
+    "step3_label": { "en": "3", "no": "3" },
+    "step3_title": { "en": "Actionable alerts", "no": "Handlingsrettede varsler" },
+    "step3_body": {
+      "en": "Alerts, heatmaps, and trend charts land directly in your dashboard. You see what changed, where, and how confident the model is - before you need to act.",
+      "no": "Varsler, varmekart og trendkurver havner direkte i dashbordet ditt. Du ser hva som endret seg, hvor, og hvor sikker modellen er - før du trenger å handle."
+    }
+  },
+  "proof": {
+    "label": { "en": "Case study", "no": "Case study" },
+    "customer": { "en": "Equafish", "no": "Equafish" },
+    "headline": {
+      "en": "Equafish gets satellite context for every cage, without extra hardware.",
+      "no": "Equafish får satellittkontekst per merd, uten ekstra utstyr."
+    },
+    "body": {
+      "en": "Equafish needed environmental risk context across multiple Norwegian localities. DuxPace plugged directly into their existing platform - satellite-derived water quality indicators now sit alongside in-situ sensor data in the same dashboard their operators already use.",
+      "no": "Equafish trengte miljørisikodata på tvers av flere norske lokaliteter. DuxPace koblet seg direkte inn i deres eksisterende plattform - satellittbaserte vannkvalitetsindikatorer vises nå ved siden av sensordata i det samme dashbordet operatørene allerede bruker."
+    },
+    "cta": { "en": "Read full case study", "no": "Les hele case-studien" }
+  },
+  "team": {
+    "label": { "en": "The team", "no": "Teamet" },
+    "title": { "en": "Built in Trondheim.", "no": "Bygget i Trondheim." },
+    "body": {
+      "en": "DuxPace came out of NTNU's intersection of satellite engineering, cybernetics, and computer science. We operate from VM-paviljongen.",
+      "no": "DuxPace vokste frem i skjæringsfeltet mellom satellittingeniørfag, kybernetikk og informatikk ved NTNU. Vi holder til i VM-paviljongen."
+    }
+  },
+  "cta": {
+    "label": { "en": "Get started", "no": "Kom i gang" },
+    "headline": {
+      "en": "Ready to see your localities from space?",
+      "no": "Klar for å se lokalitetene dine fra rommet?"
+    },
+    "body": {
+      "en": "We set up a pilot on your data. No commitment, no new hardware. Just satellite context on top of what you already have.",
+      "no": "Vi setter opp en pilot på dine data. Ingen binding, ikke nytt utstyr. Bare satellittkontekst oppå det du allerede har."
+    },
+    "primary": { "en": "Contact us", "no": "Ta kontakt" },
+    "secondary": { "en": "Email us", "no": "Send e-post" }
+  },
+  "news": {
+    "label": { "en": "News", "no": "Nyheter" },
+    "title": { "en": "What we've been up to", "no": "Hva vi har drevet med" },
+    "body": { "en": "Milestones, grants, and partnerships shaping our work.", "no": "Milepæler, tilskudd og partnerskap som former arbeidet." },
+    "readMore": { "en": "Read more", "no": "Les mer" },
+    "backToNews": { "en": "Back to news", "no": "Tilbake til nyheter" },
+    "publishedOn": { "en": "Published on", "no": "Publisert" },
+    "by": { "en": "by", "no": "av" },
+    "noArticles": { "en": "No articles yet.", "no": "Ingen artikler ennå." },
+    "close": { "en": "Close", "no": "Lukk" },
+    "copyLink": { "en": "Copy link", "no": "Kopier lenke" },
+    "linkCopied": { "en": "Copied", "no": "Kopiert" },
+    "dragHint": { "en": "Drag to explore", "no": "Dra for å se mer" }
+  },
+  "caseStudy": {
+    "title": { "en": "Case Study", "no": "Case Study" },
+    "challenge": { "en": "Challenge", "no": "Utfordring" },
+    "solution": { "en": "Solution", "no": "Løsning" },
+    "metrics": { "en": "Results", "no": "Resultater" }
+  },
+  "contact": {
+    "label": { "en": "Contact", "no": "Kontakt" },
+    "title": { "en": "Get in touch", "no": "Ta kontakt" },
+    "name_label": { "en": "Name", "no": "Navn" },
+    "name_placeholder": { "en": "Your name", "no": "Ditt navn" },
+    "email_label": { "en": "Email", "no": "E-post" },
+    "email_placeholder": { "en": "your@email.com", "no": "din@epost.no" },
+    "message_label": { "en": "Message", "no": "Melding" },
+    "message_placeholder": {
+      "en": "Tell us about your operation...",
+      "no": "Fortell oss om din virksomhet..."
+    },
+    "submit": { "en": "Send", "no": "Send" },
+    "success": {
+      "en": "Thank you for reaching out. We'll get back to you soon.",
+      "no": "Takk for at du tok kontakt. Vi vender tilbake snart."
+    },
+    "error": {
+      "en": "Something went wrong. Please try again.",
+      "no": "Noe gikk galt. Vennligst prøv igjen."
+    }
+  },
+  "footer": {
+    "tagline": {
+      "en": "Satellite intelligence for Norwegian aquaculture.",
+      "no": "Satellittintelligens for norsk havbruk."
+    },
+    "data_sources": {
+      "en": "Data: Satellite imagery, in-situ sensors, public environmental data",
+      "no": "Data: Satellittbilder, in-situ sensorer, offentlige miljødata"
+    },
+    "privacy": { "en": "Privacy", "no": "Personvern" },
+    "contact": { "en": "Contact", "no": "Kontakt" }
+  },
+  "common": {
+    "language_no": { "en": "Norwegian", "no": "Norsk" },
+    "language_en": { "en": "English", "no": "Engelsk" },
+    "loading": { "en": "Loading...", "no": "Laster..." },
+    "error": { "en": "Something went wrong.", "no": "Noe gikk galt." },
+    "readMore": { "en": "Read more", "no": "Les mer" },
+    "backHome": { "en": "Back to home", "no": "Tilbake til forsiden" }
+  }
+}

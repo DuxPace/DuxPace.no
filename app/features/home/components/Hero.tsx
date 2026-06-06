@@ -18,17 +18,17 @@ export default function Hero() {
   const { t } = useLanguage();
 
   return (
-    <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-svh flex flex-col justify-end lg:justify-center overflow-hidden">
       <div
-        className="absolute top-1/2 right-0 md:right-[10vw] -translate-y-1/2 w-[100vw] md:w-[min(95vh,95vw)] h-[100vw] md:h-[min(95vh,95vw)] pointer-events-auto select-none opacity-30 md:opacity-90 cursor-grab active:cursor-grabbing z-[5]"
+        className="absolute top-1/2 right-0 lg:right-[5vw] -translate-y-1/2 w-[90vw] md:w-[min(70vh,55vw)] lg:w-[min(90vh,62vw)] h-[90vw] md:h-[min(70vh,55vw)] lg:h-[min(90vh,62vw)] pointer-events-auto select-none opacity-25 md:opacity-80 lg:opacity-90 cursor-grab active:cursor-grabbing z-[5]"
       >
         <GlobeWrapper />
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent md:from-black md:from-30% md:via-black/80 md:via-55% md:to-transparent pointer-events-none z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent md:from-black md:from-25% md:via-black/85 md:via-55% md:to-transparent pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none z-[1]" />
 
-      <div className="relative z-10 w-full px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
+      <div className="relative z-10 w-full px-6 lg:px-16 pb-16 pt-8 lg:pt-36 lg:pb-24 pointer-events-none">
         <div className="pointer-events-auto">
         <motion.p
           className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
@@ -47,7 +47,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          className="text-gray-500 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
+          className="text-gray-300 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
           {...fadeUp(0.2)}
         >
           {t.hero.subheading}

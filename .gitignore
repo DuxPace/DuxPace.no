@@ -41,5 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Claude skill kits cloned into project
+emmi/
+
 # markdown files
 *.md
