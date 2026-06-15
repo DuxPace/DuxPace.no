@@ -35,8 +35,12 @@ function ipAllowed(ip: string | null): boolean {
     for (const [k, v] of ipLastSeen) {
       if (v < cutoff) ipLastSeen.delete(k);
     }
-    // All entries are within the window (active flood); clear to cap memory.
-    if (ipLastSeen.size >= MAX_IP_MAP) ipLastSeen.clear();
+    // All entries are within the window (active flood); clear to cap memory,
+    // then re-insert the current IP so the just-allowed entry is not lost.
+    if (ipLastSeen.size >= MAX_IP_MAP) {
+      ipLastSeen.clear();
+      ipLastSeen.set(ip, now);
+    }
   }
   return true;
 }
