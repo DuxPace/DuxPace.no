@@ -22,7 +22,7 @@ function formatDate(isoDate: string, locale: string): string {
 
 function adaptNews(articles: NewsArticle[]): NewsItem[] {
   return articles.map((a) => ({
-    image: a.image ? urlFor(a.image).url() : "/images/placeholder.jpg",
+    image: a.image ? urlFor(a.image).url() : "/images/logos/logo-square.jpeg",
     alt: a.title?.en || a.title?.no || "",
     date: a.publishedAt ? formatDate(a.publishedAt, "en-US") : "",
     dateNo: a.publishedAt ? formatDate(a.publishedAt, "nb-NO") : "",
@@ -40,7 +40,7 @@ function adaptTeam(sanityMembers: TeamMember[]): Member[] {
     name: m.name,
     role: m.role?.en || m.role?.no || "",
     roleNo: m.role?.no || m.role?.en || "",
-    image: m.image ? urlFor(m.image).url() : "/images/placeholder.jpg",
+    image: m.image ? urlFor(m.image).url() : "/images/logos/logo-square.jpeg",
     bio: m.bio?.en || m.bio?.no || "",
     bioNo: m.bio?.no || m.bio?.en || "",
     linkedin: m.linkedin || "",

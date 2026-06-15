@@ -52,6 +52,7 @@ const NewsCard = memo(function NewsCard({
               loading="lazy"
               sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
+              onError={(e) => { e.currentTarget.srcset = ""; e.currentTarget.src = "/images/logos/logo-square.jpeg"; }}
             />
             {/* Date badge */}
             <div className="absolute top-3 left-3">
@@ -297,7 +298,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
               transition={shouldReduce ? { duration: 0.15 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="relative w-full aspect-video">
-                <Image src={item.image} alt={item.alt} fill className="object-cover" />
+                <Image src={item.image} alt={item.alt} fill className="object-cover" onError={(e) => { e.currentTarget.srcset = ""; e.currentTarget.src = "/images/logos/logo-square.jpeg"; }} />
                 <motion.button
                   ref={closeButtonRef}
                   onClick={closeModal}
