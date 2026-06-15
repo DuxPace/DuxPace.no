@@ -8,27 +8,35 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const RL_COOKIE = "rl_contact";
 const RL_WINDOW_S = 60;
 const RL_WINDOW_MS = RL_WINDOW_S * 1000;
+const MAX_IP_MAP = 10_000;
 
 // In-process IP rate limit. Survives across warm serverless invocations on the
 // same instance, significantly raising the bar even when cookies are absent.
 const ipLastSeen = new Map<string, number>();
 
-function clientIp(forwardedFor: string | null): string {
-  if (!forwardedFor) return "unknown";
-  return forwardedFor.split(",")[0].trim();
+// x-real-ip is set by Vercel to the actual client IP and cannot be spoofed.
+// x-forwarded-for is taken from the rightmost entry (Vercel-appended), not the
+// leftmost, which is attacker-controlled.
+function clientIp(realIp: string | null, forwardedFor: string | null): string | null {
+  if (realIp) return realIp.trim();
+  if (!forwardedFor) return null;
+  const parts = forwardedFor.split(",");
+  return parts[parts.length - 1].trim();
 }
 
-function ipAllowed(ip: string): boolean {
+function ipAllowed(ip: string | null): boolean {
+  if (ip === null) return true;
   const now = Date.now();
   const last = ipLastSeen.get(ip);
   if (last !== undefined && now - last < RL_WINDOW_MS) return false;
   ipLastSeen.set(ip, now);
-  // Evict stale entries to prevent unbounded growth.
-  if (ipLastSeen.size > 10_000) {
+  if (ipLastSeen.size >= MAX_IP_MAP) {
     const cutoff = now - RL_WINDOW_MS;
     for (const [k, v] of ipLastSeen) {
       if (v < cutoff) ipLastSeen.delete(k);
     }
+    // All entries are within the window (active flood); clear to cap memory.
+    if (ipLastSeen.size >= MAX_IP_MAP) ipLastSeen.clear();
   }
   return true;
 }
@@ -101,7 +109,7 @@ export async function sendContactEmail(
   if (err) return { success: false, error: err };
 
   const headerStore = await headers();
-  const ip = clientIp(headerStore.get("x-forwarded-for"));
+  const ip = clientIp(headerStore.get("x-real-ip"), headerStore.get("x-forwarded-for"));
   if (!ipAllowed(ip)) {
     return { success: false, error: m.rate_limited };
   }
