@@ -29,19 +29,14 @@ function ipAllowed(ip: string | null): boolean {
   const now = Date.now();
   const last = ipLastSeen.get(ip);
   if (last !== undefined && now - last < RL_WINDOW_MS) return false;
-  ipLastSeen.set(ip, now);
   if (ipLastSeen.size >= MAX_IP_MAP) {
     const cutoff = now - RL_WINDOW_MS;
     for (const [k, v] of ipLastSeen) {
       if (v < cutoff) ipLastSeen.delete(k);
     }
-    // All entries are within the window (active flood); clear to cap memory,
-    // then re-insert the current IP so the just-allowed entry is not lost.
-    if (ipLastSeen.size >= MAX_IP_MAP) {
-      ipLastSeen.clear();
-      ipLastSeen.set(ip, now);
-    }
+    if (ipLastSeen.size >= MAX_IP_MAP) return false;
   }
+  ipLastSeen.set(ip, now);
   return true;
 }
 
