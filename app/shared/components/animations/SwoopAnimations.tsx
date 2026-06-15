@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from "framer-motion";
 
 // Swoop inn fra sidene med rotasjon
 interface SwoopInProps {
@@ -23,6 +23,7 @@ export function SwoopIn({
 }: SwoopInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   const directions = {
     left: { x: -200, y: 0 },
@@ -37,20 +38,20 @@ export function SwoopIn({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ 
-        opacity: 0, 
+      initial={shouldReduce ? false : {
+        opacity: 0,
         ...directions[direction],
         rotate: direction === "left" ? -rotate : direction === "right" ? rotate : 0,
         scale: 0.8,
       }}
-      animate={isInView ? { 
-        opacity: 1, 
-        x: 0, 
+      animate={shouldReduce ? {} : (isInView ? {
+        opacity: 1,
+        x: 0,
         y: 0,
         rotate: 0,
         scale: 1,
-      } : {}}
-      transition={{
+      } : {})}
+      transition={shouldReduce ? {} : {
         duration,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -75,6 +76,7 @@ export function SwoopOut({
 }: SwoopOutProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { amount: 0.5 });
+  const shouldReduce = useReducedMotion();
 
   const directions = {
     left: { x: -300 },
@@ -87,8 +89,8 @@ export function SwoopOut({
     <motion.div
       ref={ref}
       className={className}
-      animate={!isInView ? { 
-        opacity: 0, 
+      animate={shouldReduce ? {} : (!isInView ? {
+        opacity: 0,
         ...directions[direction],
         scale: 0.8,
         rotate: direction === "left" ? -15 : 15,
@@ -98,8 +100,8 @@ export function SwoopOut({
         y: 0,
         scale: 1,
         rotate: 0,
-      }}
-      transition={{
+      })}
+      transition={shouldReduce ? {} : {
         duration: 0.6,
         ease: [0.16, 1, 0.3, 1],
       }}
@@ -123,13 +125,12 @@ export function Floating({
   amplitude = 20,
   duration = 4,
 }: FloatingProps) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      animate={{
-        y: [-amplitude, amplitude, -amplitude],
-      }}
-      transition={{
+      animate={shouldReduce ? {} : { y: [-amplitude, amplitude, -amplitude] }}
+      transition={shouldReduce ? {} : {
         duration,
         repeat: Infinity,
         ease: "easeInOut",
@@ -147,13 +148,12 @@ interface PulseScaleProps {
 }
 
 export function PulseScale({ children, className = "" }: PulseScaleProps) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      animate={{
-        scale: [1, 1.05, 1],
-      }}
-      transition={{
+      animate={shouldReduce ? {} : { scale: [1, 1.05, 1] }}
+      transition={shouldReduce ? {} : {
         duration: 2,
         repeat: Infinity,
         ease: "easeInOut",
@@ -172,13 +172,12 @@ interface ShakeProps {
 }
 
 export function Shake({ children, className = "", trigger = false }: ShakeProps) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      animate={trigger ? {
-        x: [0, -10, 10, -10, 10, 0],
-      } : {}}
-      transition={{ duration: 0.5 }}
+      animate={shouldReduce ? {} : (trigger ? { x: [0, -10, 10, -10, 10, 0] } : {})}
+      transition={shouldReduce ? {} : { duration: 0.5 }}
     >
       {children}
     </motion.div>
@@ -199,14 +198,15 @@ export function ElasticSnap({
 }: ElasticSnapProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{
+      initial={shouldReduce ? false : { opacity: 0, scale: 0 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, scale: 1 } : {})}
+      transition={shouldReduce ? {} : {
         type: "spring",
         stiffness: 260,
         damping: 20,
@@ -231,6 +231,7 @@ export function ScrollRotate({
   rotate = 360,
 }: ScrollRotateProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const shouldReduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -239,7 +240,7 @@ export function ScrollRotate({
   const rotateValue = useTransform(scrollYProgress, [0, 1], [0, rotate]);
 
   return (
-    <motion.div ref={ref} className={className} style={{ rotate: rotateValue }}>
+    <motion.div ref={ref} className={className} style={shouldReduce ? {} : { rotate: rotateValue }}>
       {children}
     </motion.div>
   );
@@ -252,13 +253,12 @@ interface MorphProps {
 }
 
 export function Morph({ children, className = "" }: MorphProps) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      animate={{
-        borderRadius: ["20%", "50%", "20%"],
-      }}
-      transition={{
+      animate={shouldReduce ? {} : { borderRadius: ["20%", "50%", "20%"] }}
+      transition={shouldReduce ? {} : {
         duration: 4,
         repeat: Infinity,
         ease: "easeInOut",
@@ -285,6 +285,7 @@ export function Typewriter({
 }: TypewriterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const shouldReduce = useReducedMotion();
   const characters = text.split("");
 
   return (
@@ -292,9 +293,9 @@ export function Typewriter({
       {characters.map((char, index) => (
         <motion.span
           key={index}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{
+          initial={shouldReduce ? false : { opacity: 0 }}
+          animate={shouldReduce ? {} : (isInView ? { opacity: 1 } : {})}
+          transition={shouldReduce ? {} : {
             duration: 0.1,
             delay: delay + index * speed,
           }}
@@ -304,8 +305,8 @@ export function Typewriter({
       ))}
       <motion.span
         className="inline-block w-0.5 h-5 bg-blue-400 ml-1"
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity }}
+        animate={shouldReduce ? {} : { opacity: [1, 0] }}
+        transition={shouldReduce ? {} : { duration: 0.5, repeat: Infinity }}
       />
     </span>
   );
@@ -320,15 +321,18 @@ interface SpotlightProps {
 export function Spotlight({ children, className = "" }: SpotlightProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-        initial={{ x: "-200%" }}
-        animate={isInView ? { x: "200%" } : {}}
-        transition={{ duration: 1, delay: 0.5, ease: "easeInOut" }}
-      />
+      {!shouldReduce && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+          initial={{ x: "-200%" }}
+          animate={isInView ? { x: "200%" } : {}}
+          transition={{ duration: 1, delay: 0.5, ease: "easeInOut" }}
+        />
+      )}
       {children}
     </div>
   );
@@ -348,6 +352,7 @@ export function MaskReveal({
 }: MaskRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   const masks = {
     left: "inset(0 100% 0 0)",
@@ -360,9 +365,9 @@ export function MaskReveal({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ clipPath: masks[direction] }}
-      animate={isInView ? { clipPath: "inset(0 0 0 0)" } : {}}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      initial={shouldReduce ? false : { clipPath: masks[direction] }}
+      animate={shouldReduce ? {} : (isInView ? { clipPath: "inset(0 0 0 0)" } : {})}
+      transition={shouldReduce ? {} : { duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
