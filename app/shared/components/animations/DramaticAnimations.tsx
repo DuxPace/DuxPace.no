@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 // ==========================================
 // DRAMATISKE SCROLL-ANIMASJONER
@@ -27,6 +27,7 @@ export function DramaticSlide({
 }: DramaticSlideProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   const directions = {
     left: { x: -100, y: 0 },
@@ -41,18 +42,18 @@ export function DramaticSlide({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ 
-        opacity: 0, 
+      initial={shouldReduce ? false : {
+        opacity: 0,
         ...directions[direction],
         rotate: direction === "left" ? -rotate : direction === "right" ? rotate : 0,
       }}
-      animate={isInView ? { 
-        opacity: 1, 
-        x: 0, 
+      animate={shouldReduce ? {} : (isInView ? {
+        opacity: 1,
+        x: 0,
         y: 0,
         rotate: 0,
-      } : {}}
-      transition={{
+      } : {})}
+      transition={shouldReduce ? {} : {
         duration,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -79,15 +80,16 @@ export function FlipReveal({
 }: FlipRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
       style={{ perspective: 1000 }}
-      initial={{ opacity: 0, rotateX: axis === "x" ? 90 : 0, rotateY: axis === "y" ? 90 : 0 }}
-      animate={isInView ? { opacity: 1, rotateX: 0, rotateY: 0 } : {}}
-      transition={{
+      initial={shouldReduce ? false : { opacity: 0, rotateX: axis === "x" ? 90 : 0, rotateY: axis === "y" ? 90 : 0 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, rotateX: 0, rotateY: 0 } : {})}
+      transition={shouldReduce ? {} : {
         duration: 0.8,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -114,6 +116,7 @@ export function ClipReveal({
 }: ClipRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   const clipPaths = {
     up: {
@@ -142,9 +145,9 @@ export function ClipReveal({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ clipPath: clipPaths[direction].hidden }}
-      animate={isInView ? { clipPath: clipPaths[direction].visible } : {}}
-      transition={{
+      initial={shouldReduce ? false : { clipPath: clipPaths[direction].hidden }}
+      animate={shouldReduce ? {} : (isInView ? { clipPath: clipPaths[direction].visible } : {})}
+      transition={shouldReduce ? {} : {
         duration: 1,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -173,7 +176,8 @@ export function SplitText({
 }: SplitTextProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  
+  const shouldReduce = useReducedMotion();
+
   const items = splitBy === "char" ? children.split("") : children.split(" ");
 
   return (
@@ -183,17 +187,17 @@ export function SplitText({
           key={index}
           className="inline-block"
           style={{ whiteSpace: item === " " ? "pre" : "normal" }}
-          initial={{ 
-            opacity: 0, 
+          initial={shouldReduce ? false : {
+            opacity: 0,
             y: 50,
             rotateX: -90,
           }}
-          animate={isInView ? { 
-            opacity: 1, 
+          animate={shouldReduce ? {} : (isInView ? {
+            opacity: 1,
             y: 0,
             rotateX: 0,
-          } : {}}
-          transition={{
+          } : {})}
+          transition={shouldReduce ? {} : {
             duration: 0.5,
             delay: delay + index * staggerDelay,
             ease: [0.16, 1, 0.3, 1],
@@ -220,14 +224,15 @@ export function ScaleIn({
 }: ScaleInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{
+      initial={shouldReduce ? false : { opacity: 0, scale: 0.5 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, scale: 1 } : {})}
+      transition={shouldReduce ? {} : {
         duration: 0.6,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -252,22 +257,23 @@ export function DramaticEntrance({
 }: DramaticEntranceProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ 
-        opacity: 0, 
+      initial={shouldReduce ? false : {
+        opacity: 0,
         scale: 0.5,
         filter: "blur(20px)",
       }}
-      animate={isInView ? { 
-        opacity: 1, 
+      animate={shouldReduce ? {} : (isInView ? {
+        opacity: 1,
         scale: 1,
         filter: "blur(0px)",
-      } : {}}
-      transition={{
+      } : {})}
+      transition={shouldReduce ? {} : {
         duration: 0.8,
         delay,
         ease: [0.16, 1, 0.3, 1],
@@ -294,23 +300,24 @@ export function WaveStagger({
 }: WaveStaggerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <div ref={ref} className={className}>
       {children.map((child, index) => (
         <motion.div
           key={index}
-          initial={{ 
-            opacity: 0, 
+          initial={shouldReduce ? false : {
+            opacity: 0,
             x: index % 2 === 0 ? -50 : 50,
             y: 30,
           }}
-          animate={isInView ? { 
-            opacity: 1, 
+          animate={shouldReduce ? {} : (isInView ? {
+            opacity: 1,
             x: 0,
             y: 0,
-          } : {}}
-          transition={{
+          } : {})}
+          transition={shouldReduce ? {} : {
             duration: 0.6,
             delay: baseDelay + index * staggerDelay,
             ease: [0.16, 1, 0.3, 1],
@@ -336,6 +343,7 @@ export function ParallaxGroup({
   speed = 0.5,
 }: ParallaxGroupProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const shouldReduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -349,7 +357,7 @@ export function ParallaxGroup({
     <motion.div
       ref={ref}
       className={className}
-      style={{ y, opacity, scale }}
+      style={shouldReduce ? {} : { y, opacity, scale }}
     >
       {children}
     </motion.div>
@@ -370,22 +378,23 @@ export function GlitchText({
 }: GlitchTextProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={`relative ${className}`}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.1, delay }}
+      initial={shouldReduce ? false : { opacity: 0 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1 } : {})}
+      transition={shouldReduce ? {} : { duration: 0.1, delay }}
     >
       <motion.span
         className="relative inline-block"
-        animate={isInView ? {
+        animate={shouldReduce ? {} : (isInView ? {
           x: [0, -2, 2, -2, 0],
           opacity: [1, 0.8, 1, 0.9, 1],
-        } : {}}
-        transition={{
+        } : {})}
+        transition={shouldReduce ? {} : {
           duration: 0.3,
           delay: delay + 0.2,
           times: [0, 0.2, 0.4, 0.6, 1],
@@ -393,15 +402,15 @@ export function GlitchText({
       >
         {children}
       </motion.span>
-      
+
       {/* Glitch layers */}
       <motion.span
         className="absolute inset-0 text-red-400 opacity-0"
-        animate={isInView ? {
+        animate={shouldReduce ? {} : (isInView ? {
           x: [0, 4, -4, 2, 0],
           opacity: [0, 0.5, 0, 0.3, 0],
-        } : {}}
-        transition={{
+        } : {})}
+        transition={shouldReduce ? {} : {
           duration: 0.3,
           delay: delay + 0.2,
           times: [0, 0.2, 0.4, 0.6, 1],
@@ -410,14 +419,14 @@ export function GlitchText({
       >
         {children}
       </motion.span>
-      
+
       <motion.span
         className="absolute inset-0 text-blue-400 opacity-0"
-        animate={isInView ? {
+        animate={shouldReduce ? {} : (isInView ? {
           x: [0, -4, 4, -2, 0],
           opacity: [0, 0.5, 0, 0.3, 0],
-        } : {}}
-        transition={{
+        } : {})}
+        transition={shouldReduce ? {} : {
           duration: 0.3,
           delay: delay + 0.25,
           times: [0, 0.2, 0.4, 0.6, 1],
@@ -446,13 +455,14 @@ export function MaskReveal({
 }: MaskRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
       <motion.div
-        initial={{ x: direction === "left" ? "-100%" : "100%" }}
-        animate={isInView ? { x: direction === "left" ? "100%" : "-100%" } : {}}
-        transition={{
+        initial={shouldReduce ? false : { x: direction === "left" ? "-100%" : "100%" }}
+        animate={shouldReduce ? {} : (isInView ? { x: direction === "left" ? "100%" : "-100%" } : {})}
+        transition={shouldReduce ? {} : {
           duration: 0.8,
           delay,
           ease: [0.16, 1, 0.3, 1],
@@ -478,14 +488,15 @@ export function BounceIn({
 }: BounceInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const shouldReduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 100, scale: 0.3 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{
+      initial={shouldReduce ? false : { opacity: 0, y: 100, scale: 0.3 }}
+      animate={shouldReduce ? {} : (isInView ? { opacity: 1, y: 0, scale: 1 } : {})}
+      transition={shouldReduce ? {} : {
         type: "spring",
         damping: 12,
         stiffness: 100,
@@ -510,6 +521,7 @@ export function MagneticScroll({
   intensity = 0.3,
 }: MagneticScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const shouldReduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -522,7 +534,7 @@ export function MagneticScroll({
     <motion.div
       ref={ref}
       className={className}
-      style={{ x, rotate }}
+      style={shouldReduce ? {} : { x, rotate }}
     >
       {children}
     </motion.div>
