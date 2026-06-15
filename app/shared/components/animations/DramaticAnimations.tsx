@@ -459,16 +459,18 @@ export function MaskReveal({
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        initial={shouldReduce ? false : { x: direction === "left" ? "-100%" : "100%" }}
-        animate={shouldReduce ? {} : (isInView ? { x: direction === "left" ? "100%" : "-100%" } : {})}
-        transition={shouldReduce ? {} : {
-          duration: 0.8,
-          delay,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="absolute inset-0 bg-black z-10"
-      />
+      {!shouldReduce && (
+        <motion.div
+          initial={{ x: direction === "left" ? "-100%" : "100%" }}
+          animate={isInView ? { x: direction === "left" ? "100%" : "-100%" } : {}}
+          transition={{
+            duration: 0.8,
+            delay,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="absolute inset-0 bg-black z-10"
+        />
+      )}
       {children}
     </div>
   );

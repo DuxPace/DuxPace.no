@@ -325,12 +325,14 @@ export function Spotlight({ children, className = "" }: SpotlightProps) {
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-        initial={shouldReduce ? false : { x: "-200%" }}
-        animate={shouldReduce ? {} : (isInView ? { x: "200%" } : {})}
-        transition={shouldReduce ? {} : { duration: 1, delay: 0.5, ease: "easeInOut" }}
-      />
+      {!shouldReduce && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+          initial={{ x: "-200%" }}
+          animate={isInView ? { x: "200%" } : {}}
+          transition={{ duration: 1, delay: 0.5, ease: "easeInOut" }}
+        />
+      )}
       {children}
     </div>
   );
