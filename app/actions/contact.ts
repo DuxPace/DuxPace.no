@@ -1,12 +1,37 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const RL_COOKIE = "rl_contact";
 const RL_WINDOW_S = 60;
+const RL_WINDOW_MS = RL_WINDOW_S * 1000;
+
+// In-process IP rate limit. Survives across warm serverless invocations on the
+// same instance, significantly raising the bar even when cookies are absent.
+const ipLastSeen = new Map<string, number>();
+
+function clientIp(forwardedFor: string | null): string {
+  if (!forwardedFor) return "unknown";
+  return forwardedFor.split(",")[0].trim();
+}
+
+function ipAllowed(ip: string): boolean {
+  const now = Date.now();
+  const last = ipLastSeen.get(ip);
+  if (last !== undefined && now - last < RL_WINDOW_MS) return false;
+  ipLastSeen.set(ip, now);
+  // Evict stale entries to prevent unbounded growth.
+  if (ipLastSeen.size > 10_000) {
+    const cutoff = now - RL_WINDOW_MS;
+    for (const [k, v] of ipLastSeen) {
+      if (v < cutoff) ipLastSeen.delete(k);
+    }
+  }
+  return true;
+}
 
 export type ContactState = {
   success: boolean;
@@ -74,6 +99,12 @@ export async function sendContactEmail(
 
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
+
+  const headerStore = await headers();
+  const ip = clientIp(headerStore.get("x-forwarded-for"));
+  if (!ipAllowed(ip)) {
+    return { success: false, error: m.rate_limited };
+  }
 
   const cookieStore = await cookies();
   if (cookieStore.get(RL_COOKIE)) {
