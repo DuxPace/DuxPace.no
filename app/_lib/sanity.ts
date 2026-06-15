@@ -33,7 +33,7 @@ export function blocksToText(
 }
 
 export function urlFor(source: { asset?: { _ref?: string } } | null | undefined) {
-  const fallback = { url: () => "/images/placeholder.jpg" };
+  const fallback = { url: () => "/images/logos/logo-square.jpeg" };
   if (!source?.asset?._ref) return fallback;
 
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
