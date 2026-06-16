@@ -219,6 +219,7 @@ export default function Contact() {
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
+                      sandbox="allow-scripts allow-same-origin"
                       className="absolute inset-0"
                     />
                   </div>
