@@ -1,5 +1,33 @@
 import type { NextConfig } from "next";
 
+// Content-Security-Policy. The site is statically prerendered with no request
+// middleware, so a per-request nonce is not available; script-src and style-src
+// fall back to 'unsafe-inline' to cover Next's hydration scripts, the JSON-LD
+// block, and Framer Motion's inline styles. The value is still a real tightening:
+// it pins every other resource type to 'self' plus the specific third parties in
+// use, blocks plugins (object-src 'none'), locks down base-uri and form-action,
+// and refuses framing. Allowed origins, by what loads them:
+//   - va.vercel-scripts.com / vitals.vercel-insights.com: Vercel Analytics + Speed Insights
+//   - fonts.googleapis.com / fonts.gstatic.com: next/font Geist (self-hosted, kept for the preconnect)
+//   - cdn.sanity.io: news/team images; images.unsplash.com: remote image patterns
+//   - www.google.com: the contact-page Google Maps embed (frame-src)
+// Globe textures are served from /images (self), so no CDN entry is needed for them.
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io",
+  "font-src 'self' https://fonts.gstatic.com",
+  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://cdn.sanity.io",
+  "frame-src https://www.google.com",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
@@ -23,6 +51,10 @@ const nextConfig: NextConfig = {
     {
       source: "/:path*",
       headers: [
+        {
+          key: "Content-Security-Policy",
+          value: contentSecurityPolicy,
+        },
         {
           key: "X-DNS-Prefetch-Control",
           value: "on",
