@@ -68,6 +68,13 @@ export async function sendContactEmail(
   const lang = formData.get("lang") === "no" ? "no" : "en";
   const m = MESSAGES[lang];
 
+  // Honeypot: a hidden field real users never see. Bots fill every input, so a
+  // non-empty value means an automated submission. Report success without
+  // sending, so the bot gets no signal that it was caught.
+  if (formData.get("company")?.toString().trim()) {
+    return { success: true };
+  }
+
   const name = formData.get("name")?.toString().trim() ?? "";
   const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
   const message = formData.get("message")?.toString().trim() ?? "";
