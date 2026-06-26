@@ -1,6 +1,8 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
+import { contactFormRateLimit } from "../_lib/ratelimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -13,6 +15,28 @@ export async function sendContactEmail(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  // Honeypot: a hidden field real users never see. Bots fill every input, so a
+  // non-empty value means an automated submission. Report success without
+  // sending, so the bot gets no signal that it was caught.
+  if (formData.get("company")?.toString().trim()) {
+    return { success: true };
+  }
+
+  // Rate limit per client IP, server-side. The previous cookie-based limit was
+  // trivially bypassed by clearing cookies; this keys on the forwarded IP in
+  // Redis. Fails open when Upstash is not configured (e.g. local dev).
+  if (contactFormRateLimit) {
+    const forwarded = (await headers()).get("x-forwarded-for") ?? "";
+    const ip = forwarded.split(",")[0]?.trim() || "unknown";
+    const { success } = await contactFormRateLimit.limit(ip);
+    if (!success) {
+      return {
+        success: false,
+        error: "Too many messages. Please try again later.",
+      };
+    }
+  }
+
   const name = formData.get("name")?.toString().trim();
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
