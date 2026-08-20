@@ -145,6 +145,33 @@ export default function SiteFooter() {
         </div>
 
         <motion.div
+          className="pb-8 mb-8 border-b border-white/[0.07] flex flex-col sm:flex-row sm:items-center gap-4"
+          initial={shouldReduce ? false : { opacity: 0 }}
+          whileInView={shouldReduce ? {} : { opacity: 1 }}
+          viewport={{ once: true }}
+          transition={shouldReduce ? {} : { duration: 0.6, delay: 0.2 }}
+        >
+          <p className="text-[11px] text-gray-400 tracking-[0.2em] uppercase">
+            {lang === "no" ? "Støttet av" : "Supported by"}
+          </p>
+          <a
+            href="https://www.ntnudiscovery.no/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="NTNU Discovery"
+            className="inline-flex items-center bg-white rounded-md px-3 py-2 opacity-90 hover:opacity-100 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          >
+            <Image
+              src="/images/logos/ntnu-discovery.png"
+              alt="NTNU Discovery"
+              width={258}
+              height={240}
+              className="h-10 w-auto"
+            />
+          </a>
+        </motion.div>
+
+        <motion.div
           className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-4"
           initial={shouldReduce ? false : { opacity: 0 }}
           whileInView={shouldReduce ? {} : { opacity: 1 }}
