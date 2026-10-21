@@ -73,7 +73,7 @@ export default async function Home() {
         <Hero />
         <About />
         <Team initialMembers={teamData} />
-        <Suspense fallback={<div className="py-20 text-center text-gray-500">Loading news...</div>}>
+        <Suspense fallback={<div className="py-20 text-center text-gray-400">Loading news...</div>}>
           <News initialItems={newsData} />
         </Suspense>
         <Contact />

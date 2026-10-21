@@ -41,7 +41,7 @@ export default function LanguageToggle() {
         className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-sm font-medium min-w-[44px] min-h-[36px] justify-center transition-colors duration-200 ${
           lang === "en"
             ? "text-black"
-            : "text-gray-500 hover:text-white"
+            : "text-gray-400 hover:text-white"
         }`}
       >
         <span className="text-xs">EN</span>
@@ -55,7 +55,7 @@ export default function LanguageToggle() {
         className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-sm font-medium min-w-[44px] min-h-[36px] justify-center transition-colors duration-200 ${
           lang === "no"
             ? "text-black"
-            : "text-gray-500 hover:text-white"
+            : "text-gray-400 hover:text-white"
         }`}
       >
         <span className="text-xs">NO</span>

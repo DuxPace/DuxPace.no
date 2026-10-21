@@ -92,7 +92,7 @@ export default function Navbar() {
               href={`#${id}`}
               aria-current={active === id ? "true" : undefined}
               className={`relative text-sm transition-colors ${
-                active === id ? "text-white" : "text-gray-500 hover:text-gray-200"
+                active === id ? "text-white" : "text-gray-400 hover:text-gray-200"
               }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}

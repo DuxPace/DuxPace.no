@@ -56,7 +56,7 @@ export default function Team({ initialMembers }: { initialMembers?: Member[] }) 
                       {role}
                     </p>
                     {bio && (
-                      <p className="text-gray-500 text-[11px] mt-2 leading-relaxed">
+                      <p className="text-gray-400 text-[11px] mt-2 leading-relaxed">
                         {bio}
                       </p>
                     )}
