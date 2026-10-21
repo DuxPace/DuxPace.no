@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
-import { siteConfig } from "../../../lib/data/content";
+import { siteConfig, partners } from "../../../lib/data/content";
 import { Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export default function SiteFooter() {
@@ -143,6 +143,40 @@ export default function SiteFooter() {
             </ul>
           </motion.div>
         </div>
+
+        <motion.div
+          className="pb-10 flex flex-col sm:flex-row sm:items-center gap-x-10 gap-y-5"
+          initial={shouldReduce ? false : { opacity: 0 }}
+          whileInView={shouldReduce ? {} : { opacity: 1 }}
+          viewport={{ once: true }}
+          transition={shouldReduce ? {} : { duration: 0.6, delay: 0.2 }}
+        >
+          <p className="text-sm text-gray-400 tracking-[0.14em] uppercase shrink-0">
+            {t.footer.supportedBy}
+          </p>
+          <ul className="flex flex-wrap items-center gap-x-10 gap-y-5">
+            {partners.map((p) => (
+              <li key={p.name}>
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={p.name}
+                  className="inline-flex items-center gap-3 min-h-11 opacity-80 hover:opacity-100 focus-visible:opacity-100 transition-opacity"
+                >
+                  <Image
+                    src={p.logo}
+                    alt={p.name}
+                    width={p.width}
+                    height={p.height}
+                    style={{ height: p.render, width: "auto" }}
+                  />
+                  {p.showName && <span className="text-sm text-gray-300">{p.name}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
 
         <motion.div
           className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-4"
