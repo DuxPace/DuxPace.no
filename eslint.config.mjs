@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local tooling checkouts, not part of the site.
+    "marketing-site-skills/**",
+    ".superpowers/**",
+    ".playwright-mcp/**",
   ]),
 ]);
 

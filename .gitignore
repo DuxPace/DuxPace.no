@@ -41,5 +41,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# markdown files
-*.md
+# AI tooling and local notes
+CLAUDE.md
+AGENTS.md
+DESIGN.md
+.claudeignore
+.mcp.json
+.superpowers/
+.playwright-mcp/
+marketing-site-skills/
+audit-*.png
+
