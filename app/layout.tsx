@@ -107,9 +107,6 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <link rel="preload" href="/images/team/herman.jpg" as="image" />
-        <link rel="preload" href="/images/team/andre.jpg" as="image" />
-        <link rel="preload" href="/images/logos/logo-wide.jpeg" as="image" />
       </head>
       <body className={`${geist.className} antialiased`}>
         <LanguageProvider initialLang={initialLang}>

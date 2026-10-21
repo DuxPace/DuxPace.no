@@ -36,16 +36,20 @@ function adaptNews(articles: NewsArticle[]): NewsItem[] {
 }
 
 function adaptTeam(sanityMembers: TeamMember[]): Member[] {
-  return sanityMembers.map((m) => ({
-    name: m.name,
-    role: m.role?.en || m.role?.no || "",
-    roleNo: m.role?.no || m.role?.en || "",
-    image: m.image ? urlFor(m.image).url() : "/images/logos/logo-square.jpeg",
-    bio: m.bio?.en || m.bio?.no || "",
-    bioNo: m.bio?.no || m.bio?.en || "",
-    linkedin: m.linkedin || "",
-    email: "planet@duxpace.no",
-  }));
+  return sanityMembers.map((m) => {
+    // Sanity members have no photo uploaded yet, so fall back to the local headshot by name.
+    const local = staticMembers.find((s) => s.name === m.name);
+    return {
+      name: m.name,
+      role: m.role?.en || m.role?.no || "",
+      roleNo: m.role?.no || m.role?.en || "",
+      image: m.image ? urlFor(m.image).url() : local?.image ?? "/images/logos/logo-square.jpeg",
+      bio: m.bio?.en || m.bio?.no || "",
+      bioNo: m.bio?.no || m.bio?.en || "",
+      linkedin: m.linkedin || local?.linkedin || "",
+      email: "planet@duxpace.no",
+    };
+  });
 }
 
 export default async function Home() {
