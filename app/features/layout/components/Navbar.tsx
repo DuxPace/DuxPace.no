@@ -82,7 +82,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <Image src={logo} alt="DuxPace" width={160} height={48} className="h-10 w-auto" />
+          <Image src={logo} alt="DuxPace" width={176} height={60} className="h-10 w-auto" priority />
         </motion.a>
 
         <div className="hidden md:flex items-center gap-8 ml-auto">

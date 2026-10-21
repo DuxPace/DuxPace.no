@@ -1,91 +1,58 @@
 "use client";
 
 import Image from "next/image";
-import { Linkedin, Mail } from "lucide-react";
-import { SwoopIn, ElasticSnap } from "../../../shared/components/animations/SwoopAnimations";
-import { SpotlightCard, TiltCard } from "../../../shared/components/ui/PremiumHover";
+import { Linkedin } from "lucide-react";
+import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { members as staticMembers, type Member } from "../../../lib/data/members";
-import { motion } from "framer-motion";
 
 export default function Team({ initialMembers }: { initialMembers?: Member[] }) {
   const { lang, t } = useLanguage();
   const members = initialMembers && initialMembers.length > 0 ? initialMembers : staticMembers;
 
   return (
-    <section id="team" className="py-28 md:py-40 border-t border-white/[0.07]">
-      <div className="max-w-7xl mx-auto px-6">
-        <SwoopIn direction="up" delay={0}>
-          <h2 className="text-[11px] text-blue-400 font-mono tracking-[0.22em] uppercase mb-12">
+    <section id="team" className="py-16 md:py-24 border-t border-white/[0.08]">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
+        <FadeIn className="md:col-span-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
             {t.team.headline}
           </h2>
-        </SwoopIn>
+        </FadeIn>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-[680px]">
+        <ul className="md:col-span-8 grid grid-cols-2 gap-6 md:gap-10 max-w-2xl">
           {members.map((member, i) => {
             const role = lang === "no" && member.roleNo ? member.roleNo : member.role;
             const bio = lang === "no" && member.bioNo ? member.bioNo : member.bio;
             return (
-              <ElasticSnap key={member.name} delay={0.1 + i * 0.1}>
-                <TiltCard>
-                  <SpotlightCard className="h-full group">
-                    {/* Image */}
-                    <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg mb-4">
+              <li key={member.name}>
+                <FadeIn delay={i * 0.06}>
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-md mb-5 bg-white/[0.03]">
                     <Image
                       src={member.image}
-                      alt={`${member.name} - ${role} at DuxPace`}
+                      alt={`${member.name}, ${role}`}
                       fill
                       loading={i < 2 ? "eager" : "lazy"}
-                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 220px"
-                      onError={(e) => { e.currentTarget.srcset = ""; e.currentTarget.src = "/images/logos/logo-square.jpeg"; }}
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 45vw, 320px"
+                      className="object-cover object-top"
                     />
-                      {/* Overlay on hover */}
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-blue-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <h3 className="text-white text-sm font-bold leading-snug group-hover:text-blue-300 transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-blue-400/80 text-xs mt-1 font-mono tracking-wider">
-                      {role}
-                    </p>
-                    {bio && (
-                      <p className="text-gray-400 text-[11px] mt-2 leading-relaxed">
-                        {bio}
-                      </p>
-                    )}
-
-                    {/* Social icons */}
-                    <div className="flex gap-3 mt-4">
-                      <motion.a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-500/20 transition-all"
-                        whileHover={{ scale: 1.2, rotate: 10 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Linkedin size={14} />
-                      </motion.a>
-                      <motion.a
-                        href={`mailto:${member.email}`}
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-500/20 transition-all"
-                        whileHover={{ scale: 1.2, rotate: -10 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Mail size={14} />
-                      </motion.a>
-                    </div>
-                  </SpotlightCard>
-                </TiltCard>
-              </ElasticSnap>
+                  </div>
+                  <h3 className="text-white text-lg font-semibold leading-snug">{member.name}</h3>
+                  <p className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400 mt-1">{role}</p>
+                  {bio && <p className="text-gray-400 text-base mt-3 leading-relaxed">{bio}</p>}
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 min-h-11 mt-2 text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    <Linkedin size={16} aria-hidden="true" />
+                    LinkedIn
+                  </a>
+                </FadeIn>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

@@ -36,30 +36,28 @@ const LOCATIONS: Location[] = [
   { lat: 62.4722, lng: 6.1495, name: "Ålesund", size: 0.8, color: "#60a5fa" },
   { lat: 58.1467, lng: 7.9956, name: "Kristiansand", size: 0.7, color: "#60a5fa" },
   { lat: 67.28, lng: 14.405, name: "Bodø", size: 0.7, color: "#60a5fa" },
-  { lat: 51.5074, lng: -0.1278, name: "London", size: 1.0, color: "#93c5fd" },
-  { lat: 40.7128, lng: -74.006, name: "New York", size: 1.0, color: "#93c5fd" },
-  { lat: 35.6762, lng: 139.6503, name: "Tokyo", size: 0.9, color: "#93c5fd" },
 ];
 
+// Arcs follow the coast between farming regions. Nothing leaves Norway.
 const SATELLITE_ARCS: SatelliteArc[] = [
-  { 
-    startLat: 63.4305, startLng: 10.3951, 
-    endLat: 51.5074, endLng: -0.1278,
+  {
+    startLat: 63.4305, startLng: 10.3951,
+    endLat: 69.6496, endLng: 18.9553,
     color: ["rgba(96, 165, 250, 0.2)", "rgba(96, 165, 250, 0.6)"]
   },
-  { 
-    startLat: 59.9139, startLng: 10.7522, 
-    endLat: 40.7128, endLng: -74.006,
+  {
+    startLat: 60.3913, startLng: 5.3221,
+    endLat: 62.4722, endLng: 6.1495,
     color: ["rgba(147, 197, 253, 0.2)", "rgba(147, 197, 253, 0.6)"]
   },
-  { 
-    startLat: 60.3913, startLng: 5.3221, 
-    endLat: 35.6762, endLng: 139.6503,
+  {
+    startLat: 58.1467, startLng: 7.9956,
+    endLat: 60.3913, endLng: 5.3221,
     color: ["rgba(147, 197, 253, 0.2)", "rgba(147, 197, 253, 0.6)"]
   },
-  { 
-    startLat: 69.6496, startLng: 18.9553, 
-    endLat: 51.5074, endLng: -0.1278,
+  {
+    startLat: 67.28, startLng: 14.405,
+    endLat: 63.4305, endLng: 10.3951,
     color: ["rgba(96, 165, 250, 0.2)", "rgba(96, 165, 250, 0.6)"]
   },
 ];
@@ -103,8 +101,8 @@ export default function InteractiveGlobe() {
     controls.enablePan = false;
 
     const scene = globeRef.current.scene();
-    scene.background = new THREE.Color(0x000000);
-    
+    scene.background = null;
+
     scene.children.forEach((child: THREE.Object3D) => {
       if ((child as THREE.Light).isLight) scene.remove(child);
     });
@@ -169,14 +167,6 @@ export default function InteractiveGlobe() {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-50"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%)',
-          filter: 'blur(60px)',
-        }}
-      />
-
       <Globe
         ref={globeRef}
         width={dimensions.width}

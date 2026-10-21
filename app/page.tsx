@@ -47,7 +47,6 @@ function adaptTeam(sanityMembers: TeamMember[]): Member[] {
       bio: m.bio?.en || m.bio?.no || "",
       bioNo: m.bio?.no || m.bio?.en || "",
       linkedin: m.linkedin || local.linkedin,
-      email: "planet@duxpace.no",
     };
   });
 }

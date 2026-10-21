@@ -1,7 +1,7 @@
 // ─── Non-translatable config ─────────────────────────────────
 export const siteConfig = {
   nav: {
-    logo: "/images/logos/logo-wide.jpeg",
+    logo: "/images/logos/logo-wide.png",
     sections: ["home", "about", "team", "news", "contact"] as const,
   },
   hero: {
@@ -85,6 +85,7 @@ export const translations = {
       formTitle: "Send us a message",
       nameLabel: "Name",
       emailLabel: "Email",
+      locationLabel: "Location",
       messageLabel: "Message",
       namePlaceholder: "Your name",
       emailPlaceholder: "your@email.com",
@@ -157,6 +158,7 @@ export const translations = {
       formTitle: "Send oss en melding",
       nameLabel: "Navn",
       emailLabel: "E-post",
+      locationLabel: "Sted",
       messageLabel: "Melding",
       namePlaceholder: "Ditt navn",
       emailPlaceholder: "din@epost.no",
