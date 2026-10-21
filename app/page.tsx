@@ -22,8 +22,6 @@ function formatDate(isoDate: string, locale: string): string {
 
 function adaptNews(articles: NewsArticle[]): NewsItem[] {
   return articles.map((a) => ({
-    image: a.image ? urlFor(a.image).url() : "/images/logos/logo-square.jpeg",
-    alt: a.title?.en || a.title?.no || "",
     date: a.publishedAt ? formatDate(a.publishedAt, "en-US") : "",
     dateNo: a.publishedAt ? formatDate(a.publishedAt, "nb-NO") : "",
     title: a.title?.en || a.title?.no || "",

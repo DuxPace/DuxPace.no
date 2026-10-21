@@ -9,14 +9,14 @@ import type { NextConfig } from "next";
 // and refuses framing. Allowed origins, by what loads them:
 //   - va.vercel-scripts.com / vitals.vercel-insights.com: Vercel Analytics + Speed Insights
 //   - fonts.googleapis.com / fonts.gstatic.com: next/font Geist (self-hosted, kept for the preconnect)
-//   - cdn.sanity.io: news/team images; images.unsplash.com: remote image patterns
+//   - cdn.sanity.io: team images
 //   - www.google.com: the contact-page Google Maps embed (frame-src)
 // Globe textures are served from /images (self), so no CDN entry is needed for them.
 const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io",
+  "img-src 'self' data: blob: https://cdn.sanity.io",
   "font-src 'self' https://fonts.gstatic.com",
   "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://cdn.sanity.io",
   "frame-src https://www.google.com",
@@ -32,7 +32,6 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "cdn.sanity.io" },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
