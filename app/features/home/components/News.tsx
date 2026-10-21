@@ -1,91 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { memo, useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { newsItems as staticNewsItems, localize, type NewsItem } from "../../../lib/data/news";
-import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-
-const PER_PAGE = 3;
-
-// Memoized news card component
-const NewsCard = memo(function NewsCard({
-  item,
-  index,
-  globalIndex,
-  onClick,
-  t,
-  lang,
-}: {
-  item: NewsItem;
-  index: number;
-  globalIndex: number;
-  onClick: (index: number) => void;
-  t: { news: { readMore: string } };
-  lang: "en" | "no";
-}) {
-  const { title, description, date } = localize(item, lang);
-  const shouldReduce = useReducedMotion();
-
-  const handleClick = useCallback(() => {
-    onClick(globalIndex);
-  }, [onClick, globalIndex]);
-
-  return (
-    <FadeIn key={globalIndex} direction="up" delay={0.1 + index * 0.15} className="pointer-events-auto">
-      <div className="bg-white/[0.02] rounded-lg overflow-hidden border border-white/5 h-full hover:border-blue-500/30 transition-colors">
-        <button
-          onClick={handleClick}
-          className="w-full h-full text-left group cursor-pointer block relative z-10"
-          aria-haspopup="dialog"
-          type="button"
-        >
-          {/* Image */}
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
-            <Image
-              src={item.image}
-              alt={item.alt}
-              fill
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              onError={(e) => { e.currentTarget.srcset = ""; e.currentTarget.src = "/images/logos/logo-square.jpeg"; }}
-            />
-            {/* Date badge */}
-            <div className="absolute top-3 left-3">
-              <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-[10px] text-white font-mono tracking-wider uppercase rounded-full">
-                {date}
-              </span>
-            </div>
-          </div>
-          
-          {/* Content */}
-          <div className="p-5">
-            <h3 className="text-sm font-bold text-white leading-snug mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
-              {title}
-            </h3>
-            <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
-              {description}
-            </p>
-            <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-blue-400/80 group-hover:text-blue-400 transition-colors inline-flex items-center gap-1">
-              {t.news.readMore}
-              <motion.span
-                className="inline-block"
-                animate={shouldReduce ? {} : { x: [0, 3, 0] }}
-                transition={shouldReduce ? {} : { duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.span>
-            </span>
-          </div>
-        </button>
-      </div>
-    </FadeIn>
-  );
-});
 
 export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
   const newsItems = initialItems && initialItems.length > 0 ? initialItems : staticNewsItems;
@@ -93,7 +13,6 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const shouldReduce = useReducedMotion();
 
@@ -101,26 +20,18 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  const totalPages = Math.ceil(newsItems.length / PER_PAGE);
-  const visibleItems = newsItems.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
-
-  // Read URL parameter on mount - using layout effect pattern
+  // Deep links: ?news=<index> opens the article on load.
   useEffect(() => {
     const newsId = searchParams.get("news");
-    if (newsId !== null) {
-      const index = parseInt(newsId, 10);
-      if (!isNaN(index) && index >= 0 && index < newsItems.length) {
-        // Use requestAnimationFrame to avoid synchronous setState
-        requestAnimationFrame(() => {
-          setSelected(index);
-        });
-      }
+    if (newsId === null) return;
+    const index = parseInt(newsId, 10);
+    if (!isNaN(index) && index >= 0 && index < newsItems.length) {
+      requestAnimationFrame(() => setSelected(index));
     }
   }, [searchParams, newsItems]);
 
   const openNews = useCallback((index: number) => {
     setSelected(index);
-    // Update URL without reloading
     const params = new URLSearchParams(searchParams.toString());
     params.set("news", index.toString());
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -128,7 +39,6 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
 
   const closeModal = useCallback(() => {
     setSelected(null);
-    // Remove news parameter from URL
     const params = new URLSearchParams(searchParams.toString());
     params.delete("news");
     const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
@@ -136,9 +46,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
   }, [searchParams, pathname, router]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.body.style.overflow = selected !== null ? "hidden" : "";
-    }
+    document.body.style.overflow = selected !== null ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -182,11 +90,9 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
           e.preventDefault();
           last.focus();
         }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+      } else if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
 
@@ -194,133 +100,86 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [selected, closeModal]);
 
+  const article = selected !== null ? localize(newsItems[selected], lang) : null;
+
   return (
-    <section id="news" className="py-28 md:py-40 border-t border-white/[0.07] relative">
-      {/* Background glow */}
-      <motion.div
-        className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-        initial={shouldReduce ? { opacity: 0.2 } : false}
-        animate={shouldReduce ? { opacity: 0.2 } : { y: [0, 50, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={shouldReduce ? {} : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <FadeIn direction="up" delay={0} className="mb-16">
+    <section id="news" className="py-28 md:py-40 border-t border-white/[0.07]">
+      <div className="max-w-7xl mx-auto px-6">
+        <FadeIn direction="up" delay={0} className="mb-12 md:mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             {t.news.headline}
           </h2>
+          <p className="text-gray-400 text-base mt-4">{t.news.subheading}</p>
         </FadeIn>
 
-        {/* News grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {visibleItems.map((item, i) => {
-            const globalIndex = page * PER_PAGE + i;
+        <ol className="border-t border-white/[0.07]">
+          {newsItems.map((item, i) => {
+            const { title, description, date } = localize(item, lang);
             return (
-              <NewsCard
-                key={globalIndex}
-                item={item}
-                index={i}
-                globalIndex={globalIndex}
-                onClick={openNews}
-                t={t}
-                lang={lang}
-              />
+              <li key={i} className="border-b border-white/[0.07]">
+                <button
+                  type="button"
+                  onClick={() => openNews(i)}
+                  aria-haspopup="dialog"
+                  className="group w-full text-left grid gap-2 md:grid-cols-[11rem_1fr] md:gap-10 py-6 md:py-8 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                >
+                  <span className="text-sm text-gray-400 tracking-[0.14em] uppercase md:pt-1">
+                    {date}
+                  </span>
+                  <span>
+                    <span className="block text-lg md:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors">
+                      {title}
+                    </span>
+                    <span className="block text-base text-gray-400 leading-relaxed mt-2 max-w-2xl">
+                      {description}
+                    </span>
+                    <span className="inline-block text-sm text-blue-400 mt-3">
+                      {t.news.readMore} →
+                    </span>
+                  </span>
+                </button>
+              </li>
             );
           })}
-        </div>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <FadeIn direction="up" delay={0.3} className="flex items-center justify-center gap-8 mt-12">
-            <motion.button
-              onClick={() => setPage((p) => (p - 1 + totalPages) % totalPages)}
-              aria-label="Previous page"
-              className="text-gray-400 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
-              whileHover={{ x: -3 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              ← prev
-            </motion.button>
-
-            <div role="tablist" aria-label="News pages" className="flex gap-2">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <motion.button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === page}
-                  aria-label={`Page ${i + 1}`}
-                  onClick={() => setPage(i)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 ${
-                    i === page 
-                      ? "bg-blue-500 text-white" 
-                      : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
-                  }`}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="text-xs font-mono">{i + 1}</span>
-                </motion.button>
-              ))}
-            </div>
-
-            <motion.button
-              onClick={() => setPage((p) => (p + 1) % totalPages)}
-              aria-label="Next page"
-              className="text-gray-400 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
-              whileHover={{ x: 3 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              next →
-            </motion.button>
-          </FadeIn>
-        )}
+        </ol>
       </div>
 
-      {/* Modal */}
-      {selected !== null && (() => {
-        const item = newsItems[selected];
-        const { title, content, date } = localize(item, lang);
-        return (
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="news-modal-title"
-            className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/90 backdrop-blur-md p-0 md:p-6"
-            onClick={closeModal}
+      {article && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="news-modal-title"
+          className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/90 p-0 md:p-6"
+          onClick={closeModal}
+        >
+          <motion.div
+            ref={modalRef}
+            className="bg-black border border-white/[0.12] w-full md:max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg p-6 md:p-10"
+            onClick={(e) => e.stopPropagation()}
+            initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+            animate={shouldReduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduce ? { duration: 0.15 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div
-              ref={modalRef}
-              className="bg-black border border-white/[0.12] w-full md:max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-              initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 50 }}
-              animate={shouldReduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-              exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 50 }}
-              transition={shouldReduce ? { duration: 0.15 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="relative w-full aspect-video">
-                <Image src={item.image} alt={item.alt} fill className="object-cover" onError={(e) => { e.currentTarget.srcset = ""; e.currentTarget.src = "/images/logos/logo-square.jpeg"; }} />
-                <motion.button
-                  ref={closeButtonRef}
-                  onClick={closeModal}
-                  aria-label="Close article"
-                  className="absolute top-4 right-4 bg-black/70 hover:bg-blue-500 text-white w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  ×
-                </motion.button>
-              </div>
-              <div className="p-8">
-                <p className="text-[10px] text-blue-400 font-mono tracking-[0.18em] uppercase mb-3">{date}</p>
-                <h2 id="news-modal-title" className="text-2xl font-bold text-white mb-6 leading-snug tracking-tight">{title}</h2>
-                {content.split("\n\n").map((paragraph, i) => (
-                  <p key={i} className="text-gray-400 text-sm leading-relaxed mb-4">{paragraph}</p>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        );
-      })()}
+            <div className="flex items-start justify-between gap-6 mb-6">
+              <p className="text-sm text-blue-400 tracking-[0.14em] uppercase pt-3">{article.date}</p>
+              <button
+                ref={closeButtonRef}
+                onClick={closeModal}
+                aria-label="Close article"
+                className="shrink-0 w-11 h-11 flex items-center justify-center rounded-full border border-white/[0.12] text-white hover:bg-white/10 transition-colors text-xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+            <h2 id="news-modal-title" className="text-2xl md:text-3xl font-bold text-white mb-6 leading-snug tracking-tight">
+              {article.title}
+            </h2>
+            {article.content.split("\n\n").map((paragraph, i) => (
+              <p key={i} className="text-gray-300 text-base leading-relaxed mb-4">{paragraph}</p>
+            ))}
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }
