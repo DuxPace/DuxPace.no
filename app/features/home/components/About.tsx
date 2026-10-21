@@ -52,7 +52,7 @@ export default function About() {
                 {t.about.body.map((p, i) => (
                   <FadeIn key={i} direction="up" delay={0.3 + i * 0.15}>
                     <p
-                      className={`leading-relaxed ${i === 0 ? "text-gray-400 text-base" : "text-gray-600 text-sm"}`}
+                      className={`leading-relaxed ${i === 0 ? "text-gray-400 text-base" : "text-gray-400 text-sm"}`}
                     >
                       {p}
                     </p>

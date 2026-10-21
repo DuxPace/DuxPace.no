@@ -67,7 +67,7 @@ const NewsCard = memo(function NewsCard({
             <h3 className="text-sm font-bold text-white leading-snug mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
               {title}
             </h3>
-            <p className="text-gray-500 text-xs line-clamp-2 leading-relaxed mb-4">
+            <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
               {description}
             </p>
             <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-blue-400/80 group-hover:text-blue-400 transition-colors inline-flex items-center gap-1">
@@ -235,7 +235,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
             <motion.button
               onClick={() => setPage((p) => (p - 1 + totalPages) % totalPages)}
               aria-label="Previous page"
-              className="text-gray-500 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
+              className="text-gray-400 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
               whileHover={{ x: -3 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -253,7 +253,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
                   className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 ${
                     i === page 
                       ? "bg-blue-500 text-white" 
-                      : "bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white"
+                      : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                   }`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
@@ -266,7 +266,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
             <motion.button
               onClick={() => setPage((p) => (p + 1) % totalPages)}
               aria-label="Next page"
-              className="text-gray-500 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
+              className="text-gray-400 hover:text-white text-sm font-mono transition-colors flex items-center gap-2"
               whileHover={{ x: 3 }}
               whileTap={{ scale: 0.95 }}
             >

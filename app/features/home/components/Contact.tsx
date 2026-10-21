@@ -29,7 +29,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
           </svg>
         </div>
         <p className="text-white text-xl font-medium mb-2">{t.contact.successTitle}</p>
-        <p className="text-gray-500 mb-6">{t.contact.successBody}</p>
+        <p className="text-gray-400 mb-6">{t.contact.successBody}</p>
         <button
           onClick={onReset}
           className="text-xs font-semibold tracking-[0.08em] uppercase text-blue-400 hover:text-blue-300 transition-colors"
@@ -101,7 +101,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
               ? "text-red-400"
               : formData.message.length > 4500
               ? "text-yellow-400"
-              : "text-gray-600"
+              : "text-gray-400"
           }`}>
             {formData.message.length} / 5000
           </span>

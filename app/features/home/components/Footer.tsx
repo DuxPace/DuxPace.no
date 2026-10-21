@@ -52,7 +52,7 @@ export default function SiteFooter() {
                 className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity"
               />
             </motion.a>
-            <p className="text-gray-600 text-sm leading-relaxed max-w-sm mb-6">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">
               {lang === "no" 
                 ? "Satellittdata og AI for bærekraftig havbruk. Vi overvåker havet fra verdensrommet."
                 : "Satellite data and AI for sustainable aquaculture. We watch the ocean from space."
@@ -63,7 +63,7 @@ export default function SiteFooter() {
                 href={siteConfig.contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-blue-400 hover:bg-blue-500/10 transition-all"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:bg-blue-500/10 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -71,7 +71,7 @@ export default function SiteFooter() {
               </motion.a>
               <motion.a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-blue-400 hover:bg-blue-500/10 transition-all"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:bg-blue-500/10 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -87,7 +87,7 @@ export default function SiteFooter() {
             viewport={{ once: true }}
             transition={shouldReduce ? {} : { duration: 0.6, delay: 0.1 }}
           >
-            <h3 className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase mb-4">
+            <h3 className="text-[10px] text-gray-400 font-mono tracking-[0.2em] uppercase mb-4">
               {lang === "no" ? "Selskap" : "Company"}
             </h3>
             <ul className="space-y-3">
@@ -95,7 +95,7 @@ export default function SiteFooter() {
                 <li key={link.href}>
                   <motion.a
                     href={link.href}
-                    className="text-gray-600 hover:text-white text-sm transition-colors inline-flex items-center gap-1 group"
+                    className="text-gray-400 hover:text-white text-sm transition-colors inline-flex items-center gap-1 group"
                     whileHover={{ x: 4 }}
                   >
                     {link.label}
@@ -116,7 +116,7 @@ export default function SiteFooter() {
             viewport={{ once: true }}
             transition={shouldReduce ? {} : { duration: 0.6, delay: 0.2 }}
           >
-            <h3 className="text-[10px] text-gray-500 font-mono tracking-[0.2em] uppercase mb-4">
+            <h3 className="text-[10px] text-gray-400 font-mono tracking-[0.2em] uppercase mb-4">
               {lang === "no" ? "Kontakt" : "Contact"}
             </h3>
             <ul className="space-y-3">
@@ -126,10 +126,10 @@ export default function SiteFooter() {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className="text-gray-600 hover:text-white text-sm transition-colors inline-flex items-center gap-2 group"
+                    className="text-gray-400 hover:text-white text-sm transition-colors inline-flex items-center gap-2 group"
                     whileHover={{ x: 4 }}
                   >
-                    <link.icon size={14} className="text-gray-700 group-hover:text-gray-400" />
+                    <link.icon size={14} className="text-gray-400 group-hover:text-gray-400" />
                     <span className="truncate">{link.label}</span>
                     {link.external && (
                       <ArrowUpRight 
@@ -159,16 +159,16 @@ export default function SiteFooter() {
               height={18}
               className="opacity-50"
             />
-            <span className="text-gray-700 text-xs font-mono">
+            <span className="text-gray-400 text-xs font-mono">
               © {currentYear} {siteConfig.footer.copyright}
             </span>
           </div>
           
           <div className="flex items-center gap-6">
-            <p className="text-gray-800 text-xs font-mono">{t.footer.location}</p>
+            <p className="text-gray-400 text-xs font-mono">{t.footer.location}</p>
             <motion.button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-gray-700 hover:text-white text-xs font-mono flex items-center gap-1 transition-colors"
+              className="text-gray-400 hover:text-white text-xs font-mono flex items-center gap-1 transition-colors"
               whileHover={{ y: -2 }}
             >
               {lang === "no" ? "Til toppen" : "Back to top"}
