@@ -11,14 +11,6 @@ export type Member = {
 
 export const members: Member[] = [
   {
-    name: "Herman Castberg",
-    role: "CEO",
-    image: "/images/team/herman.jpg",
-    bio: "Project Manager for FramSat-1. Bachelor in Material Science at NTNU",
-    linkedin: "https://www.linkedin.com/in/herman-castberg-17a17b109/",
-    email: "planet@duxpace.no",
-  },
-  {
     name: "Andre Nielsen",
     role: "CPO",
     image: "/images/team/andre.jpg",

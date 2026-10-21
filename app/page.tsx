@@ -35,18 +35,20 @@ function adaptNews(articles: NewsArticle[]): NewsItem[] {
   }));
 }
 
+// The static list is the roster of record. Sanity only adds translated text and photos,
+// so members that have left are dropped here even if their document still exists.
 function adaptTeam(sanityMembers: TeamMember[]): Member[] {
-  return sanityMembers.map((m) => {
-    // Sanity members have no photo uploaded yet, so fall back to the local headshot by name.
+  return sanityMembers.flatMap((m) => {
     const local = staticMembers.find((s) => s.name === m.name);
+    if (!local) return [];
     return {
       name: m.name,
       role: m.role?.en || m.role?.no || "",
       roleNo: m.role?.no || m.role?.en || "",
-      image: m.image ? urlFor(m.image).url() : local?.image ?? "/images/logos/logo-square.jpeg",
+      image: m.image ? urlFor(m.image).url() : local.image,
       bio: m.bio?.en || m.bio?.no || "",
       bioNo: m.bio?.no || m.bio?.en || "",
-      linkedin: m.linkedin || local?.linkedin || "",
+      linkedin: m.linkedin || local.linkedin,
       email: "planet@duxpace.no",
     };
   });
