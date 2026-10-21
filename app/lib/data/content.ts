@@ -19,6 +19,14 @@ export const siteConfig = {
   },
 };
 
+// Funders and partners credited in the footer. Rendered height in px keeps marks at a similar optical size.
+export const partners = [
+  { name: "NTNU Discovery", href: "https://www.ntnudiscovery.no/", logo: "/images/logos/ntnu-discovery.png", width: 138, height: 128, render: 56 },
+  { name: "Aneo", href: "https://www.aneo.com/", logo: "/images/logos/aneo.svg", width: 47, height: 13, render: 16 },
+  { name: "Spark* NTNU", href: "https://sparkntnu.no/", logo: "/images/logos/spark.png", width: 127, height: 128, render: 28, showName: true },
+  { name: "EquaFish", href: "https://equafish.com/", logo: "/images/logos/equafish.svg", width: 648, height: 393, render: 44 },
+];
+
 // ─── Translations ─────────────────────────────────────────────
 export const translations = {
   en: {
@@ -89,6 +97,7 @@ export const translations = {
     },
     footer: {
       location: "Trondheim, Norway",
+      supportedBy: "Supported by",
     },
   },
 
@@ -160,6 +169,7 @@ export const translations = {
     },
     footer: {
       location: "Trondheim, Norge",
+      supportedBy: "Støttet av",
     },
   },
 } as const;
