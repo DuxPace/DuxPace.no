@@ -6,7 +6,6 @@ export type Member = {
   bio: string;
   bioNo?: string;
   linkedin: string;
-  email: string;
 };
 
 export const members: Member[] = [
@@ -16,7 +15,6 @@ export const members: Member[] = [
     image: "/images/team/andre.jpg",
     bio: "4th year Cybernetics at NTNU",
     linkedin: "https://www.linkedin.com/in/andr%C3%A9-nielsen-2846a434a/",
-    email: "planet@duxpace.no",
   },
   {
     name: "Tri Tac Le",
@@ -24,6 +22,5 @@ export const members: Member[] = [
     image: "/images/team/tri.jpg",
     bio: "2nd year Computer Science at NTNU",
     linkedin: "https://www.linkedin.com/in/tritacle/",
-    email: "planet@duxpace.no",
   },
 ];

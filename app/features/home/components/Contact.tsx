@@ -2,11 +2,10 @@
 
 import { useActionState, useState } from "react";
 import { FadeIn } from "../../../shared/components/animations/ScrollReveal";
-import { DramaticCard } from "../../../shared/components/ui/HoverEffects";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
 import { siteConfig } from "../../../lib/data/content";
 import { sendContactEmail } from "../../../actions/contact";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 function ContactForm({ onReset }: { onReset: () => void }) {
   const { t, lang } = useLanguage();
@@ -32,7 +31,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
         <p className="text-gray-400 mb-6">{t.contact.successBody}</p>
         <button
           onClick={onReset}
-          className="text-xs font-semibold tracking-[0.08em] uppercase text-blue-400 hover:text-blue-300 transition-colors"
+          className="text-sm font-semibold tracking-[0.08em] uppercase text-blue-400 hover:text-blue-300 transition-colors min-h-11"
         >
           {t.contact.sendAnother}
         </button>
@@ -40,7 +39,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
     );
   }
 
-  const inputClass = "w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-blue-500/30 transition-all duration-200 text-sm";
+  const inputClass = "w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition-colors duration-200 text-base";
 
   return (
     <form action={action} className="space-y-5">
@@ -58,7 +57,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
         />
       </div>
       <div>
-        <label htmlFor="contact-name" className="block text-xs text-gray-400 mb-1.5">
+        <label htmlFor="contact-name" className="block text-sm text-gray-400 mb-1.5">
           {t.contact.nameLabel}
         </label>
         <input
@@ -75,7 +74,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
       </div>
 
       <div>
-        <label htmlFor="contact-email" className="block text-xs text-gray-400 mb-1.5">
+        <label htmlFor="contact-email" className="block text-sm text-gray-400 mb-1.5">
           {t.contact.emailLabel}
         </label>
         <input
@@ -93,7 +92,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
 
       <div>
         <div className="flex justify-between items-baseline mb-1.5">
-          <label htmlFor="contact-message" className="block text-xs text-gray-400">
+          <label htmlFor="contact-message" className="block text-sm text-gray-400">
             {t.contact.messageLabel}
           </label>
           <span className={`text-xs tabular-nums ${
@@ -128,7 +127,7 @@ function ContactForm({ onReset }: { onReset: () => void }) {
       <button
         type="submit"
         disabled={!isFormValid || pending}
-        className={`w-full text-xs font-semibold tracking-[0.08em] uppercase rounded-sm transition-colors duration-200 mt-2 ${
+        className={`w-full text-sm font-semibold tracking-[0.08em] uppercase rounded-sm transition-colors duration-200 mt-2 ${
           isFormValid 
             ? "bg-white text-black hover:bg-gray-100 cursor-pointer py-3 px-6" 
             : "bg-white/10 text-white/30 cursor-not-allowed py-3 px-6"
@@ -154,96 +153,55 @@ export default function Contact() {
   const { t } = useLanguage();
   const { email, location, mapEmbed } = siteConfig.contact;
   const [formKey, setFormKey] = useState(0);
-  const shouldReduce = useReducedMotion();
 
   return (
-    <section id="contact" className="py-28 md:py-40 border-t border-white/[0.07] relative overflow-hidden">
-      {/* Background effects */}
-      <motion.div
-        className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        initial={shouldReduce ? { opacity: 0.2 } : false}
-        animate={shouldReduce ? { opacity: 0.2 } : { scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-        transition={shouldReduce ? {} : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          {/* Left column - Info */}
-          <FadeIn direction="up" delay={0}>
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                {t.contact.headline}
-              </h2>
+    <section id="contact" className="py-24 md:py-36 border-t border-white/[0.08]">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+          <FadeIn className="md:col-span-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+              {t.contact.headline}
+            </h2>
+            <p className="text-gray-300 text-lg leading-relaxed mb-10 max-w-md">
+              {t.contact.body}
+            </p>
 
-              <FadeIn direction="up" delay={0.1}>
-                <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-md">
-                  {t.contact.body}
-                </p>
-              </FadeIn>
+            <dl className="border-t border-white/[0.08] mb-10">
+              <div className="py-4 border-b border-white/[0.08] grid grid-cols-[7rem_1fr] gap-4 items-baseline">
+                <dt className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400">{t.contact.emailLabel}</dt>
+                <dd>
+                  <a href={`mailto:${email}`} className="text-white text-base hover:text-blue-300 transition-colors">
+                    {email}
+                  </a>
+                </dd>
+              </div>
+              <div className="py-4 border-b border-white/[0.08] grid grid-cols-[7rem_1fr] gap-4 items-baseline">
+                <dt className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400">{t.contact.locationLabel}</dt>
+                <dd className="text-white text-base">{location}</dd>
+              </div>
+            </dl>
 
-              <FadeIn direction="up" delay={0.2}>
-                <div className="space-y-4 mb-10">
-                  <DramaticCard
-                    className="p-4 bg-white/[0.02] rounded-lg border border-white/5 flex items-center gap-4"
-                    glowColor="rgba(59, 130, 246, 0.1)"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-blue-400 font-mono tracking-wider uppercase">Email</p>
-                      <p className="text-white text-sm">{email}</p>
-                    </div>
-                  </DramaticCard>
-
-                  <DramaticCard
-                    className="p-4 bg-white/[0.02] rounded-lg border border-white/5 flex items-center gap-4"
-                    glowColor="rgba(59, 130, 246, 0.1)"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-blue-400 font-mono tracking-wider uppercase">Location</p>
-                      <p className="text-white text-sm">{location}</p>
-                    </div>
-                  </DramaticCard>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.3}>
-                <DramaticCard
-                  className="rounded-xl overflow-hidden border border-white/5"
-                  glowColor="rgba(59, 130, 246, 0.15)"
-                >
-                  <div className="relative w-full aspect-video">
-                    <iframe
-                      src={mapEmbed}
-                      title="VM-paviljongen location on Google Maps"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      sandbox="allow-scripts allow-same-origin allow-popups"
-                      className="absolute inset-0"
-                    />
-                  </div>
-                </DramaticCard>
-              </FadeIn>
+            <div className="rounded-md overflow-hidden border border-white/[0.08]">
+              <div className="relative w-full aspect-video">
+                <iframe
+                  src={mapEmbed}
+                  title="VM-paviljongen location on Google Maps"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                  className="absolute inset-0"
+                />
+              </div>
             </div>
           </FadeIn>
 
-          {/* Right column - Form */}
-          <FadeIn direction="up" delay={0.2}>
-            <div className="bg-white/[0.02] rounded-xl border border-white/10 p-6 md:p-8">
-              <h3 className="text-lg font-semibold text-white mb-6">
+          <FadeIn className="md:col-span-6" delay={0.1}>
+            <div className="bg-white/[0.03] rounded-md border border-white/[0.08] p-6 md:p-8">
+              <h3 className="text-xl font-semibold text-white mb-6">
                 {t.contact.formTitle}
               </h3>
               <ContactForm key={formKey} onReset={() => setFormKey((k) => k + 1)} />

@@ -103,27 +103,27 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
   const article = selected !== null ? localize(newsItems[selected], lang) : null;
 
   return (
-    <section id="news" className="py-28 md:py-40 border-t border-white/[0.07]">
+    <section id="news" className="py-24 md:py-36 border-t border-white/[0.08]">
       <div className="max-w-7xl mx-auto px-6">
-        <FadeIn direction="up" delay={0} className="mb-12 md:mb-16">
+        <FadeIn className="mb-12 md:mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             {t.news.headline}
           </h2>
           <p className="text-gray-400 text-base mt-4">{t.news.subheading}</p>
         </FadeIn>
 
-        <ol className="border-t border-white/[0.07]">
+        <ol className="border-t border-white/[0.08]">
           {newsItems.map((item, i) => {
             const { title, description, date } = localize(item, lang);
             return (
-              <li key={i} className="border-b border-white/[0.07]">
+              <li key={i} className="border-b border-white/[0.08]">
                 <button
                   type="button"
                   onClick={() => openNews(i)}
                   aria-haspopup="dialog"
                   className="group w-full text-left grid gap-2 md:grid-cols-[11rem_1fr] md:gap-10 py-6 md:py-8 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                  <span className="text-sm text-gray-400 tracking-[0.14em] uppercase md:pt-1">
+                  <span className="text-xs font-mono text-gray-400 tracking-[0.14em] uppercase md:pt-2">
                     {date}
                   </span>
                   <span>
@@ -161,7 +161,7 @@ export default function News({ initialItems }: { initialItems?: NewsItem[] }) {
             transition={shouldReduce ? { duration: 0.15 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-start justify-between gap-6 mb-6">
-              <p className="text-sm text-blue-400 tracking-[0.14em] uppercase pt-3">{article.date}</p>
+              <p className="text-xs font-mono text-blue-400 tracking-[0.14em] uppercase pt-3">{article.date}</p>
               <button
                 ref={closeButtonRef}
                 onClick={closeModal}

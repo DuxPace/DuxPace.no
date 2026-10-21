@@ -20,7 +20,7 @@ export default function Hero() {
   }
 
   return (
-    <section id="home" className="relative min-h-svh flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-svh flex items-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-[5] pointer-events-none">
         <div className="relative mx-auto h-full w-full max-w-7xl">
           <div
@@ -37,7 +37,7 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
         <div className="pointer-events-auto">
         <motion.p
-          className="text-[11px] text-blue-400 mb-6 md:mb-10 tracking-[0.22em] uppercase font-mono"
+          className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400 mb-6 md:mb-10"
           {...fadeUp(0.05)}
         >
           {t.hero.eyebrow}
@@ -53,7 +53,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          className="text-gray-400 text-sm md:text-base max-w-sm leading-relaxed mb-8 md:mb-10"
+          className="text-gray-300 text-base md:text-lg max-w-md leading-relaxed mb-8 md:mb-10"
           {...fadeUp(0.2)}
         >
           {t.hero.subheading}
@@ -65,13 +65,13 @@ export default function Hero() {
         >
           <a
             href={t.hero.cta.href}
-            className="shrink-0 bg-white text-black text-xs font-semibold px-6 py-3 rounded-sm hover:bg-gray-100 transition-colors tracking-[0.08em] uppercase cursor-pointer pointer-events-auto"
+            className="shrink-0 bg-white text-black text-sm font-semibold px-6 py-3 rounded-sm hover:bg-gray-200 transition-colors tracking-[0.08em] uppercase cursor-pointer pointer-events-auto"
           >
             {t.hero.cta.label}
           </a>
           <a
             href={t.hero.ctaSecondary.href}
-            className="shrink-0 text-gray-300 hover:text-white text-sm transition-colors cursor-pointer pointer-events-auto"
+            className="shrink-0 text-gray-300 hover:text-white text-base transition-colors cursor-pointer pointer-events-auto min-h-11 inline-flex items-center"
           >
             {t.hero.ctaSecondary.label}
           </a>

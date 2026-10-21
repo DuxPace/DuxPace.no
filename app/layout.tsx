@@ -1,11 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { translations, siteConfig, type Language } from "./lib/data/content";
 import { LanguageProvider } from "./shared/providers/LanguageProvider";
-import { ScrollProgressIndicator } from "./shared/components/animations/SmoothScroll";
 import HtmlLang from "./shared/components/HtmlLang";
 import "./globals.css";
 
@@ -15,11 +14,17 @@ const geist = Geist({
   variable: "--font-geist",
 });
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#000000",
+  themeColor: "#0a0a0a",
 };
 
 export function generateMetadata(): Metadata {
@@ -97,7 +102,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={initialLang} className={`scroll-smooth ${geist.variable}`}>
+    <html lang={initialLang} className={`scroll-smooth ${geist.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -110,7 +115,6 @@ export default async function RootLayout({
       <body className={`${geist.className} antialiased`}>
         <LanguageProvider initialLang={initialLang}>
           <HtmlLang />
-          <ScrollProgressIndicator />
           {children}
         </LanguageProvider>
         <Analytics />
