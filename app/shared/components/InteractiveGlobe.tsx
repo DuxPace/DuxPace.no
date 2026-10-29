@@ -18,6 +18,7 @@ interface SatelliteArc {
   endLat: number;
   endLng: number;
   color: string[];
+  dashInitialGap: number;
 }
 
 interface RingData {
@@ -39,7 +40,7 @@ const LOCATIONS: Location[] = [
 ];
 
 // Arcs follow the coast between farming regions. Nothing leaves Norway.
-const SATELLITE_ARCS: SatelliteArc[] = [
+const SATELLITE_ARCS: Omit<SatelliteArc, "dashInitialGap">[] = [
   {
     startLat: 63.4305, startLng: 10.3951,
     endLat: 69.6496, endLng: 18.9553,
@@ -61,6 +62,14 @@ const SATELLITE_ARCS: SatelliteArc[] = [
     color: ["rgba(96, 165, 250, 0.2)", "rgba(96, 165, 250, 0.6)"]
   },
 ];
+
+// Gaps computed once so the dash offset does not jump on every re-render.
+const ARCS: SatelliteArc[] = SATELLITE_ARCS.map((arc) => ({
+  ...arc,
+  dashInitialGap: Math.random(),
+}));
+
+const arcDashInitialGap = (d: object) => (d as SatelliteArc).dashInitialGap;
 
 const RINGS_DATA: RingData[] = LOCATIONS.map(loc => ({
   lat: loc.lat,
@@ -199,7 +208,7 @@ export default function InteractiveGlobe() {
         ringColor={() => (t: number) => `rgba(96, 165, 250, ${0.8 * (1 - t)})`}
         ringResolution={64}
         
-        arcsData={SATELLITE_ARCS}
+        arcsData={ARCS}
         arcStartLat={(d) => (d as SatelliteArc).startLat}
         arcStartLng={(d) => (d as SatelliteArc).startLng}
         arcEndLat={(d) => (d as SatelliteArc).endLat}
@@ -207,7 +216,7 @@ export default function InteractiveGlobe() {
         arcColor={(d: object) => (d as SatelliteArc).color}
         arcDashLength={0.5}
         arcDashGap={0.2}
-        arcDashInitialGap={() => Math.random()}
+        arcDashInitialGap={arcDashInitialGap}
         arcDashAnimateTime={2500}
         arcStroke={0.6}
         arcAltitudeAutoScale={0.4}
