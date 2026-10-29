@@ -81,23 +81,25 @@ const RINGS_DATA: RingData[] = LOCATIONS.map(loc => ({
 
 export default function InteractiveGlobe() {
   const globeRef = useRef<typeof Globe.prototype | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [, setIsHovering] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 900, height: 900 });
    
   const rotationSpeed = 0.4;
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
     const updateDimensions = () => {
-      const container = globeRef.current?._containerRef?.current?.parentElement;
-      if (container) {
-        const size = Math.min(container.offsetWidth, container.offsetHeight, 1000);
-        setDimensions({ width: size, height: size });
-      }
+      const size = Math.min(el.offsetWidth, el.offsetHeight, 1000);
+      if (size > 0) setDimensions({ width: size, height: size });
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    const observer = new ResizeObserver(updateDimensions);
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -171,6 +173,7 @@ export default function InteractiveGlobe() {
 
   return (
     <div 
+      ref={containerRef}
       className="relative w-full h-full cursor-grab active:cursor-grabbing"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
