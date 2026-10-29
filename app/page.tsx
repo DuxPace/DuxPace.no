@@ -43,7 +43,7 @@ function adaptTeam(sanityMembers: TeamMember[]): Member[] {
       name: m.name,
       role: m.role?.en || m.role?.no || "",
       roleNo: m.role?.no || m.role?.en || "",
-      image: m.image ? urlFor(m.image).url() : local.image,
+      image: m.image ? urlFor(m.image, { width: 640 }).url() : local.image,
       bio: m.bio?.en || m.bio?.no || "",
       bioNo: m.bio?.no || m.bio?.en || "",
       linkedin: m.linkedin || local.linkedin,

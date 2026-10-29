@@ -32,7 +32,10 @@ export function blocksToText(
     .join("\n\n");
 }
 
-export function urlFor(source: { asset?: { _ref?: string } } | null | undefined) {
+export function urlFor(
+  source: { asset?: { _ref?: string } } | null | undefined,
+  opts?: { width?: number; height?: number; quality?: number }
+) {
   const fallback = { url: () => "/images/logos/logo-square.jpeg" };
   if (!source?.asset?._ref) return fallback;
 
@@ -46,8 +49,14 @@ export function urlFor(source: { asset?: { _ref?: string } } | null | undefined)
   const [, hash, dimensions, ext] = parts;
   const filename = `${hash}-${dimensions}.${ext}`;
 
+  // auto=format lets the CDN serve webp/avif; w/h/q keep the origin fetch small.
+  const query = new URLSearchParams({ auto: "format", q: String(opts?.quality ?? 75) });
+  if (opts?.width) query.set("w", String(opts.width));
+  if (opts?.height) query.set("h", String(opts.height));
+
   return {
-    url: () => `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}`,
+    url: () =>
+      `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}?${query.toString()}`,
   };
 }
 
