@@ -100,6 +100,12 @@ export const translations = {
       location: "Trondheim, Norway",
       supportedBy: "Supported by",
     },
+    notFound: {
+      code: "404",
+      title: "Page not found",
+      body: "The page you're looking for doesn't exist.",
+      home: "Go home",
+    },
   },
 
   no: {
@@ -172,6 +178,12 @@ export const translations = {
     footer: {
       location: "Trondheim, Norge",
       supportedBy: "Støttet av",
+    },
+    notFound: {
+      code: "404",
+      title: "Siden finnes ikke",
+      body: "Siden du leter etter finnes ikke.",
+      home: "Til forsiden",
     },
   },
 } as const;
