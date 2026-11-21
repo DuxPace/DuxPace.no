@@ -1,80 +1,87 @@
 import type { Language } from "./content";
 
-export type NewsItem = {
-  date: string;
-  dateNo: string;
-  title: string;
-  titleNo: string;
-  description: string;
-  descriptionNo: string;
-  content: string;
-  contentNo: string;
+type Localized = Record<Language, string>;
+
+export type NewsEntry = {
+  slug: string;
+  publishedAt: string;
+  title: Localized;
+  excerpt: Localized;
+  body: Localized;
+  source?: { url: string; label: Localized };
 };
 
-export function localize(item: NewsItem, lang: Language) {
-  return {
-    title: lang === "no" ? item.titleNo : item.title,
-    description: lang === "no" ? item.descriptionNo : item.description,
-    content: lang === "no" ? item.contentNo : item.content,
-    date: lang === "no" ? item.dateNo : item.date,
-  };
-}
-
-export const newsItems: NewsItem[] = [
+// Fallback when Sanity is unreachable. Kept identical to the Sanity documents.
+export const newsItems: NewsEntry[] = [
   {
-    date: "May 21, 2026",
-    dateNo: "21. mai 2026",
-    title: "NTNU Discovery Award: 300,000 kr",
-    titleNo: "NTNU Discovery-prisen: 300 000 kr",
-    description:
-      "DuxPace wins 300,000 kr at the NTNU Discovery Award on May 21, 2026, recognizing our satellite-based approach to aquaculture monitoring.",
-    descriptionNo:
-      "DuxPace vinner 300 000 kr i NTNU Discovery-prisen 21. mai 2026, som anerkjenner vår satellittbaserte tilnærming til overvåking av havbruk.",
-    content:
-      "On May 21, 2026, DuxPace wins the NTNU Discovery Award, receiving 300,000 kr in recognition of our work applying satellite intelligence to aquaculture.\n\nThe award validates our approach of using Sentinel satellite data to detect algal blooms and environmental risk factors affecting fish farming operations.\n\nThis funding will accelerate development of our core product and support continued collaboration with partners in the aquaculture industry.",
-    contentNo:
-      "Den 21. mai 2026 vinner DuxPace NTNU Discovery-prisen og mottar 300 000 kr som anerkjennelse for arbeidet vårt med å anvende satellittintelligens på havbruk.\n\nPrisen bekrefter tilnærmingen vår med å bruke Sentinel-satellittdata til å oppdage algeoppblomstringer og miljørisikofaktorer som påvirker fiskeoppdrettsvirksomheter.\n\nMidlene vil akselerere utviklingen av kjerneprodukt og støtte videre samarbeid med partnere i oppdrettsnæringen.",
+    slug: "ntnu-discovery-300k",
+    publishedAt: "2026-05-21",
+    title: {
+      no: "NTNU Discovery gir DuxPace 300 000 kr",
+      en: "NTNU Discovery awards DuxPace 300,000 kr",
+    },
+    excerpt: {
+      no: "DuxPace var ett av tre studentprosjekter som fikk 300 000 kr hver da NTNU Discovery delte ut nye hovedprosjekter 21. mai 2026.",
+      en: "DuxPace was one of three student projects awarded 300,000 kr each when NTNU Discovery announced its new main projects on 21 May 2026.",
+    },
+    body: {
+      no: "Torsdag 21. mai 2026 delte NTNU Discovery ut midler til nye hovedprosjekter under et arrangement i regi av StartupTRD på Digs i Trondheim. Tre studentprosjekter fikk 300 000 kr hver, og DuxPace var ett av dem.\n\nNTNU Discovery beskrev DuxPace som et datadrevet beslutningsverktøy for havbruksnæringen, som skal kunne forutsi endringer i havmiljøet.\n\nMidlene går til å utvikle varslene for vannkvalitet videre og til å teste dem mot målinger fra flere lokaliteter.",
+      en: "On Thursday 21 May 2026, NTNU Discovery awarded funding to new main projects at an event hosted by StartupTRD at Digs in Trondheim. Three student projects received 300,000 kr each, and DuxPace was one of them.\n\nNTNU Discovery described DuxPace as a data-driven decision tool for the aquaculture industry, built to predict changes in the marine environment.\n\nThe funding goes to developing the water quality forecasts further and testing them against measurements from more sites.",
+    },
+    source: {
+      url: "https://ntnudiscovery.no/atte-millioner-til-nye-hovedprosjekter/",
+      label: {
+        no: "NTNU Discovery: Åtte millioner til nye hovedprosjekter",
+        en: "NTNU Discovery: Åtte millioner til nye hovedprosjekter (Norwegian)",
+      },
+    },
   },
   {
-    date: "Early 2026",
-    dateNo: "Tidlig 2026",
-    title: "Partnership with EquaFish AS",
-    titleNo: "Partnerskap med EquaFish AS",
-    description:
-      "After initial talks starting in September 2025, DuxPace formalizes a partnership with EquaFish AS in early 2026 to provide satellite-based insights for their platform.",
-    descriptionNo:
-      "Etter innledende dialog fra september 2025 formaliserer DuxPace et partnerskap med EquaFish AS tidlig i 2026 for å levere satellittbasert innsikt til deres plattform.",
-    content:
-      "DuxPace begins discussions with EquaFish AS in September 2025, exploring how satellite intelligence can support fish farming operations.\n\nIn early 2026, the collaboration is formalized in writing. DuxPace contributes insights derived from Sentinel satellite data, such as indicators of algal bloom risk and environmental conditions, which EquaFish can integrate and use within their platform.\n\nThe partnership strengthens the bridge between satellite data and day-to-day operational decision-making in aquaculture.",
-    contentNo:
-      "DuxPace innleder dialog med EquaFish AS i september 2025, med mål om å utforske hvordan satellittintelligens kan støtte driften i oppdrett.\n\nTidlig i 2026 blir samarbeidet formalisert skriftlig. DuxPace bidrar med innsikt utledet fra Sentinel-satellittdata, for eksempel indikatorer på risiko for algeoppblomstring og miljøforhold, som EquaFish kan integrere og bruke i sin plattform.\n\nPartnerskapet styrker koblingen mellom satellittdata og operasjonelle beslutninger i havbruk.",
+    slug: "partnerskap-equafish",
+    publishedAt: "2026-01-15",
+    title: {
+      no: "Samarbeid med EquaFish AS",
+      en: "Partnership with EquaFish AS",
+    },
+    excerpt: {
+      no: "Etter samtaler fra september 2025 ble samarbeidet med EquaFish AS skrevet ned tidlig i 2026.",
+      en: "After talks that started in September 2025, the partnership with EquaFish AS was put in writing in early 2026.",
+    },
+    body: {
+      no: "DuxPace og EquaFish AS begynte å snakke sammen i september 2025 om hvordan data fra satellitt og sensorer kan hjelpe den daglige driften i oppdrett.\n\nTidlig i 2026 ble samarbeidet formalisert skriftlig. DuxPace leverer varsler og indikatorer for miljøforhold som EquaFish kan vise i sin plattform for oppdrettere.",
+      en: "DuxPace and EquaFish AS started talking in September 2025 about how satellite and sensor data can help day-to-day fish farming operations.\n\nIn early 2026 the partnership was formalised in writing. DuxPace supplies forecasts and environmental indicators that EquaFish can show in its platform for fish farmers.",
+    },
   },
   {
-    date: "Winter 2024",
-    dateNo: "Vinteren 2024",
-    title: "Aneobidraget Grant Awarded",
-    titleNo: "Tildelt Aneobidraget",
-    description:
-      "DuxPace is awarded 50,000 kr through Aneobidraget, securing three months of Sentinel satellite data access for development.",
-    descriptionNo:
-      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, noe som sikrer tre måneders tilgang til Sentinel-satellittdata for utvikling.",
-    content:
-      "DuxPace is awarded 50,000 kr through Aneobidraget, a grant supporting early-stage innovation at NTNU.\n\nThe funding secures three months of Sentinel satellite data access, enabling the team to accelerate MVP development and validate our algal bloom detection models with real satellite imagery.\n\nThis grant represents an important milestone in our journey toward a commercially viable product.",
-    contentNo:
-      "DuxPace tildeles 50 000 kr gjennom Aneobidraget, et tilskudd som støtter tidligfaseinnovasjon ved NTNU.\n\nFinansieringen sikrer tre måneders tilgang til Sentinel-satellittdata, noe som gjør at teamet kan akselerere MVP-utviklingen og validere modellene våre for deteksjon av algeoppblomstringer med ekte satellittbilder.\n\nDette tilskuddet representerer en viktig milepæl på veien mot et kommersielt levedyktig produkt.",
+    slug: "aneobidraget-tildelt",
+    publishedAt: "2024-12-01",
+    title: {
+      no: "Tildelt Aneobidraget",
+      en: "Aneobidraget grant awarded",
+    },
+    excerpt: {
+      no: "DuxPace fikk 50 000 kr fra Aneobidraget, nok til tre måneders tilgang til Sentinel-data.",
+      en: "DuxPace received 50,000 kr from Aneobidraget, enough for three months of Sentinel data access.",
+    },
+    body: {
+      no: "DuxPace fikk 50 000 kr gjennom Aneobidraget, et tilskudd til innovasjon i tidlig fase ved NTNU.\n\nPengene ga tre måneders tilgang til Sentinel-satellittdata, slik at vi kunne bygge den første versjonen og teste den på ekte bilder.",
+      en: "DuxPace received 50,000 kr through Aneobidraget, a grant for early-stage innovation at NTNU.\n\nThe money paid for three months of Sentinel satellite data access, so we could build a first version and test it on real imagery.",
+    },
   },
   {
-    date: "June 2024",
-    dateNo: "Juni 2024",
-    title: "DuxPace Founded at NTNU",
-    titleNo: "DuxPace stiftet ved NTNU",
-    description:
-      "DuxPace is founded at NTNU Trondheim. The early work explored satellite applications broadly, and the focus on aquaculture developed over time.",
-    descriptionNo:
-      "DuxPace stiftes ved NTNU Trondheim. Det tidlige arbeidet utforsket satellittbruksområder bredt, og fokuset på havbruk utviklet seg over tid.",
-    content:
-      "DuxPace is founded at NTNU Trondheim by a team of engineers with a shared ambition: turning satellite data into practical solutions.\n\nIn the beginning, our work was not specifically focused on aquaculture. We explored multiple use cases, and our focus gradually shifted toward fish farming, especially AI-powered monitoring of algal blooms using Sentinel satellite data.\n\nWe established our base at Gründerbrakka (NTNU) in January 2026.",
-    contentNo:
-      "DuxPace stiftes ved NTNU Trondheim av et team ingeniører med en felles ambisjon: å gjøre satellittdata om til praktiske løsninger.\n\nI starten var arbeidet vårt ikke spesifikt rettet mot havbruksnæringen. Vi utforsket flere bruksområder, og fokuset vårt dreide seg gradvis mot oppdrett, særlig KI-drevet overvåking av algeoppblomstringer ved hjelp av Sentinel-satellittdata.\n\nVi etablerte oss med base på Gründerbrakka (NTNU) i januar 2026.",
+    slug: "duxpace-stiftet",
+    publishedAt: "2024-06-01",
+    title: {
+      no: "DuxPace startet ved NTNU",
+      en: "DuxPace started at NTNU",
+    },
+    excerpt: {
+      no: "DuxPace startet ved NTNU i Trondheim i juni 2024. Havbruk ble hovedsporet etter hvert.",
+      en: "DuxPace started at NTNU in Trondheim in June 2024. Aquaculture became the main track over time.",
+    },
+    body: {
+      no: "DuxPace startet ved NTNU i Trondheim i juni 2024, med et mål om å gjøre satellittdata nyttig i praksis.\n\nI starten så vi på flere bruksområder. Etter hvert ble havbruk hovedsporet, og arbeidet dreide mot varsler for vannkvalitet ved oppdrettslokaliteter.\n\nI januar 2026 flyttet vi inn på Gründerbrakka på VM-paviljongen.",
+      en: "DuxPace started at NTNU in Trondheim in June 2024, with the aim of making satellite data useful in practice.\n\nAt first we looked at several uses. Over time aquaculture became the main track, and the work turned toward water quality forecasts for fish farming sites.\n\nIn January 2026 we moved into Gründerbrakka at VM-paviljongen.",
+    },
   },
 ];
