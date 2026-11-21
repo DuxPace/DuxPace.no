@@ -2,7 +2,6 @@ import type {
   SiteSettings,
   HeroSection,
   AboutSection,
-  TeamMember,
   NewsArticle,
   ContactSection,
 } from "@/types/sanity";
@@ -32,33 +31,6 @@ export function blocksToText(
     .join("\n\n");
 }
 
-export function urlFor(
-  source: { asset?: { _ref?: string } } | null | undefined,
-  opts?: { width?: number; height?: number; quality?: number }
-) {
-  const fallback = { url: () => "/images/logos/logo-square.jpeg" };
-  if (!source?.asset?._ref) return fallback;
-
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-  if (!projectId || projectId === "your_project_id_here") return fallback;
-
-  // ref format: image-<hash>-<WxH>-<ext>
-  const parts = source.asset._ref.split("-");
-  if (parts.length < 4) return fallback;
-  const [, hash, dimensions, ext] = parts;
-  const filename = `${hash}-${dimensions}.${ext}`;
-
-  // auto=format lets the CDN serve webp/avif; w/h/q keep the origin fetch small.
-  const query = new URLSearchParams({ auto: "format", q: String(opts?.quality ?? 75) });
-  if (opts?.width) query.set("w", String(opts.width));
-  if (opts?.height) query.set("h", String(opts.height));
-
-  return {
-    url: () =>
-      `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}?${query.toString()}`,
-  };
-}
 
 async function sanityFetch<T>(
   query: string,
@@ -122,17 +94,6 @@ export async function getAboutSection(): Promise<AboutSection | null> {
   }
 }
 
-export async function getTeamMembers(): Promise<TeamMember[]> {
-  try {
-    const query = `*[_type == "teamMember"] | order(order asc) {
-      _id, name, role, image, bio, linkedin, order
-    }`;
-    return (await sanityFetch<TeamMember[]>(query)) || [];
-  } catch (err) {
-    logger.error("getTeamMembers failed", err instanceof Error ? err : new Error(String(err)));
-    return [];
-  }
-}
 
 export async function getNewsArticles(limit?: number): Promise<NewsArticle[]> {
   try {

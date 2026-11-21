@@ -13,6 +13,13 @@ export type ContactState = {
   error?: string;
 } | null;
 
+const TOPICS = {
+  site: "Site forecast",
+  insurance: "Insurance",
+  research: "Research or funding",
+  other: "Other",
+};
+
 const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
 const MESSAGES = {
@@ -78,6 +85,8 @@ export async function sendContactEmail(
   const name = formData.get("name")?.toString().trim() ?? "";
   const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
   const message = formData.get("message")?.toString().trim() ?? "";
+  const rawTopic = formData.get("topic")?.toString() ?? "";
+  const topic = Object.hasOwn(TOPICS, rawTopic) ? TOPICS[rawTopic as keyof typeof TOPICS] : TOPICS.other;
 
   const err = validate(name, email, message, m);
   if (err) return { success: false, error: err };
@@ -100,8 +109,8 @@ export async function sendContactEmail(
       from,
       to: "planet@duxpace.no",
       replyTo: email,
-      subject: `New message from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      subject: `[${topic}] ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\nLanguage: ${lang}\n\n${message}`,
     });
     sendError = error;
   } catch (err) {

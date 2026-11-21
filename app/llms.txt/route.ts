@@ -1,43 +1,30 @@
-import { siteConfig } from "../lib/data/content";
-import { translations } from "../lib/data/content";
+import { siteConfig, translations, urlFor } from "../lib/data/content";
+import { solutionCopy } from "../features/pages/SolutionView";
+import { algaeCopy } from "../features/pages/AlgaeView";
 
-const BASE = "https://duxpace.no";
-
-const SECTION_TITLES: Record<string, string> = {
-  home: "Home",
-  about: "About",
-  team: "Team",
-  news: "News",
-  contact: "Contact",
-};
+export const dynamic = "force-static";
 
 export function GET() {
-  const en = translations.en;
-  const pages = siteConfig.nav.sections
-    .map((s) => {
-      const href = s === "home" ? `${BASE}/` : `${BASE}/#${s}`;
-      return `- [${SECTION_TITLES[s] ?? s}](${href})`;
-    })
-    .join("\n");
-
+  const en = translations.en.meta;
   const body = [
     "# DuxPace",
     "",
-    `> ${en.meta.description}`,
+    `> ${en.description}`,
     "",
-    en.hero.subheading,
+    "DuxPace forecasts water temperature, oxygen and salinity 48 hours ahead for individual salmon farming sites in Norway, from in-pen sensors, with calibrated 80 percent uncertainty bands. It does not claim to predict algal blooms from satellite.",
     "",
     "## Pages",
-    pages,
+    `- [Home (Norwegian)](${urlFor("home", "no")})`,
+    `- [Home (English)](${urlFor("home", "en")})`,
+    `- [${solutionCopy.en.title}](${urlFor("solution", "en")}): ${solutionCopy.en.description}`,
+    `- [${algaeCopy.en.title}](${urlFor("algae", "en")}): ${algaeCopy.en.description}`,
     "",
     "## Contact",
-    `- Email: ${siteConfig.contact.email}`,
-    `- Location: ${siteConfig.contact.location}`,
-    `- LinkedIn: ${siteConfig.contact.linkedin}`,
+    `- Email: ${siteConfig.email}`,
+    `- Address: ${siteConfig.address}`,
+    `- LinkedIn: ${siteConfig.linkedin}`,
     "",
   ].join("\n");
 
-  return new Response(body, {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
-  });
+  return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }
