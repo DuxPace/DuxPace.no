@@ -2,23 +2,9 @@
 
 import GlobeWrapper from "../../../shared/components/GlobeWrapper";
 import { useLanguage } from "../../../shared/providers/LanguageProvider";
-import { motion, useReducedMotion } from "framer-motion";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
   const { t } = useLanguage();
-  const shouldReduce = useReducedMotion();
-
-  function fadeUp(delay: number) {
-    if (shouldReduce) return {};
-    return {
-      initial: { opacity: 0, y: 24 },
-      animate: { opacity: 1, y: 0 },
-      transition: { delay, duration: 0.4, ease },
-    };
-  }
-
   return (
     <section id="home" className="relative min-h-svh flex items-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-[5] pointer-events-none">
@@ -36,33 +22,21 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 pt-20 md:pt-36 pb-20 md:pb-24 pointer-events-none">
         <div className="pointer-events-auto">
-        <motion.p
-          className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400 mb-6 md:mb-10"
-          {...fadeUp(0.05)}
-        >
+        <p className="text-xs font-mono tracking-[0.14em] uppercase text-blue-400 mb-6 md:mb-10">
           {t.hero.eyebrow}
-        </motion.p>
+        </p>
 
-        <motion.h1
-          className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] max-w-2xl tracking-tight mb-5 md:mb-8"
-          {...fadeUp(0.12)}
-        >
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] max-w-2xl tracking-tight mb-5 md:mb-8">
           {t.hero.headline[0]}
           <br />
           {t.hero.headline[1]}
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          className="text-gray-300 text-base md:text-lg max-w-md leading-relaxed mb-8 md:mb-10"
-          {...fadeUp(0.2)}
-        >
+        <p className="text-gray-300 text-base md:text-lg max-w-md leading-relaxed mb-8 md:mb-10">
           {t.hero.subheading}
-        </motion.p>
+        </p>
 
-        <motion.div
-          className="flex flex-row items-center gap-5 flex-wrap relative z-20"
-          {...fadeUp(0.28)}
-        >
+        <div className="flex flex-row items-center gap-5 flex-wrap relative z-20">
           <a
             href={t.hero.cta.href}
             className="shrink-0 bg-white text-black text-sm font-semibold px-6 py-3 rounded-sm hover:bg-gray-200 transition-colors tracking-[0.08em] uppercase cursor-pointer pointer-events-auto"
@@ -75,7 +49,7 @@ export default function Hero() {
           >
             {t.hero.ctaSecondary.label}
           </a>
-        </motion.div>
+        </div>
 
 
         </div>
