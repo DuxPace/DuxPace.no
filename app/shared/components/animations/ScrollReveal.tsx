@@ -23,9 +23,10 @@ export function FadeIn({
     <motion.div
       ref={ref}
       className={className}
-      initial={shouldReduce ? false : { opacity: 0, y: 12 }}
-      animate={shouldReduce ? {} : isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease }}
+      initial={{ opacity: 0, y: 12 }}
+      // SSR renders the hidden state, so reduced motion must still animate to visible, just instantly.
+      animate={shouldReduce || isInView ? { opacity: 1, y: 0 } : undefined}
+      transition={shouldReduce ? { duration: 0 } : { duration: 0.5, delay, ease }}
     >
       {children}
     </motion.div>
