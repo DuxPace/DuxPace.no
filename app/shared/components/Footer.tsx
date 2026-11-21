@@ -6,7 +6,7 @@ import { CookieSettingsButton } from "./Consent";
 
 export default function Footer({ lang }: { lang: Language }) {
   const t = translations[lang];
-  const linkClass = "inline-flex min-h-11 items-center transition-colors duration-150 hover:text-paper underline-offset-4 hover:underline";
+  const linkClass = "inline-flex min-h-11 items-center transition-colors duration-150 hover:text-paper active:text-on-deep-2 underline-offset-4 hover:underline";
 
   return (
     <footer className="bg-deep text-on-deep mt-24 md:mt-36">

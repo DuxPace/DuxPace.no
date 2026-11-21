@@ -8,7 +8,7 @@
   --color-ink: oklch(0.255 0.04 245); /* #112535 */
   --color-ink-2: oklch(0.44 0.03 240); /* #445562 */
   --color-magenta: oklch(0.5 0.19 350); /* #AB1D72 */
-  --color-magenta-dark: oklch(0.42 0.17 350);
+  --color-magenta-dark: oklch(0.42 0.17 350); /* #8A085A */
   --color-deep: oklch(0.215 0.035 245); /* #0A1B29 */
   --color-on-deep: oklch(0.93 0.01 230); /* #E1E9ED */
   --color-on-deep-2: oklch(0.78 0.02 235); /* #ACBAC3 */
@@ -47,6 +47,11 @@ body {
   outline: 3px solid var(--color-magenta);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Magenta fails 3:1 on the deep footer; use the light footer ink there. */
+footer :focus-visible {
+  outline-color: var(--color-on-deep);
 }
 
 /* The sticky header is 4.5rem; keep focused and anchored targets clear of it. */
@@ -96,6 +101,10 @@ body {
 .link:hover {
   color: var(--color-magenta-dark);
   text-decoration-thickness: 2px;
+}
+
+.link:active {
+  color: var(--color-ink);
 }
 
 .tabular {

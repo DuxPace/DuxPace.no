@@ -32,10 +32,10 @@ export default function Article({
     <article className="mx-auto max-w-[76rem] px-5 md:px-10 pt-10 md:pt-16">
       <JsonLd data={breadcrumbLd} />
       <nav aria-label={lang === "no" ? "Brødsmuler" : "Breadcrumb"} className="text-ink-2">
-        <ol className="flex flex-wrap gap-x-2">
+        <ol className="flex flex-wrap items-center gap-x-2">
           {crumbs.map((c) => (
-            <li key={c.href} className="after:ml-2 after:content-['/']">
-              <Link href={c.href} className="link">{c.name}</Link>
+            <li key={c.href} className="flex items-center after:ml-2 after:content-['/']">
+              <Link href={c.href} className="link inline-flex min-h-11 items-center">{c.name}</Link>
             </li>
           ))}
           <li aria-current="page">{title}</li>

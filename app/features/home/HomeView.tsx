@@ -103,7 +103,7 @@ export default async function HomeView({ lang }: { lang: Language }) {
         <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
           <a
             href={`#${a.contact}`}
-            className="inline-flex min-h-12 items-center rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark"
+            className="inline-flex min-h-12 items-center rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark active:bg-ink"
           >
             {c.cta}
           </a>
@@ -188,7 +188,7 @@ export default async function HomeView({ lang }: { lang: Language }) {
               </time>
               <div className="md:col-span-9">
                 <h3 className="text-xl font-bold">
-                  <Link href={pathFor("news", lang, n.slug)} className="transition-colors duration-150 hover:text-magenta hover:underline underline-offset-4">
+                  <Link href={pathFor("news", lang, n.slug)} className="inline-flex min-h-11 items-center transition-colors duration-150 hover:text-magenta hover:underline underline-offset-4">
                     {n.title[lang]}
                   </Link>
                 </h3>

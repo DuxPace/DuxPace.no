@@ -96,7 +96,7 @@ function Form({ lang, onDone }: { lang: Language; onDone: () => void }) {
       <button
         type="submit"
         disabled={pending}
-        className="min-h-12 rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark disabled:cursor-wait disabled:opacity-80"
+        className="min-h-12 rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark active:bg-ink disabled:cursor-wait disabled:opacity-80"
       >
         {pending ? t.sending : t.send}
       </button>

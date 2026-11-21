@@ -30,7 +30,7 @@ export default function Header({ lang }: { lang: Language }) {
     { href: homeAnchor(a.contact), label: t.contact },
   ];
   const linkClass =
-    "inline-flex min-h-11 items-center px-3 font-medium transition-colors duration-150 hover:text-magenta";
+    "inline-flex min-h-11 items-center px-3 font-medium transition-colors duration-150 hover:text-magenta active:text-ink-2";
 
   return (
     <header className="sticky top-0 z-40 bg-paper/95 border-b border-rule">

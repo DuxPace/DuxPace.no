@@ -13,7 +13,7 @@ export const solutionCopy = {
     steps: [
       {
         h: "Målinger inn",
-        p: "Sensorene i merden måler temperatur, oksygen og saltholdighet på 3, 5 og 10 meters dyp hvert tiende minutt. Vi henter dataene hver natt kl. 03.30 UTC.",
+        p: "Sensorene i merden måler temperatur, oksygen og saltholdighet på 3, 5 og 10 meters dyp hvert tiende minutt. Vi henter dataene hver natt kl. 03.30 UTC. Uten sensorer i merden finnes det ikke noe varsel i dag; lokaliteter uten egne sensorer er det vi jobber mot, med havmodeller og satellitt.",
       },
       {
         h: "Varsel",
@@ -21,7 +21,7 @@ export const solutionCopy = {
       },
       {
         h: "Usikkerhet",
-        p: "Hvert varsel får et bånd som skal fange 80 prosent av målingene. Vi sjekker at det holder: i testene havnet 80,9 prosent innenfor.",
+        p: "Hvert varsel får et bånd som skal fange 80 prosent av målingene. Vi sjekker at det holder: i testene, ved fem lokaliteter med sensorer i Nordfjord, havnet 80,9 prosent innenfor.",
       },
       {
         h: "Levering",
@@ -29,24 +29,9 @@ export const solutionCopy = {
       },
     ],
     satH: "Hva satellittene gjør",
-    sat: "Satellittdata går inn i risikoscoren, ikke i selve 48-timersvarselet. Sentinel-2 gir turbiditet og en klorofyllindeks for overflaten. Havtemperatur fra Sentinel-3 brukes i en indeks for lusens utviklingsvilkår.",
+    sat: "Satellittdata går inn i risikoscoren, ikke i selve 48-timersvarselet. Sentinel-2 gir turbiditet og en klorofyllindeks for overflaten. Havtemperatur fra Sentinel-3 brukes i en indeks for lusens utviklingsvilkår. Dette erstatter ikke Havforskningsinstituttets algestatus, som gir ukentlig status for skadelige alger per produksjonsområde og bør følges uansett.",
     whyH: "Hvorfor 48 timer",
     why: "Vi testet også 30 dager frem. Da tapte varselet mot en flat linje i 21 av 34 tidsserier, så vi sluttet å vise det. Det vi viser og det vi kan forsvare, er det samme tallet.",
-    qH: "Spørsmål vi ofte får",
-    q: [
-      {
-        h: "Trenger lokaliteten sensorer?",
-        p: "I dag, ja. Varselet bygger på målinger fra merden. Å gi varsler til lokaliteter uten egne sensorer, ved hjelp av havmodeller og satellitt, er det vi jobber mot.",
-      },
-      {
-        h: "Erstatter dette Havforskningsinstituttets algestatus?",
-        p: "Nei. Algestatus gir ukentlig status for skadelige alger per produksjonsområde, og den bør du følge uansett. Vi varsler vannkvalitet for den enkelte lokaliteten.",
-      },
-      {
-        h: "Hvor er det testet?",
-        p: "Ved fem lokaliteter med sensorer i Nordfjord. Tallene på denne siden kommer fra de testene.",
-      },
-    ],
     hi: "Algestatus hos Havforskningsinstituttet",
     cta: "Be om et varsel for din lokalitet",
   },
@@ -58,7 +43,7 @@ export const solutionCopy = {
     steps: [
       {
         h: "Measurements in",
-        p: "Sensors in the pen measure temperature, oxygen and salinity at 3, 5 and 10 metres every ten minutes. We collect the data every night at 03:30 UTC.",
+        p: "Sensors in the pen measure temperature, oxygen and salinity at 3, 5 and 10 metres every ten minutes. We collect the data every night at 03:30 UTC. Without sensors in the pen there is no forecast today; sites without their own sensors are what we are working toward, using ocean models and satellite.",
       },
       {
         h: "Forecast",
@@ -66,7 +51,7 @@ export const solutionCopy = {
       },
       {
         h: "Uncertainty",
-        p: "Every forecast carries a band meant to catch 80 percent of measurements. We check that it holds: in testing, 80.9 percent fell inside.",
+        p: "Every forecast carries a band meant to catch 80 percent of measurements. We check that it holds: in testing, at five sites with sensors in Nordfjord, 80.9 percent fell inside.",
       },
       {
         h: "Delivery",
@@ -74,24 +59,9 @@ export const solutionCopy = {
       },
     ],
     satH: "What the satellites do",
-    sat: "Satellite data feeds the risk score, not the 48 hour forecast itself. Sentinel-2 gives turbidity and a surface chlorophyll index. Sea temperature from Sentinel-3 goes into an index of how favourable conditions are for lice development.",
+    sat: "Satellite data feeds the risk score, not the 48 hour forecast itself. Sentinel-2 gives turbidity and a surface chlorophyll index. Sea temperature from Sentinel-3 goes into an index of how favourable conditions are for lice development. None of this replaces the Institute of Marine Research algae status, which gives a weekly status of harmful algae per production area and is worth following regardless.",
     whyH: "Why 48 hours",
     why: "We also tested 30 days ahead. There the forecast lost to a flat line in 21 of 34 time series, so we stopped showing it. What we show and what we can defend are the same number.",
-    qH: "Questions we often get",
-    q: [
-      {
-        h: "Does the site need sensors?",
-        p: "Today, yes. The forecast is built on measurements from the pen. Forecasts for sites without their own sensors, using ocean models and satellite, are what we are working toward.",
-      },
-      {
-        h: "Does this replace the Institute of Marine Research algae status?",
-        p: "No. Algestatus gives a weekly status of harmful algae per production area, and you should follow it regardless. We forecast water quality for the individual site.",
-      },
-      {
-        h: "Where has it been tested?",
-        p: "At five sites with sensors in Nordfjord. The figures on this page come from those tests.",
-      },
-    ],
     hi: "Algestatus at the Institute of Marine Research",
     cta: "Ask for a forecast for your site",
   },
@@ -129,26 +99,16 @@ export default function SolutionView({ lang }: { lang: Language }) {
 
       <h2 className="mt-20 text-[length:var(--text-section)] font-bold leading-tight">{c.satH}</h2>
       <p className="mt-4 max-w-[65ch]">{c.sat}</p>
+      <p className="mt-2">
+        <a href="https://algestatus.hi.no" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center">{c.hi}</a>
+      </p>
 
       <h2 className="mt-16 text-[length:var(--text-section)] font-bold leading-tight">{c.whyH}</h2>
       <p className="mt-4 max-w-[65ch]">{c.why}</p>
 
-      <h2 className="mt-16 text-[length:var(--text-section)] font-bold leading-tight">{c.qH}</h2>
-      <div className="mt-6 space-y-8">
-        {c.q.map((q) => (
-          <div key={q.h}>
-            <h3 className="text-xl font-bold">{q.h}</h3>
-            <p className="mt-2 max-w-[65ch]">{q.p}</p>
-          </div>
-        ))}
-      </div>
-      <p className="mt-6">
-        <a href="https://algestatus.hi.no" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center">{c.hi}</a>
-      </p>
-
       <Link
         href={`${home}#${anchors(lang).contact}`}
-        className="mt-14 inline-flex min-h-12 items-center rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark"
+        className="mt-14 inline-flex min-h-12 items-center rounded-[var(--radius-control)] bg-magenta px-6 font-semibold text-paper transition-colors duration-150 hover:bg-magenta-dark active:bg-ink"
       >
         {c.cta}
       </Link>
